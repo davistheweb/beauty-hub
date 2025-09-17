@@ -5,26 +5,23 @@ import { useSelector } from "react-redux";
 import { Session } from "@/hooks/Auth";
 import { Toaster } from "sonner";
 
-
-
 function AppLayout({ children }) {
   const user = useSelector((state) => state.User);
   const isAuthenticated = Session(user);
   const [showNav, setShowNav] = useState(false);
   const router = useRouter();
 
-
   useEffect(() => {
     window.addEventListener("scroll", () => {
-      setShowNav(false)
-    })
-  }, [])
+      setShowNav(false);
+    });
+  }, []);
 
   if (isAuthenticated.status === "unauthenticated") {
     router.push("/auth/login");
   } else {
     if (user?.value?.user?.email_verified_at === null) {
-      router.push('/auth/accountverification')
+      router.push("/auth/accountverification");
     } else {
       return (
         <div className="relative">
@@ -33,7 +30,6 @@ function AppLayout({ children }) {
         </div>
       );
     }
-
   }
 }
 

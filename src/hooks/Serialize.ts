@@ -31,7 +31,7 @@ const serialize = (form) => {
           ...acc,
           [key]: isNaN(value) ? value : value,
         }),
-        {}
+        {},
       );
 
   return serializeToJSON(data);

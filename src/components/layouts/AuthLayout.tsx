@@ -4,7 +4,15 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { Session } from "@/hooks/Auth";
 
-function AuthLayout({ title, children, subText, formTitle, formDes, onSubmit, errMsg }) {
+function AuthLayout({
+  title,
+  children,
+  subText,
+  formTitle,
+  formDes,
+  onSubmit,
+  errMsg,
+}) {
   const user = useSelector((state) => state.User);
   const isAuthenticated = Session(user);
   const router = useRouter();
@@ -41,22 +49,25 @@ function AuthLayout({ title, children, subText, formTitle, formDes, onSubmit, er
             ...acc,
             [key]: value,
           }),
-          {}
+          {},
         );
 
     return serializeToJSON(data);
   };
 
-
   if (isAuthenticated.status === "authenticated") {
-    (user?.value?.user?.email_verified_at && user?.value?.user?.email_verified_at !== null) ? router.push("/") : router.push('/auth/accountverification')
+    user?.value?.user?.email_verified_at &&
+    user?.value?.user?.email_verified_at !== null
+      ? router.push("/")
+      : router.push("/auth/accountverification");
   } else {
     return (
       <div className="min-h-screen grid lg:grid-cols-2">
         <form
           onSubmit={(e) => {
-            e.preventDefault(), onSubmit(serialize(e.target));
-          }} >
+            (e.preventDefault(), onSubmit(serialize(e.target)));
+          }}
+        >
           <div className="space-y-4">
             <div className="text-red-500 text-xs">{errMsg}</div>
             <div className="space-y-5">{children}</div>
@@ -65,7 +76,6 @@ function AuthLayout({ title, children, subText, formTitle, formDes, onSubmit, er
       </div>
     );
   }
-
 }
 
 export default AuthLayout;

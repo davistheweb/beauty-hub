@@ -1,8 +1,8 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://bd.literesults.net/api";
-export const TOKEN = `Bearer ${Cookies.get("BEAUTY")}`
-
+export const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "https://bd.literesults.net/api";
+export const TOKEN = `Bearer ${Cookies.get("BEAUTY")}`;
 
 const timeoutConfig = {
   timeout: 30000,
@@ -13,8 +13,8 @@ export const apiWithOutAuth = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
   headers: {
-    'Cache-Control': 'no-cache',
-    'Pragma': 'no-cache',
+    "Cache-Control": "no-cache",
+    Pragma: "no-cache",
     Accept: "application/json",
     "Content-Type": "application/json",
   },
@@ -25,15 +25,14 @@ export const apiWithAuth = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
   headers: {
-    'Cache-Control': 'no-cache',
-    'Pragma': 'no-cache',
+    "Cache-Control": "no-cache",
+    Pragma: "no-cache",
     Accept: "application/json",
     "Content-Type": "application/json",
     Authorization: TOKEN,
   },
   ...timeoutConfig,
 });
-
 
 export const getApiResponse = (data) => {
   return {
@@ -44,7 +43,7 @@ export const getApiResponse = (data) => {
 
 export const getErrorResponse = (error) => {
   if (error?.response?.status === 401) {
-    Cookies.remove('BEAUTY')
+    Cookies.remove("BEAUTY");
     // window !== "undefined" && window.location.reload()
   }
 
