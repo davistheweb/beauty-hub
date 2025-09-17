@@ -1,8 +1,7 @@
 "use client";
-import React from "react";
-import { useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
 import { Session } from "@/hooks/Auth";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 function AuthLayout({
   title,
@@ -62,14 +61,14 @@ function AuthLayout({
       : router.push("/auth/accountverification");
   } else {
     return (
-      <div className="min-h-screen grid lg:grid-cols-2">
+      <div className="grid min-h-screen lg:grid-cols-2">
         <form
           onSubmit={(e) => {
             (e.preventDefault(), onSubmit(serialize(e.target)));
           }}
         >
           <div className="space-y-4">
-            <div className="text-red-500 text-xs">{errMsg}</div>
+            <div className="text-xs text-red-500">{errMsg}</div>
             <div className="space-y-5">{children}</div>
           </div>
         </form>
