@@ -74,7 +74,7 @@ export default function PasswordReset() {
                     />
                     {form.getValues("password").length > 0 && (
                       <span
-                        className="absolute top-3.5  right-3 cursor-pointer text-gray-500"
+                        className="absolute top-3.5 right-3 cursor-pointer text-gray-500"
                         onClick={() => setShowPassword((prev) => !prev)}
                       >
                         {showPassword ? (
@@ -117,7 +117,7 @@ export default function PasswordReset() {
                         )}
                       </span>
                     )}
-                <FormMessage />
+                    <FormMessage />
                   </div>
                 </FormControl>
               </FormItem>

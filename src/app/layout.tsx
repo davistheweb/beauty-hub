@@ -17,11 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${dm_sans.className} antialiased w-full h-screen overflow-x-hidden`}>
-        <ReduxProvider>
-        {children}
-
-        </ReduxProvider>
+      <body
+        className={`${dm_sans.className} h-screen w-full overflow-x-hidden antialiased`}
+      >
+        <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
   );
