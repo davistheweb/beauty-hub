@@ -41,7 +41,7 @@ export default function LoginForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleLogin)}
-          className="mt-10 flex flex-col gap-10"
+          className="mt-5 flex flex-col gap-3 md:mt-10 md:gap-10"
         >
           <FormField
             name="email"

@@ -36,7 +36,7 @@ export const AuthWrapper: React.FC<{
         />
       </div>
     </aside>
-    <main className="mt-5 flex items-center justify-center lg:items-start lg:justify-start">
+    <main className="mt-2 flex items-center justify-center md:mt-5 lg:items-start lg:justify-start">
       <AuthFormWrapper
         formTitle={formTitle}
         formSubtitle={formSubtitle}
