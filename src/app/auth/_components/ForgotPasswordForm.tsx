@@ -16,7 +16,7 @@ import z from "zod";
 
 export default function ForgotPasswordForm() {
   const ForgotPasswordFormSchema = z.object({
-    email: z.string().email("Account email is required"),
+    email: z.email({ error: "Account's email is required" }),
   });
 
   type ForgotPasswordFormValues = z.infer<typeof ForgotPasswordFormSchema>;
@@ -28,7 +28,7 @@ export default function ForgotPasswordForm() {
     },
   });
 
-  const handleLogin = async (values: ForgotPasswordFormValues) => {
+  const handleForgotPassword = async (values: ForgotPasswordFormValues) => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
     console.log(values);
     form.reset();
@@ -38,7 +38,7 @@ export default function ForgotPasswordForm() {
     <div className="w-full bg-white">
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(handleLogin)}
+          onSubmit={form.handleSubmit(handleForgotPassword)}
           className="mt-5 flex flex-col gap-10 md:mt-10"
         >
           <FormField

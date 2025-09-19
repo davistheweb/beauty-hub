@@ -44,7 +44,7 @@ export default function PasswordReset() {
     },
   });
 
-  const handleLogin = async (values: PasswordResetFormValues) => {
+  const handlePasswordReset = async (values: PasswordResetFormValues) => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
     console.log(values);
     form.reset();
@@ -54,7 +54,7 @@ export default function PasswordReset() {
     <div className="w-full bg-white">
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(handleLogin)}
+          onSubmit={form.handleSubmit(handlePasswordReset)}
           className="mt-5 flex flex-col gap-5 md:mt-10 md:gap-10"
         >
           <FormField

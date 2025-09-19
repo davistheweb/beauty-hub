@@ -4,8 +4,6 @@ import LoginForm from "../_components/LoginForm";
 export default function LoginPage() {
   return (
     <AuthWrapper
-      title="Welcome Back, Admin"
-      subtitle="Manage barbers, users, and appointments seamlessly. <br/> Your control panel for keeping the beauty hub running smoothly."
       formTitle="Login"
       formSubtitle="Login into your account"
     >

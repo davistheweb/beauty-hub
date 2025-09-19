@@ -5,11 +5,17 @@ import { AuthFormWrapper } from "./AuthFormWrapper";
 
 export const AuthWrapper: React.FC<{
   children: React.ReactNode;
-  title: string;
-  subtitle: string;
+  title?: string;
+  subtitle?: string;
   formTitle: string;
   formSubtitle: string;
-}> = ({ children, title, subtitle, formTitle, formSubtitle }) => (
+}> = ({
+  children,
+  title = "Welcome Back, Admin",
+  subtitle = "Manage barbers, users, and appointments seamlessly. <br/> Your control panel for keeping the beauty hub running smoothly.",
+  formTitle,
+  formSubtitle,
+}) => (
   <section className="flex h-screen w-full flex-col justify-center gap-4 bg-[#292F2A] p-4 lg:min-h-screen lg:flex-row lg:justify-around lg:p-10">
     <div className="flex flex-col items-center justify-center lg:hidden">
       <h1 className="text-xl font-medium">{title}</h1>
