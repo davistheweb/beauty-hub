@@ -17,13 +17,13 @@ export const AuthWrapper: React.FC<{
   formSubtitle,
 }) => (
   <section className="flex h-screen w-full flex-col justify-center gap-4 bg-[#292F2A] p-4 lg:min-h-screen lg:flex-row lg:justify-around lg:p-10">
-    <div className="flex flex-col items-center justify-center lg:hidden">
+    {/* <div className="flex flex-col items-center justify-center lg:hidden">
       <h1 className="text-xl font-medium">{title}</h1>
       <p
         className="hidden text-center md:block"
         dangerouslySetInnerHTML={{ __html: subtitle }}
       />
-    </div>
+    </div> */}
     <aside className="hidden flex-col items-center justify-center gap-10 text-white lg:flex">
       <div className="flex flex-col space-y-4">
         <h1 className="text-2xl font-medium lg:text-4xl">{title}</h1>

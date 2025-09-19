@@ -1,3 +1,4 @@
+"use client";
 import { AuthWrapper } from "../_components/AuthWrapper";
 import PasswordReset from "../_components/PasswordReset";
 
