@@ -1,3 +1,4 @@
+"use client";
 import { AuthWrapper } from "../_components/AuthWrapper";
 import ForgotPasswordForm from "../_components/ForgotPasswordForm";
 
