@@ -60,7 +60,7 @@ export default function PasswordReset() {
           <FormField
             name="password"
             control={form.control}
-            render={({ field}) => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>

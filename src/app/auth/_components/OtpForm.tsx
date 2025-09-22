@@ -28,7 +28,7 @@ export const OtpForm: React.FC = () => {
   const handelSubmitOTP = async (data: z.infer<typeof otpShema>) => {
     await new Promise((resolve) => setTimeout(resolve, 3000));
     console.log(data);
-    
+
     form.reset();
   };
 
