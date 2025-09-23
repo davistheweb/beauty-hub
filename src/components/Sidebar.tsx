@@ -8,7 +8,7 @@ import Logo from "./ui/Logo";
 export default function Sidebar() {
   const pathName = usePathname();
 
-  const isActive = (href: string) => pathName === href;
+  const isActive = (url: string) => pathName === url;
 
   return (
     <aside className="sticky hidden h-full w-[200px] justify-center border-r-2 border-r-[#D1F0DE] bg-white pt-[5px] pr-[13px] pb-[30px] pl-[13px] lg:flex">
@@ -28,15 +28,16 @@ export default function Sidebar() {
             <nav className="flex w-full flex-col items-center justify-center">
               <ul className="flex w-full flex-col gap-5">
                 {NavLinks.map(({ title, href, Icon }, i) => (
-                  <li
+                  <Link
+                    href={href}
                     key={i}
                     className={`flex h-10 w-[170px] cursor-pointer list-none rounded-sm p-2 transition-all duration-300 ease-in-out hover:bg-[#D1F0DE] ${isActive(href) ? "bg-[#D1F0DE]" : ""} `}
                   >
                     <span className="text-custom-green flex items-center gap-3">
                       <Icon />
-                      <Link href={href}>{title}</Link>
+                      {title}
                     </span>
-                  </li>
+                  </Link>
                 ))}
               </ul>
             </nav>
