@@ -8,7 +8,9 @@ const Logo = ({ width, height }: { width: number; height: number }) => (
       width={width}
       height={height}
     />
-    <span className="text-custom-green text-[11.5px] font-bold">BeautyHub</span>
+    <span className="text-custom-green text-[11.5px] font-bold md:text-xl">
+      BeautyHub
+    </span>
   </div>
 );
 export default Logo;

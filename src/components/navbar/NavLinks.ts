@@ -1,5 +1,16 @@
-import { BookText, Logs, Menu, Settings, User } from "lucide-react";
-export const NavLinks = [
+import {
+  BookText,
+  Logs,
+  Menu,
+  Settings,
+  User,
+  type LucideIcon,
+} from "lucide-react";
+export const NavLinks: {
+  title: string;
+  href: string;
+  Icon: LucideIcon;
+}[] = [
   {
     title: "Dashboard",
     href: "/dashboard",
@@ -17,10 +28,4 @@ export const NavLinks = [
   },
   { title: "Customers", href: "/customers", Icon: User },
   { title: "Settings", href: "/settings", Icon: Settings },
-];
-
-// : {
-//   title: string;
-//   href: string;
-//   Icon: React.SVGElementType;
-// }[]
+] as const;

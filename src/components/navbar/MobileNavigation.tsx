@@ -9,7 +9,7 @@ import MobileNavMenu from "./MobileNavMenu";
 export default function MobileNavigation() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
-    <nav className="fixed top-0 right-0 z-10 flex w-full items-center justify-between border-b-1 border-b-gray-400 bg-white p-3 lg:hidden">
+    <nav className="border-b-gray-[#A4B9DA] fixed top-0 right-0 z-10 flex w-full items-center justify-between border-b-1 bg-white p-2 lg:hidden">
       {/* <div>1 May 2025 | 11:09 AM GMT</div> */}
       {/* Header */}
 

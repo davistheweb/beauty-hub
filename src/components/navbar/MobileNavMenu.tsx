@@ -44,9 +44,9 @@ export default function MobileNavMenu({
                   <X size={35} />
                 </button>
               </div>
-              <li className="mt-10 flex flex-col gap-5">
+              <ul className="mt-10 flex flex-col gap-5">
                 {NavLinks.map(({ title, href, Icon }, i) => (
-                  <div
+                  <li
                     key={i}
                     className="w-full"
                   >
@@ -54,9 +54,9 @@ export default function MobileNavMenu({
                       <Icon size={17} />
                       <Link href={href}>{title}</Link>
                     </span>
-                  </div>
+                  </li>
                 ))}
-              </li>
+              </ul>
 
               <div className="absolute bottom-0 left-3">
                 <button className="mt-10 flex gap-3 p-3 text-red-600">
