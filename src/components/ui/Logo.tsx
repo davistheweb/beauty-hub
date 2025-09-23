@@ -7,6 +7,7 @@ const Logo = ({ width, height }: { width: number; height: number }) => (
       alt="Logo"
       width={width}
       height={height}
+      draggable="false"
     />
     <span className="text-custom-green text-[11.5px] font-bold md:text-xl">
       BeautyHub
