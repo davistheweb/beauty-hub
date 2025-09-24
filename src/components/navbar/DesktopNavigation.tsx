@@ -5,7 +5,7 @@ import Notifications from "../Notifications";
 export default function DesktopNavigation() {
   const { customDate } = useDate();
   return (
-    <nav className="hidden h-[40px] w-auto items-center justify-between border-b-2 border-b-[#D1F0DE] bg-white p-4 lg:flex">
+    <nav className="hidden h-[40px] w-auto items-center justify-between border-b-2 border-b-[#D1F0DE] bg-white p-6 lg:flex">
       <div>
         <span className="font-[14px] text-[#898A8C]">{customDate}</span>
       </div>

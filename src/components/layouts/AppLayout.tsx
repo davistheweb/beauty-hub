@@ -39,9 +39,9 @@ function AppLayout({ children }: { children: React.ReactNode }) {
         position="top-right"
       />
       <Sidebar />
-      <div className="flex h-full w-full flex-col overflow-x-hidden pt-4">
+      <div className="relative flex h-full w-full flex-col overflow-x-hidden pt-4">
         <Navbar />
-        <main className="h-screen w-full flex-1 overflow-x-hidden overflow-y-scroll bg-[#E6E6E6]">
+        <main className="scrollbar-thin h-screen w-full flex-1 overflow-x-hidden overflow-y-auto bg-[#E6E6E6] p-4 pt-[80px] lg:py-5">
           {children}
         </main>
       </div>
