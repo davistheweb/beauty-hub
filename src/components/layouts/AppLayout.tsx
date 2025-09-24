@@ -33,8 +33,8 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   //   }
 
   return (
-    <div className="flex h-screen w-full items-center justify-center">
-      <div className="relative flex h-full min-h-svh w-full max-w-7xl bg-white">
+    <div className="flex h-screen items-center justify-center overflow-hidden">
+      <div className="relative flex h-full min-h-svh w-full max-w-[1400px] bg-white">
         <Toaster
           richColors
           position="top-right"
