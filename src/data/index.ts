@@ -5,14 +5,14 @@ const tableHeaders: string[] = [
   "Status",
 ];
 
-type TtbodyData = {
+type TBookingDetails = {
   customer: string;
   package: string;
   date: string;
   status: "In Progress" | "Done" | "Cancelled";
 };
 
-const tbodyData: TtbodyData[] = [
+let bookingDetails: TBookingDetails[] = [
   {
     customer: "John Smith",
     package: "Regular Package",
@@ -121,7 +121,8 @@ const tbodyData: TtbodyData[] = [
     date: "2024-03-15 2:00 PM",
     status: "Cancelled",
   },
-  
 ];
 
-export { tableHeaders, tbodyData };
+bookingDetails = [];
+
+export { bookingDetails, tableHeaders };
