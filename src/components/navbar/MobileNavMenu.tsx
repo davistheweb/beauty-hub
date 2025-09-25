@@ -1,8 +1,9 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
-import { LogOut, X } from "lucide-react";
+import { X } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useRef } from "react";
+import { CustomLogoutIcon } from "../icons";
 import { NavLinks } from "./NavLinks";
 
 export default function MobileNavMenu({
@@ -60,7 +61,7 @@ export default function MobileNavMenu({
 
               <div className="absolute bottom-0 left-3">
                 <button className="mt-10 flex gap-3 p-3 text-red-600">
-                  <LogOut className="" /> <span>Logout</span>
+                  <CustomLogoutIcon /> <span>Logout</span>
                 </button>
               </div>
             </div>

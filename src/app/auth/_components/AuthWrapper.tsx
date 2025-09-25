@@ -17,7 +17,7 @@ export const AuthWrapper: React.FC<{
   formSubtitle,
 }) => (
   <div className="flex h-full w-full items-center justify-center">
-    <section className="flex h-screen max-h-[800px] w-full max-w-[1400px] flex-col lg:items-start justify-center gap-4 bg-[#292F2A] p-4 lg:min-h-screen lg:flex-row lg:justify-around lg:p-10">
+    <section className="flex h-screen max-h-[800px] w-full max-w-[1400px] flex-col justify-center gap-4 bg-[#292F2A] p-4 lg:min-h-screen lg:flex-row lg:items-start lg:justify-around lg:p-10">
       {/* <div className="flex flex-col items-center justify-center lg:hidden">
       <h1 className="text-xl font-medium">{title}</h1>
       <p
@@ -25,7 +25,7 @@ export const AuthWrapper: React.FC<{
         dangerouslySetInnerHTML={{ __html: subtitle }}
       />
     </div> */}
-      <aside className="hidden flex-col items-center justify-center gap-10 text-white lg:flex mt-10">
+      <aside className="mt-10 hidden flex-col items-center justify-center gap-10 text-white lg:flex">
         <div className="flex flex-col space-y-4">
           <h1 className="text-2xl font-medium lg:text-4xl">{title}</h1>
           <p
