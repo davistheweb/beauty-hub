@@ -24,8 +24,8 @@ export default function MobileNavigation() {
           <Image
             src="/images/admin-img.png"
             alt="profile-img"
-            width={35}
-            height={35}
+            width={27}
+            height={27}
           />
         </div>
         <button onClick={() => setIsOpen((prev) => !prev)}>

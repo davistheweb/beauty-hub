@@ -40,19 +40,19 @@ export default function Dashboard() {
         </div>
 
         {/* Table and Statistics Container */}
-        <div className="mt-3 flex w-full flex-col items-center justify-center gap-3 p-2 lg:flex-row">
+        <div className="mt-3 flex w-full flex-col justify-center gap-3 p-2 lg:flex-row">
           {/* Customers Display*/}
           <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
             <div className="flex h-12 w-full items-center justify-center">
               <div className="flex h-[30px] w-full items-center justify-end p-4">
                 <div className="flex gap-2">
-                  <button className="text-custom-green cursor-pointer rounded-xs bg-[#E6E6E6] p-1 pr-2 pl-2 text-center text-[14px] font-medium">
+                  <button className="text-custom-green cursor-pointer rounded-xs bg-[#F9FFFB] p-1 pr-2 pl-2 text-center text-[14px] font-medium">
                     Day
                   </button>
-                  <button className="cursor-pointer rounded-xs p-1 pr-2 pl-2 text-[14px] font-medium text-[#898A8C] duration-300 hover:bg-[#E6E6E6] hover:text-[#1AB65C]">
+                  <button className="cursor-pointer rounded-xs p-1 pr-2 pl-2 text-[14px] font-medium text-[#898A8C] duration-300 hover:bg-[#F9FFFB] hover:text-[#1AB65C]">
                     Month
                   </button>
-                  <button className="cursor-pointer rounded-xs p-1 pr-2 pl-2 text-[14px] font-medium text-[#898A8C] duration-300 hover:bg-[#E6E6E6] hover:text-[#1AB65C]">
+                  <button className="cursor-pointer rounded-xs p-1 pr-2 pl-2 text-[14px] font-medium text-[#898A8C] duration-300 hover:bg-[#F9FFFB] hover:text-[#1AB65C]">
                     Year
                   </button>
                 </div>
@@ -95,17 +95,19 @@ export default function Dashboard() {
                         <td className="px-4 py-2 text-center text-[14px] text-[#727272]">
                           {bookingDetail.package}
                         </td>
-                        <td className="px-4 py-2 text-center text-[14px] font-normal text-[#727272]">
+                        <td className="px-4 py-2 text-center text-[13px] font-normal text-[#727272]">
                           {bookingDetail.date}
                         </td>
                         <td
                           className={`flex items-center justify-center px-4 py-2`}
                         >
                           <span
-                            className={`rounded-md bg-[#EDF5FE] pt-[4.26px] pr-[8.52px] pb-[4.26px] pl-[8.52px] ${bookingDetail.status === "In Progress" ? "text-[#004CE8]" : bookingDetail.status === "Done" ? "text-[#00C247]" : "text-[#FF3333]"} flex w-[120px] items-center text-[14px]`}
+                            className={`rounded-[38.32px] bg-[#EDF5FE] pt-[4.26px] pr-[8.52px] pb-[4.26px] pl-[8.52px] ${bookingDetail.status === "In Progress" ? "text-[#004CE8]" : bookingDetail.status === "Done" ? "text-[#00C247]" : "text-[#FF3333]"} flex w-full items-center justify-center gap-1`}
                           >
-                            <Dot size={30} />
-                            <span>{bookingDetail.status}</span>
+                            <Dot size={40} className="inline-block" />
+                            <span className="text-[12px] font-medium">
+                              {bookingDetail.status}
+                            </span>
                           </span>
                         </td>
                       </tr>

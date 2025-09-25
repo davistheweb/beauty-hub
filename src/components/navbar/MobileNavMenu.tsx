@@ -36,7 +36,7 @@ export default function MobileNavMenu({
             transition={{ type: "tween", duration: 0.3 }}
             ref={navRef}
           >
-            <div className="relative h-[520px] bg-white p-10 pr-20 pl-5">
+            <div className="relative h-[100%] bg-white p-10 pr-20 pl-5">
               <div className="absolute top-3 right-4">
                 <button
                   className="text-gray-400"
@@ -59,7 +59,7 @@ export default function MobileNavMenu({
                 ))}
               </ul>
 
-              <div className="absolute bottom-0 left-3">
+              <div className="absolute bottom-36 left-3">
                 <button className="mt-10 flex gap-3 p-3 text-red-600">
                   <CustomLogoutIcon /> <span>Logout</span>
                 </button>

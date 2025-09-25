@@ -1,12 +1,7 @@
-import { Bell } from "lucide-react";
+import { CustomBellICon } from "./icons";
 
 export default function Notifications() {
-  return (
-    <Bell
-      size={30}
-      className="cursor-pointer font-light text-gray-400"
-    />
-  );
+  return <CustomBellICon />;
 }
 
 // #FF3333; -> reddot

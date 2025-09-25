@@ -11,7 +11,7 @@ export default function Sidebar() {
   const isActive = (url: string) => pathName === url;
 
   return (
-    <aside className="sticky hidden h-full w-[200px] justify-center border-r-2 border-r-[#D1F0DE] bg-white pt-[5px] pr-[13px] pb-[30px] pl-[13px] lg:flex">
+    <aside className="sticky hidden h-full w-[220px] justify-center border-r-2 border-r-[#D1F0DE] bg-white pt-[5px] pr-[13px] pb-[30px] pl-[13px] lg:flex">
       {/* Sidebar first Layout Cotainer (Outer) */}
       <div className="flex h-[550px] w-[250px] flex-col justify-center gap-10 pt-[10px] pr-[8px] pb-[16px] pl-[8px]">
         {/* Logo and links container */}
