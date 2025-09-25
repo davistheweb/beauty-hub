@@ -1,7 +1,7 @@
 "use client";
-import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { CustomLogoutIcon } from "./icons";
 import { NavLinks } from "./navbar/NavLinks";
 import Logo from "./ui/Logo";
 
@@ -31,10 +31,12 @@ export default function Sidebar() {
                   <Link
                     href={href}
                     key={i}
-                    className={`flex h-10 w-[170px] cursor-pointer list-none rounded-sm p-2 transition-all duration-300 ease-in-out hover:bg-[#D1F0DE] ${isActive(href) ? "bg-[#D1F0DE]" : ""} `}
+                    className={`flex h-10 w-[170px] cursor-pointer list-none rounded-sm p-2 transition-all duration-300 ease-in-out hover:bg-[#D1F0DE] ${isActive(href) ? "bg-[#D1F0DE]" : ""} sidebar-hover`}
                   >
-                    <span className="text-custom-green flex items-center gap-3">
-                      <Icon />
+                    <span
+                      className={`${isActive(href) ? "text-custom-green" : "text-[#5C5A55]"} flex items-center gap-3`}
+                    >
+                      <Icon size={23} />
                       {title}
                     </span>
                   </Link>
@@ -46,10 +48,7 @@ export default function Sidebar() {
         {/* Logout  */}
         <div className="z-10 flex h-[40px] w-full items-center pl-4">
           <button className="flex cursor-pointer gap-4 text-red-500">
-            <LogOut
-              className=""
-              fill="red"
-            />{" "}
+            <CustomLogoutIcon />
             <span>Logout</span>
           </button>
         </div>

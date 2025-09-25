@@ -1,12 +1,14 @@
 import { DashboardCard } from "@/components/DashboardCard ";
 import DashboardChart from "@/components/DashboardChart";
+import { CustomGreenBookICon, StylistIcon } from "@/components/icons";
+import { CustomWalletICon } from "@/components/icons/CustomWalletICon";
 import AppLayout from "@/components/layouts/AppLayout";
 import {
   NoDataFoundDesktopComponent,
   NoDataFoundMobileComponent,
 } from "@/components/no-data";
 import { bookingDetails, tableHeaders } from "@/data";
-import { BookText, Dot, User, Wallet } from "lucide-react";
+import { Dot } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -23,17 +25,17 @@ export default function Dashboard() {
           <DashboardCard
             title="TotalBookings"
             subtitle={0}
-            icon={<BookText className="text-custom-green" />}
+            icon={<CustomGreenBookICon />}
           />
           <DashboardCard
             title="AllBarbers"
             subtitle={0}
-            icon={<User className="text-custom-green" />}
+            icon={<StylistIcon />}
           />
           <DashboardCard
             title="TotalRevenue"
             subtitle={0}
-            icon={<Wallet className="text-custom-green" />}
+            icon={<CustomWalletICon />}
           />
         </div>
 
