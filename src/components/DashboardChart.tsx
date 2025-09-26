@@ -14,7 +14,7 @@ const DashboardChart: React.FC = () => {
   const colors = ["#1AB65C", "#40C277", "#66CE92", "#8CDAAD", "#B3E7C9"];
   const series = [10, 20, 15, 30, 25];
 
-  const total = series.reduce((a, b) => a + b, 0);
+  // const total = series.reduce((a, b) => a + b, 0);
 
   const [chartData] = useState({
     series,

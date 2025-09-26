@@ -104,7 +104,10 @@ export default function Dashboard() {
                           <span
                             className={`rounded-[38.32px] bg-[#EDF5FE] pt-[4.26px] pr-[8.52px] pb-[4.26px] pl-[8.52px] ${bookingDetail.status === "In Progress" ? "text-[#004CE8]" : bookingDetail.status === "Done" ? "text-[#00C247]" : "text-[#FF3333]"} flex w-full items-center justify-center gap-1`}
                           >
-                            <Dot size={40} className="inline-block" />
+                            <Dot
+                              size={40}
+                              className="inline-block"
+                            />
                             <span className="text-[12px] font-medium">
                               {bookingDetail.status}
                             </span>

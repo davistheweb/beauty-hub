@@ -12,7 +12,7 @@ type TBookingDetails = {
   status: "In Progress" | "Done" | "Cancelled";
 };
 
-let bookingDetails: TBookingDetails[] = [
+const bookingDetails: TBookingDetails[] = [
   {
     customer: "John Smith",
     package: "Regular Package",
@@ -121,7 +121,7 @@ let bookingDetails: TBookingDetails[] = [
     date: "2024-03-15 2:00 PM",
     status: "Cancelled",
   },
-];
+]
 
 // bookingDetails = [];
 
