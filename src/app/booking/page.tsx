@@ -186,7 +186,7 @@ export default function Booking() {
           </div>
           {/* Pagination  */}
           {bookingDetails.length > 0 && (
-            <div className="hidden h-[40px] w-[900px] flex-col rounded-md bg-white md:flex">
+            <div className="hidden h-[40px] w-[900px] flex-col rounded-md md:flex">
               <div className="flex h-full w-[500px] items-center justify-between">
                 <div className="flex h-[35px] w-[140px] items-center justify-center gap-2">
                   <span className="text-[12px] text-[#5C5A55]">Show</span>
@@ -196,13 +196,13 @@ export default function Booking() {
                       id=""
                       className="scrollbar-thin h-[35px] w-[64px] cursor-pointer appearance-none rounded-sm border border-[#C2C2C2] px-3"
                     >
-                      {Array.from({ length: 12 }).map((arr, _i) => (
+                      {Array.from({ length: 12 }, (arr, i) => i).map((arr) => (
                         <option
-                          key={`${_i} :: ${arr}`}
-                          value={(_i + 1).toString()}
+                          key={` :: ${arr}`}
+                          value={arr + 1}
                           className=""
                         >
-                          {_i + 1}
+                          {arr + 1}
                         </option>
                       ))}
                     </select>

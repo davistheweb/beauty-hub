@@ -123,7 +123,7 @@ let bookingDetails: TBookingDetails[] = [
   },
 ];
 
-// bookingDetails = [];
+bookingDetails = [];
 
 const bookingTableHeaders: string[] = [...tableHeaders, "Action"];
 
