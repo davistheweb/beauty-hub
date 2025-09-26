@@ -7,14 +7,15 @@ interface INotFoundElementProps {
 const NoDataFoundDesktopComponent = ({
   title,
   subtitle,
-}: INotFoundElementProps) => (
+  colSpan,
+}: INotFoundElementProps & { colSpan: number }) => (
   <tbody
-    className="h-full w-full"
+    className="h-full w-full items-center justify-center"
     suppressHydrationWarning={true}
   >
     <tr className="h-full">
       <td
-        colSpan={4}
+        colSpan={colSpan}
         className="h-full items-center align-middle"
       >
         <NoDataFoundElement
