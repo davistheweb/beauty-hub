@@ -45,7 +45,7 @@ export default function MobileNavMenu({
                   <X size={35} />
                 </button>
               </div>
-              <ul className="mt-10 flex flex-col gap-5">
+              <ul className="mt-10 flex flex-col gap-10">
                 {NavLinks.map(({ title, href, Icon }, i) => (
                   <li
                     key={i}

@@ -12,7 +12,7 @@ type TBookingDetails = {
   status: "In Progress" | "Done" | "Cancelled";
 };
 
-const bookingDetails: TBookingDetails[] = [
+let bookingDetails: TBookingDetails[] = [
   {
     customer: "John Smith",
     package: "Regular Package",
@@ -121,8 +121,10 @@ const bookingDetails: TBookingDetails[] = [
     date: "2024-03-15 2:00 PM",
     status: "Cancelled",
   },
-]
+];
 
-// bookingDetails = [];
+bookingDetails = [];
 
-export { bookingDetails, tableHeaders };
+const bookingTableHeaders: string[] = [...tableHeaders, "Action"];
+
+export { bookingDetails, tableHeaders, bookingTableHeaders };

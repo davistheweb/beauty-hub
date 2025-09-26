@@ -81,6 +81,7 @@ export default function Dashboard() {
                     title="No Information Yet!"
                     subtitle="Once your users start booking an appointment, all informations will be
         displayed here"
+                    colSpan={tableHeaders.length}
                   />
                 ) : (
                   <tbody className="w-full divide-y divide-gray-100">
