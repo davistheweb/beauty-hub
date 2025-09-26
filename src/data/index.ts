@@ -123,6 +123,6 @@ let bookingDetails: TBookingDetails[] = [
   },
 ];
 
-bookingDetails = [];
+// bookingDetails = [];
 
 export { bookingDetails, tableHeaders };
