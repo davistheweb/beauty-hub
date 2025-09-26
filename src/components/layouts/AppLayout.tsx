@@ -43,7 +43,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
         <div className="relative flex h-full w-full flex-col overflow-x-hidden pt-4">
           <Navbar />
           <main className="scrollbar-thin h-screen w-full flex-1 overflow-x-hidden overflow-y-auto bg-[#E6E6E6] p-4 pt-[80px] lg:py-5">
-            {children}
+            <div className="pb-5">{children}</div>
           </main>
         </div>
       </div>
