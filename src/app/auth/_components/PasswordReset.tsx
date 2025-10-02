@@ -15,7 +15,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
-export default function PasswordReset() {
+export default function PasswordReset({ userMail }: { userMail: string }) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConformPassword, setShowConfirmPassword] =
     useState<boolean>(false);
@@ -95,7 +95,7 @@ export default function PasswordReset() {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Confirm Password</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input

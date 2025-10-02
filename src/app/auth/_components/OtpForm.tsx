@@ -8,14 +8,24 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { InputOTP, InputOTPSlot } from "@/components/ui/input-otp";
+import { resendOtp, verifyOtpCode } from "@/services/Auth";
+import { TReoveryStage } from "@/types/TRecoveryStage";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 
-export const OtpForm: React.FC = () => {
+export const OtpForm = ({
+  setRecoveryStage,
+  userMail,
+}: {
+  setRecoveryStage: React.Dispatch<React.SetStateAction<TReoveryStage>>;
+  userMail: string;
+}) => {
+  const [resendOtpCountdown, SetResendOtpCountdown] = useState<number>(30);
   const otpShema = z.object({
-    otpCode: z.string().min(4, { error: "Required OTP length is 4" }),
+    otpCode: z.string().min(5, { error: "Required OTP length is 5" }),
   });
 
   const form = useForm({
@@ -25,67 +35,100 @@ export const OtpForm: React.FC = () => {
     },
   });
 
-  const handelSubmitOTP = async (data: z.infer<typeof otpShema>) => {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    console.log(data);
+  const handelSubmitOTP = async (value: z.infer<typeof otpShema>) => {
+    await verifyOtpCode(value.otpCode, userMail)
+      .then((res) => {
+        if (res.status) setTimeout(() => setRecoveryStage("reset-form"), 1200);
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.message);
+        console.log(err);
+      });
+  };
 
-    form.reset();
+  useEffect(() => {
+    if (resendOtpCountdown <= 0) return;
+    const reduceTimeOut = setInterval(() => {
+      SetResendOtpCountdown((prev) => prev - 1);
+      if (resendOtpCountdown === 0) clearInterval(reduceTimeOut);
+    }, 1000);
+
+    return () => clearInterval(reduceTimeOut);
+  }, [resendOtpCountdown]);
+
+  const handleResendOtp = async () => {
+    if (resendOtpCountdown > 0) return;
+    resendOtp(userMail)
+      .then((res) => {
+        if (res.status) {
+          toast.success(res?.data?.message);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
-    <div className="w-full bg-white">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handelSubmitOTP)}>
-          <div className="mt-3 flex flex-col items-center justify-center gap-10">
-            <FormField
-              control={form.control}
-              name="otpCode"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <InputOTP
-                      maxLength={4}
-                      {...field}
-                    >
-                      {Array.from({ length: 4 }).map((E, I) => (
-                        <InputOTPSlot
-                          key={`${E}--${I}`}
-                          className="h-[50px] w-[50px] rounded-sm border-1 text-center text-3xl font-normal select-none first:rounded-l-sm data-[active=true]:ring-[0px]"
-                          index={I}
-                        />
-                      ))}
-                    </InputOTP>
-                  </FormControl>
-                  <FormMessage className="text-center text-xs" />
-                </FormItem>
-              )}
-            />
-            <div className="flex w-full flex-col items-center justify-center">
-              <Button
-                type="submit"
-                className={`bg-custom-green cursor-pointer rounded-full hover:bg-[#1fc966] ${form.formState.isSubmitting ? "w-5" : "w-full"} transition-all duration-500 ease-in-out`}
-                disabled={form.formState.isSubmitting}
-              >
-                {form.formState.isSubmitting ? (
-                  <div className="flex items-center justify-center">
-                    <div className="bg-custom-green w-fit rounded-full p-2">
-                      <div className="h-5 w-5 animate-spin rounded-full border-3 border-gray-200 border-t-[#1AB65C]" />
-                    </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handelSubmitOTP)}>
+        <div className="mt-3 flex flex-col items-center justify-center gap-10">
+          <FormField
+            control={form.control}
+            name="otpCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <InputOTP
+                    maxLength={5}
+                    {...field}
+                  >
+                    {Array.from({ length: 5 }, (arr, i) => i).map((i) => (
+                      <InputOTPSlot
+                        key={i}
+                        className="h-[50px] w-[50px] rounded-sm border-1 text-center text-3xl font-normal select-none first:rounded-l-sm data-[active=true]:ring-[0px]"
+                        index={i}
+                      />
+                    ))}
+                  </InputOTP>
+                </FormControl>
+                <FormMessage className="text-center text-xs" />
+              </FormItem>
+            )}
+          />
+          <div className="flex w-full flex-col items-center justify-center">
+            <Button
+              type="submit"
+              className={`bg-custom-green cursor-pointer rounded-full hover:bg-[#1fc966] ${form.formState.isSubmitting ? "w-5" : "w-full"} transition-all duration-500 ease-in-out`}
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting ? (
+                <div className="flex items-center justify-center">
+                  <div className="bg-custom-green w-fit rounded-full p-2">
+                    <div className="h-5 w-5 animate-spin rounded-full border-3 border-gray-200 border-t-[#1AB65C]" />
                   </div>
-                ) : (
-                  "Send"
-                )}
-              </Button>
-              <span className="mt-2 flex justify-end text-center text-sm text-gray-500">
-                Didn&apos;t Recieve the code?
-                <button className="text-custom-green ml-1 cursor-pointer">
+                </div>
+              ) : (
+                "Send"
+              )}
+            </Button>
+            <span className="mt-2 flex justify-end text-center text-sm text-gray-500">
+              Didn&apos;t Recieve the code?
+              {!resendOtpCountdown ? (
+                <button
+                  className="text-custom-green ml-1 cursor-pointer"
+                  type="button"
+                  onClick={handleResendOtp}
+                >
                   Resend
                 </button>
-              </span>
-            </div>
+              ) : (
+                <span className="text-custom-green ml-2">
+                  0 : {resendOtpCountdown}
+                </span>
+              )}
+            </span>
           </div>
-        </form>
-      </Form>
-    </div>
+        </div>
+      </form>
+    </Form>
   );
 };

@@ -59,7 +59,7 @@ export default function Booking() {
                     {bookingTableHeaders.map((header, _i) => (
                       <th
                         key={_i}
-                        className="w-[200px] border-b border-gray-200 px-4 py-2 text-center text-[14px] font-medium tracking-wide"
+                        className={`${header === "Action" ? "w-[50px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-center text-[14px] font-medium tracking-wide`}
                       >
                         {header}
                       </th>
@@ -80,7 +80,7 @@ export default function Booking() {
                         key={index}
                         className="h-[48px] w-full hover:bg-gray-50"
                       >
-                        <td className="px-4 py-2 text-center text-[14px] font-normal">
+                        <td className="px-8 py-2 text-center text-[14px] font-normal">
                           {bookingDetail.customer}
                         </td>
                         <td className="px-4 py-2 text-center text-[14px] text-[#727272]">
@@ -90,22 +90,22 @@ export default function Booking() {
                           {bookingDetail.date}
                         </td>
                         <td
-                          className={`flex items-center justify-center px-4 py-1`}
+                          className={`flex items-center justify-center px-10 py-1`}
                         >
                           <span
-                            className={`rounded-[38.32px] bg-[#EDF5FE] pt-[4.26px] pr-[8.52px] pb-[4.26px] pl-[8.52px] ${bookingDetail.status === "In Progress" ? "text-[#004CE8]" : bookingDetail.status === "Done" ? "text-[#00C247]" : "text-[#FF3333]"} flex w-full items-center justify-center gap-1`}
+                            className={`rounded-[38.32px] bg-[#EDF5FE] ${bookingDetail.status === "In Progress" ? "text-[#004CE8]" : bookingDetail.status === "Done" ? "text-[#00C247]" : "text-[#FF3333]"} flex w-full items-center justify-center`}
                           >
                             <Dot
                               size={40}
                               className="inline-block"
                             />
-                            <span className="text-[12px] font-medium">
+                            <span className="w-fit text-center text-[12px]">
                               {bookingDetail.status}
                             </span>
                           </span>
                         </td>
                         <td className="">
-                          <span className="flex cursor-pointer items-center justify-center rounded-xs p-1 pr-2 pl-2 text-center text-[14px] font-medium">
+                          <span className="flex cursor-pointer items-center justify-center rounded-xs text-center text-[14px] font-medium">
                             <EllipsisVertical className="text-[#737375] hover:bg-[#EDF5FE]" />
                           </span>
                         </td>
@@ -165,9 +165,9 @@ export default function Booking() {
                           <span className="flex items-center justify-between">
                             <h1 className="text-[18px] font-medium">Status</h1>
                             <span
-                              className={`rounded-[42.58px] bg-[#EDF5FE] pt-[4.73px] pr-[9.46px] pb-[4.73px] pl-[9.46px] ${bookingDetail.status === "In Progress" ? "text-[#004CE8]" : bookingDetail.status === "Done" ? "text-[#00C247]" : "text-[#FF3333]"} flex w-[130px] items-center justify-center text-[14px]`}
+                              className={`rounded-[42.58px] bg-[#EDF5FE] ${bookingDetail.status === "In Progress" ? "text-[#004CE8]" : bookingDetail.status === "Done" ? "text-[#00C247]" : "text-[#FF3333]"} my-4 flex w-[110px] items-center justify-center px-4 text-[14px]`}
                             >
-                              <Dot size={40} />
+                              <Dot />
                               <span>{bookingDetail.status}</span>
                             </span>
                           </span>

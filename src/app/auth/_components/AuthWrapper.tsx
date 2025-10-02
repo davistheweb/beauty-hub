@@ -2,6 +2,8 @@
 import Image from "next/image";
 import React from "react";
 import { AuthFormWrapper } from "./AuthFormWrapper";
+import { AnimatePresence, motion } from "framer-motion";
+import { Toaster } from "sonner";
 
 export const AuthWrapper: React.FC<{
   children: React.ReactNode;
@@ -44,12 +46,22 @@ export const AuthWrapper: React.FC<{
         </div>
       </aside>
       <main className="-mt-20 flex items-center justify-center md:mt-5 lg:items-start lg:justify-start">
-        <AuthFormWrapper
-          formTitle={formTitle}
-          formSubtitle={formSubtitle}
-        >
-          {children}
-        </AuthFormWrapper>
+        <AnimatePresence>
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "tween", duration: 0.8 }}
+          >
+            <Toaster richColors position="top-right" />
+            <AuthFormWrapper
+              formTitle={formTitle}
+              formSubtitle={formSubtitle}
+            >
+              {children}
+            </AuthFormWrapper>
+          </motion.div>
+        </AnimatePresence>
       </main>
     </section>
   </div>

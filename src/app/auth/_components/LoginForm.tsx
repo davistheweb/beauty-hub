@@ -9,6 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { loginAdmin } from "@/services/Auth";
 import {
   LoginFormSchema,
   LoginFormValues,
@@ -34,6 +35,10 @@ export default function LoginForm() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
     console.log(values);
     form.reset();
+
+    // loginAdmin(values.email, values.password)
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.log(err));
   };
 
   return (
