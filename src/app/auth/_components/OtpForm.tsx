@@ -64,7 +64,8 @@ export const OtpForm = ({
           toast.success(res?.data?.message);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => SetResendOtpCountdown(60));
   };
 
   return (
