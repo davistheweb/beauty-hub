@@ -11,6 +11,7 @@ import { InputOTP, InputOTPSlot } from "@/components/ui/input-otp";
 import { resendOtp, verifyOtpCode } from "@/services/Auth";
 import { TReoveryStage } from "@/types/TRecoveryStage";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -24,6 +25,7 @@ export const OtpForm = ({
   userMail: string;
 }) => {
   const [resendOtpCountdown, SetResendOtpCountdown] = useState<number>(30);
+  const [isResending, setIsResending] = useState<boolean>(false);
   const otpShema = z.object({
     otpCode: z.string().min(5, { error: "Required OTP length is 5" }),
   });
@@ -58,14 +60,20 @@ export const OtpForm = ({
 
   const handleResendOtp = async () => {
     if (resendOtpCountdown > 0) return;
-    resendOtp(userMail)
+
+    setIsResending((prev) => !prev);
+
+    await resendOtp(userMail)
       .then((res) => {
         if (res.status) {
           toast.success(res?.data?.message);
         }
       })
       .catch((err) => console.log(err))
-      .finally(() => SetResendOtpCountdown(60));
+      .finally(() => {
+        SetResendOtpCountdown(60);
+        setIsResending((prev) => !prev);
+      });
   };
 
   return (
@@ -81,6 +89,7 @@ export const OtpForm = ({
                   <InputOTP
                     maxLength={5}
                     {...field}
+                    pattern={REGEXP_ONLY_DIGITS}
                   >
                     {Array.from({ length: 5 }, (arr, i) => i).map((i) => (
                       <InputOTPSlot
@@ -111,19 +120,20 @@ export const OtpForm = ({
                 "Send"
               )}
             </Button>
-            <span className="mt-2 flex justify-end text-center text-sm text-gray-500">
+            <span className="mt-2 flex justify-end text-center text-sm text-gray-500 lg:text-xs">
               Didn&apos;t Recieve the code?
               {!resendOtpCountdown ? (
                 <button
                   className="text-custom-green ml-1 cursor-pointer"
                   type="button"
                   onClick={handleResendOtp}
+                  disabled={isResending}
                 >
-                  Resend
+                  {isResending ? "Resending....." : "Resend"}
                 </button>
               ) : (
                 <span className="text-custom-green ml-2">
-                  0 : {resendOtpCountdown}
+                  Resend in {resendOtpCountdown}s
                 </span>
               )}
             </span>

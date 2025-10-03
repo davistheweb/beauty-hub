@@ -22,7 +22,7 @@ import { AuthWrapper } from "./AuthWrapper";
 import { OtpForm } from "./OtpForm";
 import PasswordReset from "./PasswordReset";
 
-export default function ForgotPasswordForm() {
+export default function AccountRecovery() {
   const [recoveryStage, setRecoveryStage] =
     useState<TReoveryStage>("email-form");
   const [userMail, setUserMail] = useState<string>("");
@@ -50,8 +50,9 @@ export default function ForgotPasswordForm() {
           setTimeout(() => setRecoveryStage("otp-form"), 1100);
         }
       })
-      .catch((err) => {
-        toast.error(err?.response?.data?.message || "Something went wrong");
+      .catch((err) => {   toast.error(
+        err?.response?.data?.message || err?.message || "Something went wrong",
+      );
       });
   };
 
@@ -60,16 +61,17 @@ export default function ForgotPasswordForm() {
       ? "Reset your password"
       : recoveryStage === "otp-form"
         ? "Enter OTP"
-        : recoveryStage === "reset-form" && "Confirm New Password"
+        : (recoveryStage === "reset-form" && "Confirm New Password") || "Login"
   }`;
 
   const recoveryFormSubtitle = `${
     recoveryStage === "email-form"
       ? "Don't worry, We'll send you reset instructions"
       : recoveryStage === "otp-form"
-        ? `A 4 digits code has been sent to your email <span style='color: #1AB65C;'>${maskMail(userMail) || ""}</span> to verify account.`
-        : recoveryStage === "reset-form" &&
-          "Please ensure your new password is distinct from any you have used before."
+        ? `A 5 digits code has been sent to your email <span style='color: #1AB65C;'>${maskMail(userMail)}</span> to verify account.`
+        : (recoveryStage === "reset-form" &&
+            "Please ensure your new password is distinct from any you have used before.") ||
+          "Login into your account"
   }`;
 
   return (

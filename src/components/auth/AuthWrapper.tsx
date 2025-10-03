@@ -1,9 +1,9 @@
 "use client";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import React from "react";
-import { AuthFormWrapper } from "./AuthFormWrapper";
-import { AnimatePresence, motion } from "framer-motion";
 import { Toaster } from "sonner";
+import { AuthFormWrapper } from "./AuthFormWrapper";
 
 export const AuthWrapper: React.FC<{
   children: React.ReactNode;
@@ -53,7 +53,10 @@ export const AuthWrapper: React.FC<{
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.8 }}
           >
-            <Toaster richColors position="top-right" />
+            <Toaster
+              richColors
+              position="top-right"
+            />
             <AuthFormWrapper
               formTitle={formTitle}
               formSubtitle={formSubtitle}

@@ -127,4 +127,4 @@ bookingDetails = [];
 
 const bookingTableHeaders: string[] = [...tableHeaders, "Action"];
 
-export { bookingDetails, tableHeaders, bookingTableHeaders };
+export { bookingDetails, bookingTableHeaders, tableHeaders };

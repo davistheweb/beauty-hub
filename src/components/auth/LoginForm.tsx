@@ -9,54 +9,63 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  LoginFormSchema,
+  LoginFormValues,
+} from "@/utils/validators/LoginFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import z from "zod";
 
-export default function PasswordReset({ userMail }: { userMail: string }) {
+export default function LoginForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConformPassword, setShowConfirmPassword] =
-    useState<boolean>(false);
 
-  const PasswordResetFormSchema = z
-    .object({
-      password: z.string().nonempty({ error: "Password is required" }),
-      confirmPassword: z
-        .string()
-        .nonempty({ error: "Confirm  password is required" }),
-    })
-    .refine(
-      (val) => {
-        return val.password === val.confirmPassword;
-      },
-      { error: "Passwords do not match", path: ["confirmPassword"] },
-    );
-
-  type PasswordResetFormValues = z.infer<typeof PasswordResetFormSchema>;
-
-  const form = useForm<PasswordResetFormValues>({
-    resolver: zodResolver(PasswordResetFormSchema),
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(LoginFormSchema),
     defaultValues: {
+      email: "",
       password: "",
-      confirmPassword: "",
     },
   });
 
-  const handlePasswordReset = async (values: PasswordResetFormValues) => {
+  const handleLogin = async (values: LoginFormValues) => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
     console.log(values);
     form.reset();
+
+    // loginAdmin(values.email, values.password)
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.log(err));
   };
 
   return (
     <div className="w-full bg-white">
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(handlePasswordReset)}
-          className="mt-5 flex flex-col gap-5 md:mt-10 md:gap-10"
+          onSubmit={form.handleSubmit(handleLogin)}
+          className="mt-5 flex flex-col gap-3 md:mt-10 md:gap-10"
         >
+          <FormField
+            name="email"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email address</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="Email address"
+                    type="email"
+                    name="email"
+                    className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             name="password"
             control={form.control}
@@ -74,7 +83,7 @@ export default function PasswordReset({ userMail }: { userMail: string }) {
                     />
                     {form.getValues("password").length > 0 && (
                       <span
-                        className="absolute top-3.5 right-3 cursor-pointer text-gray-500"
+                        className="absolute top-2 right-3 cursor-pointer text-gray-500"
                         onClick={() => setShowPassword((prev) => !prev)}
                       >
                         {showPassword ? (
@@ -87,39 +96,14 @@ export default function PasswordReset({ userMail }: { userMail: string }) {
                   </div>
                 </FormControl>
                 <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            name="confirmPassword"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Confirm Password</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <Input
-                      {...field}
-                      placeholder="Confirm Password"
-                      type={showConformPassword ? "text" : "password"}
-                      name="confirmPassword"
-                      className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none"
-                    />
-                    {form.getValues("confirmPassword").length > 0 && (
-                      <span
-                        className="absolute top-3.5 right-3 cursor-pointer text-gray-500"
-                        onClick={() => setShowConfirmPassword((prev) => !prev)}
-                      >
-                        {showConformPassword ? (
-                          <EyeOff size={20} />
-                        ) : (
-                          <Eye size={20} />
-                        )}
-                      </span>
-                    )}
-                    <FormMessage />
-                  </div>
-                </FormControl>
+                <span className="mt-2 flex justify-end text-sm">
+                  <Link
+                    href="/auth/account-recovery"
+                    className="text-custom-green"
+                  >
+                    Forgot Password?
+                  </Link>
+                </span>
               </FormItem>
             )}
           />

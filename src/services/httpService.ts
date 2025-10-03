@@ -13,15 +13,19 @@ const timeoutConfig: {
   timeoutErrorMessage: "Server taking too long to respond. Try again.",
 };
 
+const headersConfig = {
+  "Cache-Control": "no-cache",
+  Pragma: "no-cache",
+  Accept: "application/json",
+  "Content-Type": "application/json",
+};
+
 export const apiWithOutAuth = axios.create({
   baseURL: API_BASE_URL,
-  // withCredentials: true,
-  // headers: {
-  //   "Cache-Control": "no-cache",
-  //   Pragma: "no-cache",
-  //   Accept: "application/json",
-  //   "Content-Type": "application/json",
-  // },
+  withCredentials: true,
+  headers: {
+    ...headersConfig,
+  },
   ...timeoutConfig,
 });
 
@@ -29,10 +33,7 @@ export const apiWithAuth = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
   headers: {
-    "Cache-Control": "no-cache",
-    Pragma: "no-cache",
-    Accept: "application/json",
-    "Content-Type": "application/json",
+    ...headersConfig,
     Authorization: TOKEN,
   },
   ...timeoutConfig,
@@ -45,15 +46,15 @@ export const getApiResponse = <T>(data: { data: T }) => {
   };
 };
 
-export const getErrorResponse = (error: any) => {
-  if (error?.response?.status === 401) {
-    Cookies.remove("BEAUTY");
-    typeof window !== "undefined" && window.location.reload();
-  }
+// export const getErrorResponse = (error: any) => {
+//   if (error?.response?.status === 401) {
+//     Cookies.remove("BEAUTY");
+//     if (typeof window !== "undefined") window.location.reload();
+//   }
 
-  return {
-    statusCode: error?.response?.status,
-    status: false,
-    data: error?.response?.data,
-  };
-};
+//   return {
+//     statusCode: error?.response?.status,
+//     status: false,
+//     data: error?.response?.data,
+//   };
+// };
