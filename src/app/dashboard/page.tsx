@@ -69,7 +69,7 @@ export default function Dashboard() {
                     {tableHeaders.map((header, _i) => (
                       <th
                         key={_i}
-                        className="w-[200px] border-b border-gray-200 px-4 py-2 text-center text-[14px] font-medium tracking-wide"
+                        className={`${header === "Status" ? "w-[150px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-center text-[14px] font-medium tracking-wide`}
                       >
                         {header}
                       </th>
@@ -100,16 +100,16 @@ export default function Dashboard() {
                           {bookingDetail.date}
                         </td>
                         <td
-                          className={`flex items-center justify-center px-4 py-2`}
+                          className={`flex items-center justify-center px-1 py-1`}
                         >
                           <span
-                            className={`rounded-[38.32px] bg-[#EDF5FE] pt-[4.26px] pr-[8.52px] pb-[4.26px] pl-[8.52px] ${bookingDetail.status === "In Progress" ? "text-[#004CE8]" : bookingDetail.status === "Done" ? "text-[#00C247]" : "text-[#FF3333]"} flex w-full items-center justify-center gap-1`}
+                            className={`rounded-[38.32px] bg-[#EDF5FE] ${bookingDetail.status === "In Progress" ? "text-[#004CE8]" : bookingDetail.status === "Done" ? "text-[#00C247]" : "text-[#FF3333]"} flex w-full items-center justify-center`}
                           >
                             <Dot
                               size={40}
                               className="inline-block"
                             />
-                            <span className="text-[12px] font-medium">
+                            <span className="w-fit text-center text-[12px]">
                               {bookingDetail.status}
                             </span>
                           </span>
