@@ -9,20 +9,25 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { createNewPassword } from "@/services/Auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 
-export default function PasswordReset() {
+export default function PasswordReset({ userMail }: { userMail: string }) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConformPassword, setShowConfirmPassword] =
     useState<boolean>(false);
 
+  const router = useRouter();
+
   const PasswordResetFormSchema = z
     .object({
-      password: z.string().nonempty({ error: "Password is required" }),
+      password: z.string().nonempty({ error: "Password is required" }).min(8, {error: "Password must be 8 charaters or more"}),
       confirmPassword: z
         .string()
         .nonempty({ error: "Confirm  password is required" }),
@@ -45,10 +50,24 @@ export default function PasswordReset() {
   });
 
   const handlePasswordReset = async (values: PasswordResetFormValues) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(values);
-    form.reset();
+    await createNewPassword(values.password, userMail)
+      .then((res) => {
+        if (res.status) {
+          toast.success(res?.data?.message);
+          form.reset();
+          setTimeout(() => router.push("/auth/login"), 1200);
+        }
+      })
+      .catch((err) => {
+        toast.error(
+          err?.response?.data?.message ||
+            err?.message ||
+            "Something went wrong",
+        );
+      });
   };
+
+  console.log(userMail);
 
   return (
     <div className="w-full bg-white">
@@ -95,7 +114,7 @@ export default function PasswordReset() {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Confirm Password</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input
@@ -136,7 +155,7 @@ export default function PasswordReset() {
                   </div>
                 </div>
               ) : (
-                "Login"
+                "Create New Password"
               )}
             </Button>
           </div>

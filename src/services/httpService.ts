@@ -1,50 +1,55 @@
-// import axios from "axios";
-// import Cookies from "js-cookie";
-// export const API_BASE_URL =
-//   process.env.NEXT_PUBLIC_API_BASE_URL || "https://bd.literesults.net/api";
-// export const TOKEN = `Bearer ${Cookies.get("BEAUTY")}`;
+import axios from "axios";
+import Cookies from "js-cookie";
 
-// const timeoutConfig = {
-//   timeout: 30000,
-//   timeoutErrorMessage: "Server taking too long to respond. Try again.",
-// };
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-// export const apiWithOutAuth = axios.create({
-//   baseURL: API_BASE_URL,
-//   withCredentials: true,
-//   headers: {
-//     "Cache-Control": "no-cache",
-//     Pragma: "no-cache",
-//     Accept: "application/json",
-//     "Content-Type": "application/json",
-//   },
-//   ...timeoutConfig,
-// });
+export const TOKEN = `Bearer ${Cookies.get("BEAUTY")}`;
 
-// export const apiWithAuth = axios.create({
-//   baseURL: API_BASE_URL,
-//   withCredentials: true,
-//   headers: {
-//     "Cache-Control": "no-cache",
-//     Pragma: "no-cache",
-//     Accept: "application/json",
-//     "Content-Type": "application/json",
-//     Authorization: TOKEN,
-//   },
-//   ...timeoutConfig,
-// });
+const timeoutConfig: {
+  timeout: number;
+  timeoutErrorMessage: string;
+} = {
+  timeout: 30000,
+  timeoutErrorMessage: "Server taking too long to respond. Try again.",
+};
 
-// export const getApiResponse = (data) => {
-//   return {
-//     status: true,
-//     data: data.data,
-//   };
-// };
+const headersConfig = {
+  "Cache-Control": "no-cache",
+  Pragma: "no-cache",
+  Accept: "application/json",
+  "Content-Type": "application/json",
+};
 
-// export const getErrorResponse = (error) => {
+export const apiWithOutAuth = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+  headers: {
+    ...headersConfig,
+  },
+  ...timeoutConfig,
+});
+
+export const apiWithAuth = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+  headers: {
+    ...headersConfig,
+    Authorization: TOKEN,
+  },
+  ...timeoutConfig,
+});
+
+export const getApiResponse = <T>(data: { data: T }) => {
+  return {
+    status: true,
+    data: data.data,
+  };
+};
+
+// export const getErrorResponse = (error: any) => {
 //   if (error?.response?.status === 401) {
 //     Cookies.remove("BEAUTY");
-//     // window !== "undefined" && window.location.reload()
+//     if (typeof window !== "undefined") window.location.reload();
 //   }
 
 //   return {

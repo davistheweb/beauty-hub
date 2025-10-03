@@ -5,33 +5,14 @@ import Navbar from "../navbar";
 import Sidebar from "../Sidebar";
 
 // import { Session } from "@/hooks/Auth";
-// import { useEffect, useState } from "react";
 
 function AppLayout({ children }: { children: React.ReactNode }) {
-  //   const user = useSelector((state) => state.User);
-  //   const isAuthenticated = Session(user);
-  //   const [showNav, setShowNav] = useState(false);
-  //   const router = useRouter();
-  //   useEffect(() => {
-  //     window.addEventListener("scroll", () => {
-  //       setShowNav(false);
-  //     });
-  //   }, []);
-  //   if (isAuthenticated.status === "unauthenticated") {
-  //     router.push("/auth/login");
-  //   } else {
-  //     if (user?.value?.user?.email_verified_at === null) {
-  //       router.push("/auth/accountverification");
-  //     } else {
-  //       return (
-  //         <div className="relative">
-  //           <Toaster />
-  //           {children}
-  //         </div>
-  //       );
-  //     }
-  //   }
-
+  // const user = useSelector((state) => state.User);
+  // const isAuthenticated = Session(user);
+  // const router = useRouter();
+  // if (isAuthenticated.status === "unauthenticated") {
+  //   router.push("/auth/login");
+  // } else {
   return (
     <div className="flex h-screen items-center justify-center overflow-hidden">
       <div className="relative flex h-full min-h-svh w-full max-w-[1400px] bg-white">
@@ -50,5 +31,5 @@ function AppLayout({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-
+// }
 export default AppLayout;
