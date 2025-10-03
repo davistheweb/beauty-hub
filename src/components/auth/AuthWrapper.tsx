@@ -48,10 +48,11 @@ export const AuthWrapper: React.FC<{
       <main className="-mt-20 flex items-center justify-center md:mt-5 lg:items-start lg:justify-start">
         <AnimatePresence>
           <motion.div
-            initial={{ x: "100%" }}
+            initial={{ x: "100vw" }}
             animate={{ x: 0 }}
-            exit={{ x: "100%" }}
+            exit={{ x: "100vw" }}
             transition={{ type: "tween", duration: 0.8 }}
+            className="w-full max-sm:max-w-md"
           >
             <Toaster
               richColors
