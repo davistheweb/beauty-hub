@@ -1,12 +1,12 @@
 import AppLayout from "@/components/layouts/AppLayout";
-import { Metadata } from "next";
-
 import {
-  NoDataFoundDesktopComponent,
-  NoDataFoundMobileComponent,
+  NoDataFoundTableDesktopComponent,
+  NoDataFoundTableMobileComponent,
 } from "@/components/no-data";
+import SearchInput from "@/components/ui/SearchInput";
 import { bookingDetails, bookingTableHeaders } from "@/data";
-import { ChevronDown, Dot, EllipsisVertical, Search } from "lucide-react";
+import { ChevronDown, Dot, EllipsisVertical } from "lucide-react";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Beauty - Booking",
@@ -23,18 +23,7 @@ export default function Booking() {
             <div className="flex h-12 w-full items-center justify-center">
               <div className="flex h-[30px] w-full items-center justify-between p-2 md:p-4">
                 {/* Search  */}
-                <div className="relative flex items-center justify-center p-1">
-                  <input
-                    type="text"
-                    name=""
-                    id=""
-                    className="w-[136px] rounded-md border border-[#C2C2C2] py-1 pr-3 pl-7 outline-none placeholder:text-[14px] sm:w-[300px]"
-                    placeholder="Search"
-                  />
-                  <span className="absolute top-3.5 left-3">
-                    <Search size={15} />
-                  </span>
-                </div>
+                <SearchInput />
                 <div className="flex gap-1 md:gap-2">
                   <button className="text-custom-green cursor-pointer rounded-xs bg-[#F9FFFB] p-1 pr-2 pl-2 text-center text-[14px] font-medium">
                     Day
@@ -67,7 +56,7 @@ export default function Booking() {
                   </tr>
                 </thead>
                 {!bookingDetails.length ? (
-                  <NoDataFoundDesktopComponent
+                  <NoDataFoundTableDesktopComponent
                     title="No Information Yet!"
                     subtitle="Once your users start booking an appointment, all informations will be
         displayed here"
@@ -118,7 +107,7 @@ export default function Booking() {
             {/* Customers Display Card  */}
             <div className="scrollbar-thin flex h-full w-full items-center justify-center overflow-y-auto md:hidden">
               {!bookingDetails.length ? (
-                <NoDataFoundMobileComponent
+                <NoDataFoundTableMobileComponent
                   title="No Information Yet!"
                   subtitle="Once your users start booking an appointment, all informations will be
         displayed here"

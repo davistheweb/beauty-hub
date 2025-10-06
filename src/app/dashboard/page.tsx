@@ -4,8 +4,8 @@ import { CustomGreenBookICon, StylistIcon } from "@/components/icons";
 import { CustomWalletICon } from "@/components/icons/CustomWalletICon";
 import AppLayout from "@/components/layouts/AppLayout";
 import {
-  NoDataFoundDesktopComponent,
-  NoDataFoundMobileComponent,
+  NoDataFoundTableDesktopComponent,
+  NoDataFoundTableMobileComponent,
 } from "@/components/no-data";
 import { bookingDetails, tableHeaders } from "@/data";
 import { Dot } from "lucide-react";
@@ -77,7 +77,7 @@ export default function Dashboard() {
                   </tr>
                 </thead>
                 {!bookingDetails.length ? (
-                  <NoDataFoundDesktopComponent
+                  <NoDataFoundTableDesktopComponent
                     title="No Information Yet!"
                     subtitle="Once your users start booking an appointment, all informations will be
         displayed here"
@@ -123,7 +123,7 @@ export default function Dashboard() {
             {/* Customers Display Card  */}
             <div className="flex h-full w-full items-center justify-center overflow-y-auto md:hidden">
               {!bookingDetails.length ? (
-                <NoDataFoundMobileComponent
+                <NoDataFoundTableMobileComponent
                   title="No Information Yet!"
                   subtitle="Once your users start booking an appointment, all informations will be
         displayed here"

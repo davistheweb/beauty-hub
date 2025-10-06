@@ -4,7 +4,7 @@ interface INotFoundElementProps {
   title: string;
   subtitle: string;
 }
-const NoDataFoundDesktopComponent = ({
+const NoDataFoundTableDesktopComponent = ({
   title,
   subtitle,
   colSpan,
@@ -27,7 +27,7 @@ const NoDataFoundDesktopComponent = ({
   </tbody>
 );
 
-const NoDataFoundMobileComponent = ({
+const NoDataFoundTableMobileComponent = ({
   title,
   subtitle,
 }: INotFoundElementProps) => (
@@ -55,4 +55,8 @@ const NoDataFoundElement = ({ title, subtitle }: INotFoundElementProps) => (
   </div>
 );
 
-export { NoDataFoundDesktopComponent, NoDataFoundMobileComponent };
+export {
+  NoDataFoundElement,
+  NoDataFoundTableDesktopComponent,
+  NoDataFoundTableMobileComponent,
+};
