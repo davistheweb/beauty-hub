@@ -19,13 +19,8 @@ const storeAccessBearerToken = async (bearer_token: string) => {
   });
 };
 
-
-
 const deleteAccessBearerToken = async () => {
   (await cookies()).delete("access_bearer_token");
 };
 
-export {
-  deleteAccessBearerToken,
-  storeAccessBearerToken,
-};
+export { deleteAccessBearerToken, storeAccessBearerToken };

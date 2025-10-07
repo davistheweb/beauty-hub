@@ -17,10 +17,7 @@ apiWithAuth.interceptors.request.use(async (config) => {
   const token = cookieStore.get("access_bearer_token");
 
   console.log(token);
-  
 
   if (token) config.headers.Authorization = `Bearer ${token}` as string;
   return config;
 });
-
-

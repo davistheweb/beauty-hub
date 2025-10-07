@@ -32,7 +32,7 @@ const getApiResponse = <T>(data: { data: T }) => {
   };
 };
 
-export { apiWithOutAuth, headersConfig, timeoutConfig, getApiResponse };
+export { apiWithOutAuth, getApiResponse, headersConfig, timeoutConfig };
 
 // export const getErrorResponse = (error: any) => {
 //   if (error?.response?.status === 401) {

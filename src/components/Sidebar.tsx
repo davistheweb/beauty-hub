@@ -1,14 +1,21 @@
 "use client";
+import { logoutAdmin } from "@/services/Auth";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { CustomLogoutIcon } from "./icons";
 import { NavLinks } from "./navbar/NavLinks";
 import Logo from "./ui/Logo";
 
 export default function Sidebar() {
   const pathName = usePathname();
+  const router = useRouter();
 
   const isActive = (url: string) => pathName === url;
+
+  const handleLogout = async () => {
+    await logoutAdmin();
+    router.push("/");
+  };
 
   return (
     <aside className="sticky hidden h-full w-[220px] justify-center border-r-2 border-r-[#D1F0DE] bg-white pt-[5px] pr-[13px] pb-[30px] pl-[13px] lg:flex">
@@ -47,7 +54,10 @@ export default function Sidebar() {
         </div>
         {/* Logout  */}
         <div className="z-10 flex h-[40px] w-full items-center pl-4">
-          <button className="flex cursor-pointer gap-4 text-red-500">
+          <button
+            className="flex w-full cursor-pointer gap-4 rounded-sm p-2 text-red-500 transition-all duration-500 hover:bg-red-300/45"
+            onClick={handleLogout}
+          >
             <CustomLogoutIcon />
             <span>Logout</span>
           </button>
