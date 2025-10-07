@@ -1,4 +1,5 @@
 import { apiWithOutAuth, getApiResponse } from "./httpService";
+import { deleteAccessBearerToken } from "./server";
 
 const loginAdmin = async (email: string, password: string) =>
   apiWithOutAuth.post("/login", { email, password }).then(getApiResponse);
@@ -19,4 +20,18 @@ const createNewPassword = async (password: string, email: string) =>
     .post("/recover/create_new_password", { new_password: password, email })
     .then(getApiResponse);
 
-export { createNewPassword, loginAdmin, resendOtp, sendOtpViaMail, verifyOtpCode };
+const logoutAdmin = async () => {
+  await deleteAccessBearerToken().then((res) => {
+    console.log(res);
+    window.location.reload();
+  });
+};
+
+export {
+  createNewPassword,
+  loginAdmin,
+  logoutAdmin,
+  resendOtp,
+  sendOtpViaMail,
+  verifyOtpCode,
+};

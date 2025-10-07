@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const hasToken = request.cookies.has("access_bearer_token");
 
   console.log("userHasToken:", hasToken);
-  console.log(pathname, "from mdwa");
+  console.log(pathname, "is pathname from middleware");
 
   if (!hasToken && !pathname.startsWith("/auth/login")) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
