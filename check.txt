@@ -1,0 +1,86 @@
+import { parseCookieHeader } from "@/lib/auth/cookie-parser";
+import { isJwtExpired } from "@/lib/auth/jwt";
+import { parseXiorError } from "@/lib/error-handlers/handle-axios-error";
+import { NextRequest, NextResponse } from "next/server";
+import { cache } from "react";
+import x from "xior";
+
+const xior = x.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL!,
+  timeout: 60000,
+});
+
+export async function middleware(request: NextRequest) {
+  const hasAccess = request.cookies.has("access_token");
+  const hasRefresh = request.cookies.has("refresh_token");
+
+  console.log(
+    `Cookies present? access_token=${hasAccess}, refresh_token=${hasRefresh}`,
+  );
+
+  if (!hasAccess && !hasRefresh) {
+    console.log("No tokens, redirecting to /signin");
+    return NextResponse.redirect(new URL("/signin", request.url));
+  }
+
+  if (!isJwtExpired(request.cookies.get("access_token")?.value || "")) {
+    console.log("✅ Access token still valid, carrying on...");
+    return NextResponse.next();
+  }
+
+  return await getCurrentUser(request.headers.get("cookie") ?? "", request.url);
+}
+
+const getCurrentUser = cache(async (cookies: string, requestUrl: string) => {
+  try {
+    console.log("Checking /user/current...");
+    const response = await xior.get("/user/current", {
+      headers: { Cookie: cookies },
+    });
+    console.log("✅ /user/current succeeded:", response.data);
+    return NextResponse.next();
+  } catch (err) {
+    console.error("Error fetching /user/current:", parseXiorError(err));
+    console.log("Attempting token refresh via /refresh...");
+
+    try {
+      const refreshRes = await xior.post("/refresh", null, {
+        headers: { Cookie: cookies },
+      });
+      console.log("/refresh response status:", refreshRes.status);
+
+      const rawSet = refreshRes.headers.getSetCookie() ?? [];
+      // console.log("Received Set-Cookie headers:", rawSet);
+
+      const res = NextResponse.next();
+      rawSet.forEach((raw) => {
+        // console.log("Parsing raw cookie:", raw);
+        const parsed = parseCookieHeader(raw);
+        const [name, value] = Object.entries(parsed)[0]!;
+
+        console.log(`Setting response.cookie: ${name}=${value}`);
+        res.cookies.set({
+          name,
+          value,
+          httpOnly: true,
+          partitioned: true,
+          secure: parsed.Secure === "true",
+          sameSite: "lax",
+          maxAge: parsed["Max-Age"]
+            ? parseInt(parsed["Max-Age"], 10)
+            : undefined,
+          expires: parsed.Expires ? new Date(parsed.Expires) : undefined,
+        });
+      });
+
+      return res;
+    } catch (refreshErr) {
+      console.error("Error during refresh:", parseXiorError(refreshErr));
+      return NextResponse.redirect(new URL("/signin", requestUrl));
+    }
+  }
+});
+
+export const config = {
+  matcher: ["/((?!api|_next|signin|forgot-password|create-bay|signup|favicon\\.ico|$|.*\\..*).*)"],
+};
