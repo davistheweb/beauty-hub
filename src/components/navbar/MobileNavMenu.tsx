@@ -16,7 +16,6 @@ export default function MobileNavMenu({
 }) {
   const navRef = useRef<HTMLDivElement | null>(null);
 
-
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(e.target as Node))

@@ -113,10 +113,10 @@ export default function Booking() {
         displayed here"
                 />
               ) : (
-                <div className="w-full">
+                <div className="h-full w-full">
                   <div className="flex h-14 w-full items-center justify-center bg-[#F5F5F5]">
                     <h1 className="text-custom-green font-semibold">
-                      Team Members Details
+                      Booking Details
                     </h1>
                   </div>
                   <div className="flex w-full flex-col gap-3">
@@ -154,9 +154,9 @@ export default function Booking() {
                           <span className="flex items-center justify-between">
                             <h1 className="text-[18px] font-medium">Status</h1>
                             <span
-                              className={`rounded-[42.58px] bg-[#EDF5FE] ${bookingDetail.status === "In Progress" ? "text-[#004CE8]" : bookingDetail.status === "Done" ? "text-[#00C247]" : "text-[#FF3333]"} my-4 flex w-[110px] items-center justify-center px-4 text-[14px]`}
+                              className={`rounded-[42.58px] bg-[#EDF5FE] pt-[4.73px] pr-[9.46px] pb-[4.73px] pl-[9.46px] ${bookingDetail.status === "In Progress" ? "text-[#004CE8]" : bookingDetail.status === "Done" ? "text-[#00C247]" : "text-[#FF3333]"} flex w-[130px] items-center justify-center text-[14px]`}
                             >
-                              <Dot />
+                              <Dot size={40} />
                               <span>{bookingDetail.status}</span>
                             </span>
                           </span>

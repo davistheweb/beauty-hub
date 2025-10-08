@@ -129,7 +129,7 @@ export default function Dashboard() {
         displayed here"
                 />
               ) : (
-                <div className="w-full">
+                <div className="h-full w-full">
                   <div className="flex h-14 w-full items-center justify-center bg-[#F5F5F5]">
                     <h1 className="text-custom-green font-semibold">
                       Team Members Details

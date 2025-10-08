@@ -7,7 +7,7 @@ import { NavLinks } from "./navbar/NavLinks";
 import Logo from "./ui/Logo";
 
 export default function Sidebar() {
-  const pathName = usePathname();;
+  const pathName = usePathname();
 
   const isActive = (url: string) => pathName === url;
 
