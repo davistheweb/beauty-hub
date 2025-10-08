@@ -50,9 +50,12 @@ export default function AccountRecovery() {
           setTimeout(() => setRecoveryStage("otp-form"), 1100);
         }
       })
-      .catch((err) => {   toast.error(
-        err?.response?.data?.message || err?.message || "Something went wrong",
-      );
+      .catch((err) => {
+        toast.error(
+          err?.response?.data?.message ||
+            err?.message ||
+            "Something went wrong",
+        );
       });
   };
 

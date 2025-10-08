@@ -14,9 +14,10 @@ export default function DesktopNavigation() {
         <button className="cursor-pointer">
           <Notifications />
         </button>
-        <div className="flex cursor-pointer items-center justify-center rounded-full">
+        <div className="flex h-[28px] w-[28px] cursor-pointer items-center justify-center overflow-hidden rounded-full">
           <Image
             src="/images/admin-img.png"
+            className="object-cover"
             alt="profile-img"
             width={28}
             height={28}

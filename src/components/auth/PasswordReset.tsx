@@ -27,7 +27,10 @@ export default function PasswordReset({ userMail }: { userMail: string }) {
 
   const PasswordResetFormSchema = z
     .object({
-      password: z.string().nonempty({ error: "Password is required" }).min(8, {error: "Password must be 8 charaters or more"}),
+      password: z
+        .string()
+        .nonempty({ error: "Password is required" })
+        .min(8, { error: "Password must be 8 charaters or more" }),
       confirmPassword: z
         .string()
         .nonempty({ error: "Confirm  password is required" }),

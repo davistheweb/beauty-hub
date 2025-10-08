@@ -20,12 +20,13 @@ export default function MobileNavigation() {
       {/* Navitems */}
       <div className="flex items-center justify-center gap-3">
         <Notifications />
-        <div className="flex items-center justify-center rounded-full">
+        <div className="flex h-[27px] w-[27px] items-center justify-center overflow-hidden rounded-full">
           <Image
             src="/images/admin-img.png"
             alt="profile-img"
             width={27}
             height={27}
+            className="object-cover"
           />
         </div>
         <button onClick={() => setIsOpen((prev) => !prev)}>

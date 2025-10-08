@@ -1,7 +1,9 @@
 "use client";
+import { logoutAdmin } from "@/services/Auth";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useRef } from "react";
 import { CustomLogoutIcon } from "../icons";
 import { NavLinks } from "./NavLinks";
@@ -15,6 +17,8 @@ export default function MobileNavMenu({
 }) {
   const navRef = useRef<HTMLDivElement | null>(null);
 
+  const router = useRouter();
+
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(e.target as Node))
@@ -25,6 +29,12 @@ export default function MobileNavMenu({
 
     return () => document.removeEventListener("click", handleOutsideClick);
   }, [isOpen, setIsOpen]);
+
+  const handleLogout = async () => {
+    await logoutAdmin();
+    router.push("/");
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -60,7 +70,10 @@ export default function MobileNavMenu({
               </ul>
 
               <div className="absolute bottom-36 left-3">
-                <button className="mt-10 flex gap-3 p-3 text-red-600">
+                <button
+                  className="mt-10 flex gap-3 p-3 text-red-600"
+                  onClick={handleLogout}
+                >
                   <CustomLogoutIcon /> <span>Logout</span>
                 </button>
               </div>
