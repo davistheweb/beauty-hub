@@ -31,8 +31,9 @@ export default function MobileNavMenu({
   }, [isOpen, setIsOpen]);
 
   const handleLogout = async () => {
-    await logoutAdmin();
-    router.push("/");
+    await logoutAdmin().then(() => {
+      window.location.reload();
+    });
   };
 
   return (
