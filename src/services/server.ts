@@ -15,7 +15,7 @@ const storeAccessBearerToken = async (bearer_token: string) => {
     secure: true,
     sameSite: "strict",
     path: "/",
-    maxAge: 1 * 60 * 60 * 1000,
+    maxAge: 60 * 60,
   });
 };
 
