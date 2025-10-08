@@ -1,20 +1,20 @@
 "use client";
 import { logoutAdmin } from "@/services/Auth";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { CustomLogoutIcon } from "./icons";
 import { NavLinks } from "./navbar/NavLinks";
 import Logo from "./ui/Logo";
 
 export default function Sidebar() {
-  const pathName = usePathname();
-  const router = useRouter();
+  const pathName = usePathname();;
 
   const isActive = (url: string) => pathName === url;
 
   const handleLogout = async () => {
-    await logoutAdmin();
-    router.push("/");
+    await logoutAdmin().then(() => {
+      window.location.reload();
+    });
   };
 
   return (

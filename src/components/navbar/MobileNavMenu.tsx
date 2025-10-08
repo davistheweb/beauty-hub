@@ -3,7 +3,6 @@ import { logoutAdmin } from "@/services/Auth";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useRef } from "react";
 import { CustomLogoutIcon } from "../icons";
 import { NavLinks } from "./NavLinks";
@@ -17,7 +16,6 @@ export default function MobileNavMenu({
 }) {
   const navRef = useRef<HTMLDivElement | null>(null);
 
-  const router = useRouter();
 
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
@@ -31,8 +29,9 @@ export default function MobileNavMenu({
   }, [isOpen, setIsOpen]);
 
   const handleLogout = async () => {
-    await logoutAdmin();
-    router.push("/");
+    await logoutAdmin().then(() => {
+      window.location.reload();
+    });
   };
 
   return (
