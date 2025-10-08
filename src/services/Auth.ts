@@ -1,7 +1,7 @@
 import { apiWithOutAuth, getApiResponse } from "./httpService";
 import { deleteAccessBearerToken } from "./server";
 
-const login = async (email: string, password: string) =>
+const loginAdmin = async (email: string, password: string) =>
   apiWithOutAuth.post("/login", { email, password }).then(getApiResponse);
 
 const sendOtpViaMail = async (email: string) =>
@@ -20,7 +20,6 @@ const createNewPassword = async (password: string, email: string) =>
     .post("/recover/create_new_password", { new_password: password, email })
     .then(getApiResponse);
 
-<<<<<<< HEAD
 const logoutAdmin = async () => {
   await deleteAccessBearerToken();
 };
@@ -33,6 +32,3 @@ export {
   sendOtpViaMail,
   verifyOtpCode,
 };
-=======
-export { createNewPassword, login, resendOtp, sendOtpViaMail, verifyOtpCode };
->>>>>>> parent of 465ce66 (completed login)

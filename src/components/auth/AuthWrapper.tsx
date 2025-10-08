@@ -42,6 +42,7 @@ export const AuthWrapper: React.FC<{
             width={300}
             height={300}
             draggable={false}
+            priority
           />
         </div>
       </aside>

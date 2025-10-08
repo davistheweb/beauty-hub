@@ -9,6 +9,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { loginAdmin } from "@/services/Auth";
+import { storeAccessBearerToken } from "@/services/server";
 import {
   LoginFormSchema,
   LoginFormValues,
@@ -16,12 +18,14 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
+  const router = useRouter();
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(LoginFormSchema),
     defaultValues: {
@@ -31,7 +35,6 @@ export default function LoginForm() {
   });
 
   const handleLogin = async (values: LoginFormValues) => {
-<<<<<<< HEAD
     await loginAdmin(values.email, values.password)
       .then(async (res) => {
         if (res.status) {
@@ -43,15 +46,9 @@ export default function LoginForm() {
       })
       .catch((err) => {
         console.error(err);
-=======
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(values);
-    form.reset();
->>>>>>> parent of 465ce66 (completed login)
 
-    // loginAdmin(values.email, values.password)
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
+        toast.error(err?.response?.data?.message || "Something went wrong");
+      });
   };
 
   return (
@@ -97,7 +94,7 @@ export default function LoginForm() {
                     />
                     {form.getValues("password").length > 0 && (
                       <span
-                        className="absolute top-2 right-3 cursor-pointer text-gray-500"
+                        className="absolute top-3.5 right-3 cursor-pointer text-gray-500"
                         onClick={() => setShowPassword((prev) => !prev)}
                       >
                         {showPassword ? (
