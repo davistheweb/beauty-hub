@@ -1,5 +1,9 @@
 import axios from "axios";
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
+import Cookies from "js-cookie";
+
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+export const TOKEN = `Bearer ${Cookies.get("BEAUTY")}`;
 
 const timeoutConfig: {
   timeout: number;
@@ -16,7 +20,7 @@ const headersConfig = {
   "Content-Type": "application/json",
 };
 
-const apiWithOutAuth = axios.create({
+export const apiWithOutAuth = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
   headers: {
@@ -25,15 +29,28 @@ const apiWithOutAuth = axios.create({
   ...timeoutConfig,
 });
 
-const getApiResponse = <T>(data: { data: T }) => {
+export const apiWithAuth = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+  headers: {
+    ...headersConfig,
+    Authorization: TOKEN,
+  },
+  ...timeoutConfig,
+});
+
+export const getApiResponse = <T>(data: { data: T }) => {
   return {
     status: true,
     data: data.data,
   };
 };
 
+<<<<<<< HEAD
 export { apiWithOutAuth, getApiResponse, headersConfig, timeoutConfig };
 
+=======
+>>>>>>> parent of 465ce66 (completed login)
 // export const getErrorResponse = (error: any) => {
 //   if (error?.response?.status === 401) {
 //     Cookies.remove("BEAUTY");

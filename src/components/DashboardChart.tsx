@@ -1,8 +1,6 @@
 "use client";
-import dynamic from "next/dynamic";
 import React, { useState } from "react";
-
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import Chart from "react-apexcharts";
 
 const DashboardChart: React.FC = () => {
   const labels = [
