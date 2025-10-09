@@ -1,9 +1,11 @@
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { cookies } from "next/headers";
-import { API_BASE_URL, headersConfig, timeoutConfig } from "./httpService";
+import { headersConfig, timeoutConfig } from "./httpConfig";
 import { deleteAccessBearerToken } from "./server";
 
-export const apiWithAuth = axios.create({
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
+
+export const API = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
   headers: {
@@ -12,7 +14,7 @@ export const apiWithAuth = axios.create({
   ...timeoutConfig,
 });
 
-apiWithAuth.interceptors.request.use(
+API.interceptors.request.use(
   async (
     config: InternalAxiosRequestConfig,
   ): Promise<InternalAxiosRequestConfig> => {
@@ -30,7 +32,7 @@ apiWithAuth.interceptors.request.use(
   },
 );
 
-apiWithAuth.interceptors.response.use(
+API.interceptors.response.use(
   async (response: AxiosResponse): Promise<AxiosResponse> => {
     if (response.status === 401) {
       await deleteAccessBearerToken().then(() => {

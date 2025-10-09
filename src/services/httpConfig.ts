@@ -1,7 +1,3 @@
-import axios from "axios";
-
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
-
 const timeoutConfig: {
   timeout: number;
   timeoutErrorMessage: string;
@@ -17,15 +13,6 @@ const headersConfig = {
   "Content-Type": "application/json",
 };
 
-const apiWithOutAuth = axios.create({
-  baseURL: API_BASE_URL,
-  withCredentials: true,
-  headers: {
-    ...headersConfig,
-  },
-  ...timeoutConfig,
-});
-
 const getApiResponse = <T>(data: { data: T }) => {
   return {
     status: true,
@@ -33,7 +20,7 @@ const getApiResponse = <T>(data: { data: T }) => {
   };
 };
 
-export { apiWithOutAuth, getApiResponse, headersConfig, timeoutConfig };
+export { getApiResponse, headersConfig, timeoutConfig };
 
 // export const getErrorResponse = (error: any) => {
 //   if (error?.response?.status === 401) {
