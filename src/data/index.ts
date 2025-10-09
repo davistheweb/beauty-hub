@@ -1,4 +1,5 @@
 import { TBookingDetails } from "@/types/TBookingDetails";
+import { TDummyCustomers } from "@/types/TDummyCustomers";
 import { TDummyServices } from "@/types/TDummyServices";
 
 const tableHeaders: string[] = [
@@ -6,6 +7,15 @@ const tableHeaders: string[] = [
   "Packages",
   "Time and Date",
   "Status",
+];
+
+const customersTableHeaders: string[] = [
+  "Customer's Name",
+  "Email Address",
+  "Phone Number",
+  "Date Created",
+  "Status",
+  "Action",
 ];
 
 const bookingDetails: TBookingDetails[] = [
@@ -201,6 +211,229 @@ const dummyServices: TDummyServices[] = [
   },
 ];
 
-// dummyServices.length = 0;
+dummyServices.length = 0;
 
-export { bookingDetails, bookingTableHeaders, dummyServices, tableHeaders };
+const dummyCustomers: TDummyCustomers[] = [
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Active",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Inactive",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Active",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Inactive",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Active",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Inactive",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Active",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Inactive",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Active",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Inactive",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Active",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Inactive",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Active",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Inactive",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Active",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Inactive",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Active",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Inactive",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Active",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-03-15",
+    status: "Inactive",
+  },
+  // extra entries
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-04-01",
+    status: "Active",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-04-01",
+    status: "Inactive",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-04-01",
+    status: "Active",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-04-01",
+    status: "Inactive",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-04-01",
+    status: "Active",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-04-01",
+    status: "Inactive",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-04-01",
+    status: "Active",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-04-01",
+    status: "Inactive",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-04-01",
+    status: "Active",
+  },
+  {
+    customerName: "Ifedayo Ojo",
+    emailAddress: "Ifedayoojo@gmail.com",
+    phoneNumber: "09087654321",
+    dateCreated: "2024-04-01",
+    status: "Inactive",
+  },
+];
+
+// dummyCustomers.length = 0;
+
+export {
+  bookingDetails,
+  bookingTableHeaders,
+  customersTableHeaders,
+  dummyCustomers,
+  dummyServices,
+  tableHeaders,
+};
