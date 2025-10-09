@@ -39,8 +39,9 @@ export default function LoginForm() {
       .then(async (res) => {
         if (res.status) {
           toast.success(res?.data?.message);
+          form.reset();
           await storeAccessBearerToken(res?.data?.data.bearer_token).then(() =>
-            router.push("/dashboard"),
+            router.refresh(),
           );
         }
       })
