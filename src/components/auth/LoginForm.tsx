@@ -38,10 +38,10 @@ export default function LoginForm() {
     await loginAdmin(values.email, values.password)
       .then(async (res) => {
         if (res.status) {
-          toast.success(res?.data?.message);
-          form.reset();
+          // toast.success(res?.data?.message);
+          // form.reset();
           await storeAccessBearerToken(res?.data?.data.bearer_token).then(() =>
-            router.refresh(),
+            setTimeout(() => router.refresh(), 1500),
           );
         }
       })
