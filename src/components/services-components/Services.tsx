@@ -7,10 +7,10 @@ import { NoDataFoundElement } from "../no-data";
 import ServiceCard from "./ServiceCard";
 
 const Services = () => {
-  const [serviceLists, 
+  const [
+    serviceLists,
     // setServiceLists
-  ] =
-    useState<TDummyServices[]>(dummyServices);
+  ] = useState<TDummyServices[]>(dummyServices);
 
   return (
     <>
