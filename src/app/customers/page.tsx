@@ -9,7 +9,7 @@ export default function Customers() {
   return (
     <AppLayout>
       <div className="flex-1">
-        <p>Customers</p>
+        <h1 className="inline-block text-2xl font-bold">Customers</h1>
       </div>
     </AppLayout>
   );
