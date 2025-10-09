@@ -24,7 +24,7 @@ const Services = () => {
           </div>
         </div>
       ) : (
-        <div className="scrollbar-thin mt-2 grid h-full grid-cols-1 justify-items-center gap-5 overflow-x-hidden overflow-y-auto px-2 py-3 md:grid-cols-2 lg:gap-0 xl:grid-cols-3 xl:gap-4">
+        <div className="scrollbar-thin mt-2 grid h-full grid-cols-1 justify-items-center gap-5 overflow-x-hidden lg:overflow-y-auto px-2 py-3 md:grid-cols-2 lg:gap-0 xl:grid-cols-3 xl:gap-4">
           {serviceLists.map(
             (
               { imgSrc, serviceType, serviceAmount, allServices, status },

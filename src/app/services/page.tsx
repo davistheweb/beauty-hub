@@ -25,7 +25,7 @@ export default function ServicesPage() {
 
         {/* Customers Layout  */}
 
-        <div className="mt-5 flex h-[800px] w-full flex-col rounded-md bg-white p-1">
+        <div className="mt-5 flex w-full flex-col rounded-md bg-white p-1 lg:h-[800px]">
           <div className="flex h-12 w-full items-center justify-center">
             <div className="flex h-[30px] w-full items-center p-2 md:p-1">
               {/* Search  */}
