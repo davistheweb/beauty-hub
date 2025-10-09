@@ -1,3 +1,4 @@
+import { Dot } from "lucide-react";
 import Image from "next/image";
 import { MarkGreenIcon } from "../icons";
 import { Button } from "../ui/button";
@@ -12,6 +13,21 @@ const ServiceCard = ({
   status,
 }: IServiceCardProps) => (
   <div className="relative flex h-[407px] w-[320px] flex-col items-center justify-between overflow-hidden rounded-md border border-[#E6E6E6] bg-white pb-2">
+    {status && (
+      <span
+        className={`absolute top-[8px] right-3 z-1 rounded-[42.58px] bg-[#EDF5FE] ${
+          status === "Active" ? "text-[#00C247]" : "text-[#004CE8]"
+        } flex h-[25px] w-[90px] items-center justify-center gap-1 text-[14px] select-none`}
+      >
+        <span className="flex h-3 w-3 items-center justify-center">
+          <Dot
+            size={40}
+            className="shrink-0"
+          />
+        </span>
+        <span className="text-xs font-medium">{status}</span>
+      </span>
+    )}
     <div className="relative h-[243px] min-w-full overflow-hidden rounded-md">
       <Image
         src={imgSrc}

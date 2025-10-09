@@ -53,27 +53,29 @@ export default function MobileNavMenu({
                   <X size={35} />
                 </button>
               </div>
-              <ul className="mt-10 flex flex-col gap-10">
-                {NavLinks.map(({ title, href, Icon }, i) => (
-                  <li
-                    key={i}
-                    className="w-full"
-                  >
-                    <span className="flex items-center gap-3">
-                      <Icon size={17} />
-                      <Link href={href}>{title}</Link>
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              <div className="flex flex-col items-start justify-between">
+                <ul className="mt-10 flex flex-col gap-7">
+                  {NavLinks.map(({ title, href, Icon }, i) => (
+                    <li
+                      key={i}
+                      className="w-full"
+                    >
+                      <span className="flex items-center gap-3">
+                        <Icon size={17} />
+                        <Link href={href}>{title}</Link>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
 
-              <div className="absolute bottom-36 left-3">
-                <button
-                  className="mt-10 flex gap-3 p-3 text-red-600"
-                  onClick={handleLogout}
-                >
-                  <CustomLogoutIcon /> <span>Logout</span>
-                </button>
+                <div className="">
+                  <button
+                    className="mt-10 flex gap-3 p-3 text-red-600"
+                    onClick={handleLogout}
+                  >
+                    <CustomLogoutIcon /> <span>Logout</span>
+                  </button>
+                </div>
               </div>
             </div>
           </motion.div>
