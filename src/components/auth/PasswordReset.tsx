@@ -93,6 +93,7 @@ export default function PasswordReset({ userMail }: { userMail: string }) {
                       type={showPassword ? "text" : "password"}
                       name="password"
                       className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                      disabled={form.formState.isSubmitting}
                     />
                     {form.getValues("password").length > 0 && (
                       <span
@@ -126,6 +127,7 @@ export default function PasswordReset({ userMail }: { userMail: string }) {
                       type={showConformPassword ? "text" : "password"}
                       name="confirmPassword"
                       className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                      disabled={form.formState.isSubmitting}
                     />
                     {form.getValues("confirmPassword").length > 0 && (
                       <span
