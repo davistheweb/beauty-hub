@@ -8,7 +8,7 @@ import { GrayStylistGIcon } from "../icons/StylistIcon";
 export const NavLinks: {
   title: string;
   href: string;
-  Icon: LucideIcon | IconType;
+  Icon: LucideIcon | IconType
 }[] = [
   {
     title: "Dashboard",

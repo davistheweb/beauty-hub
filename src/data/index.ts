@@ -1,3 +1,6 @@
+import { TBookingDetails } from "@/types/TBookingDetails";
+import { TDummyServices } from "@/types/TDummyServices";
+
 const tableHeaders: string[] = [
   "Customer",
   "Packages",

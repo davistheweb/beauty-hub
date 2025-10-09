@@ -1,4 +1,4 @@
-type TDummyServices = {
+export type TDummyServices = {
   imgSrc: string;
   serviceType: string;
   serviceAmount: string;

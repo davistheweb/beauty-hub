@@ -1,12 +1,15 @@
 "use client";
 
 import { dummyServices } from "@/data";
+import { TDummyServices } from "@/types/TDummyServices";
 import { useState } from "react";
 import { NoDataFoundElement } from "../no-data";
 import ServiceCard from "./ServiceCard";
 
 const Services = () => {
-  const [serviceLists, setServiceLists] =
+  const [serviceLists, 
+    // setServiceLists
+  ] =
     useState<TDummyServices[]>(dummyServices);
 
   return (

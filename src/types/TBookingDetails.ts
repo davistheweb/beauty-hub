@@ -1,4 +1,4 @@
-type TBookingDetails = {
+export type TBookingDetails = {
   customer: string;
   package: string;
   date: string;

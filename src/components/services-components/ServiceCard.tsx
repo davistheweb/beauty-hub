@@ -3,7 +3,13 @@ import Image from "next/image";
 import { MarkGreenIcon } from "../icons";
 import { Button } from "../ui/button";
 
-interface IServiceCardProps extends TDummyServices {}
+interface IServiceCardProps {
+  imgSrc: string;
+  serviceType: string;
+  serviceAmount: string;
+  allServices: string[];
+  status: "" | "Active" | "Inactive";
+}
 
 const ServiceCard = ({
   imgSrc,
