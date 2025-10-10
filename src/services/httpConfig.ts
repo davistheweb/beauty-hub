@@ -22,7 +22,7 @@ const getApiResponse = <T>(response: { data: T }) => {
 
 const getErrorResponse = (error: any) => {
   console.error("error from get error res", error);
-  
+
   return {
     // statusCode: error?.response?.status,
     status: false,

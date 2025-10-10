@@ -12,8 +12,7 @@ export default function Sidebar() {
   const isActive = (url: string) => pathName === url;
 
   const handleLogout = async () => {
-    await logoutAdmin();
-    window.location.reload();
+    await logoutAdmin().then(() => window.location.reload());
   };
 
   return (

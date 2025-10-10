@@ -28,10 +28,10 @@ export default function MobileNavMenu({
   }, [isOpen, setIsOpen]);
 
   const handleLogout = async () => {
-    await logoutAdmin();
-    window.location.reload();
+    await logoutAdmin().then(() => {
+      window.location.reload();
+    });
   };
-
 
   return (
     <AnimatePresence>

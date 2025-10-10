@@ -37,11 +37,11 @@ export default function LoginForm() {
 
   const handleLogin = async (values: LoginFormValues) => {
     await loginAdmin(values.email, values.password)
-      .then((res) => {
+      .then(async (res) => {
         if (res.status) {
-          toast.success(res?.data?.message);
-          storeAccessBearerToken(res?.data?.data.bearer_token);
-          router.push("/dashboard");
+          await storeAccessBearerToken(res?.data?.data.bearer_token).then(() =>
+            router.push("/dashboard"),
+          );
         }
       })
       .catch((err) => {
