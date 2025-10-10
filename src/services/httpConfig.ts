@@ -13,24 +13,21 @@ const headersConfig = {
   "Content-Type": "application/json",
 };
 
-const getApiResponse = <T>(data: { data: T }) => {
+const getApiResponse = <T>(response: { data: T }) => {
   return {
     status: true,
-    data: data.data,
+    data: response.data,
   };
 };
 
-export { getApiResponse, headersConfig, timeoutConfig };
+const getErrorResponse = (error: any) => {
+  console.error("error from get error res", error);
+  
+  return {
+    // statusCode: error?.response?.status,
+    status: false,
+    errorMsg: error?.response?.data,
+  };
+};
 
-// export const getErrorResponse = (error: any) => {
-//   if (error?.response?.status === 401) {
-//     Cookies.remove("BEAUTY");
-//     if (typeof window !== "undefined") window.location.reload();
-//   }
-
-//   return {
-//     statusCode: error?.response?.status,
-//     status: false,
-//     data: error?.response?.data,
-//   };
-// };
+export { getApiResponse, getErrorResponse, headersConfig, timeoutConfig };

@@ -1,7 +1,6 @@
-"use server";
 import { API } from "./axios";
 import { getApiResponse } from "./httpConfig";
-import { deleteAccessBearerToken } from "./server";
+import { deleteAccessBearerToken } from "./lib";
 
 const loginAdmin = async (email: string, password: string) =>
   API.post("/login", { email, password }).then(getApiResponse);

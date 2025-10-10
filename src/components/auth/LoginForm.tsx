@@ -10,7 +10,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { loginAdmin } from "@/services/Auth";
-import { storeAccessBearerToken } from "@/services/server";
+import { getErrorResponse } from "@/services/httpConfig";
+import { storeAccessBearerToken } from "@/services/lib";
 import {
   LoginFormSchema,
   LoginFormValues,
@@ -36,19 +37,16 @@ export default function LoginForm() {
 
   const handleLogin = async (values: LoginFormValues) => {
     await loginAdmin(values.email, values.password)
-      .then(async (res) => {
+      .then((res) => {
         if (res.status) {
-          // toast.success(res?.data?.message);
-          // form.reset();
-          await storeAccessBearerToken(res?.data?.data.bearer_token).then(() =>
-            setTimeout(() => router.refresh(), 1500),
-          );
+          toast.success(res?.data?.message);
+          storeAccessBearerToken(res?.data?.data.bearer_token);
+          router.push("/dashboard");
         }
       })
       .catch((err) => {
-        console.error(err);
-
-        toast.error(err?.response?.data?.message || "Something went wrong");
+        const error = getErrorResponse(err);
+        toast.error(error.errorMsg.message || "Something went wrong");
       });
   };
 
