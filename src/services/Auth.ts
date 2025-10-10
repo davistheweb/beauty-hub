@@ -1,5 +1,5 @@
 import { API } from "./axios";
-import { getApiResponse } from "./httpConfig";
+import { getApiResponse } from "./helpers";
 import { deleteAccessBearerToken } from "./lib";
 
 const loginAdmin = async (email: string, password: string) =>

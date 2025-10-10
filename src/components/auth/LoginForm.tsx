@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { loginAdmin } from "@/services/Auth";
-import { getErrorResponse } from "@/services/httpConfig";
+import { getErrorResponse } from "@/services/helpers";
 import { storeAccessBearerToken } from "@/services/lib";
 import {
   LoginFormSchema,
@@ -46,7 +46,7 @@ export default function LoginForm() {
       })
       .catch((err) => {
         const error = getErrorResponse(err);
-        toast.error(error.errorMsg.message || "Something went wrong");
+        toast.error(error?.errorMsg?.message || "Something went wrong");
       });
   };
 
