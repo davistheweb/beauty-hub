@@ -24,7 +24,9 @@ export const config = {
     "/dashboard/:path*",
     "/booking/:path*",
     "/services/:path*",
+    "/staffs/:path*",
     "/customers/:path*",
+    "/ratings/:path*",
     "/settings/:path*",
   ],
 };

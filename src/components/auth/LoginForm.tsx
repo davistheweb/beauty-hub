@@ -10,7 +10,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { loginAdmin } from "@/services/Auth";
-import { storeAccessBearerToken } from "@/services/server";
+import { getErrorResponse } from "@/services/httpConfig";
+import { storeAccessBearerToken } from "@/services/lib";
 import {
   LoginFormSchema,
   LoginFormValues,
@@ -36,18 +37,16 @@ export default function LoginForm() {
 
   const handleLogin = async (values: LoginFormValues) => {
     await loginAdmin(values.email, values.password)
-      .then(async (res) => {
+      .then((res) => {
         if (res.status) {
           toast.success(res?.data?.message);
-          await storeAccessBearerToken(res?.data?.data.bearer_token).then(() =>
-            router.push("/dashboard"),
-          );
+          storeAccessBearerToken(res?.data?.data.bearer_token);
+          router.push("/dashboard");
         }
       })
       .catch((err) => {
-        console.error(err);
-
-        toast.error(err?.response?.data?.message || "Something went wrong");
+        const error = getErrorResponse(err);
+        toast.error(error.errorMsg.message || "Something went wrong");
       });
   };
 
@@ -71,6 +70,7 @@ export default function LoginForm() {
                     type="email"
                     name="email"
                     className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                    disabled={form.formState.isSubmitting}
                   />
                 </FormControl>
                 <FormMessage />
@@ -91,6 +91,7 @@ export default function LoginForm() {
                       type={showPassword ? "text" : "password"}
                       name="password"
                       className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                      disabled={form.formState.isSubmitting}
                     />
                     {form.getValues("password").length > 0 && (
                       <span

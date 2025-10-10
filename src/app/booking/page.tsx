@@ -24,14 +24,14 @@ export default function Booking() {
               <div className="flex h-[30px] w-full items-center justify-between p-2 md:p-4">
                 {/* Search  */}
                 <SearchInput />
-                <div className="flex gap-1 md:gap-2">
-                  <button className="text-custom-green cursor-pointer rounded-xs bg-[#F9FFFB] p-1 pr-2 pl-2 text-center text-[14px] font-medium">
+                <div className="flex gap-0 md:gap-2">
+                  <button className="text-custom-green cursor-pointer rounded-xs bg-[#F9FFFB] p-1 pr-1 pl-1 text-center text-[12px] font-medium md:text-[14px] lg:pr-2 lg:pl-2">
                     Day
                   </button>
-                  <button className="cursor-pointer rounded-xs p-1 pr-2 pl-2 text-[14px] font-medium text-[#898A8C] duration-300 hover:bg-[#F9FFFB] hover:text-[#1AB65C]">
+                  <button className="cursor-pointer rounded-xs p-1 pr-1 pl-1 text-[12px] font-medium text-[#898A8C] duration-300 hover:bg-[#F9FFFB] hover:text-[#1AB65C] md:text-[14px] lg:pr-2 lg:pl-2">
                     Month
                   </button>
-                  <button className="cursor-pointer rounded-xs p-1 pr-2 pl-2 text-[14px] font-medium text-[#898A8C] duration-300 hover:bg-[#F9FFFB] hover:text-[#1AB65C]">
+                  <button className="cursor-pointer rounded-xs p-1 pr-1 pl-1 text-[12px] font-medium text-[#898A8C] duration-300 hover:bg-[#F9FFFB] hover:text-[#1AB65C] md:text-[14px] lg:pr-2 lg:pl-2">
                     Year
                   </button>
                 </div>
@@ -113,10 +113,10 @@ export default function Booking() {
         displayed here"
                 />
               ) : (
-                <div className="w-full">
+                <div className="h-full w-full">
                   <div className="flex h-14 w-full items-center justify-center bg-[#F5F5F5]">
                     <h1 className="text-custom-green font-semibold">
-                      Team Members Details
+                      Booking Details
                     </h1>
                   </div>
                   <div className="flex w-full flex-col gap-3">
@@ -154,9 +154,9 @@ export default function Booking() {
                           <span className="flex items-center justify-between">
                             <h1 className="text-[18px] font-medium">Status</h1>
                             <span
-                              className={`rounded-[42.58px] bg-[#EDF5FE] ${bookingDetail.status === "In Progress" ? "text-[#004CE8]" : bookingDetail.status === "Done" ? "text-[#00C247]" : "text-[#FF3333]"} my-4 flex w-[110px] items-center justify-center px-4 text-[14px]`}
+                              className={`rounded-[42.58px] bg-[#EDF5FE] pt-[4.73px] pr-[9.46px] pb-[4.73px] pl-[9.46px] ${bookingDetail.status === "In Progress" ? "text-[#004CE8]" : bookingDetail.status === "Done" ? "text-[#00C247]" : "text-[#FF3333]"} flex w-[130px] items-center justify-center text-[14px]`}
                             >
-                              <Dot />
+                              <Dot size={40} />
                               <span>{bookingDetail.status}</span>
                             </span>
                           </span>
