@@ -1,6 +1,9 @@
-import { TBookingDetails } from "@/types/TBookingDetails";
-import { TDummyCustomers } from "@/types/TDummyCustomers";
-import { TDummyServices } from "@/types/TDummyServices";
+import {
+  TBookingDetails,
+  TDummyCustomers,
+  TDummyServices,
+  TDummyStaffs,
+} from "@/types";
 
 const tableHeaders: string[] = [
   "Customer",
@@ -129,9 +132,17 @@ const bookingDetails: TBookingDetails[] = [
   },
 ];
 
-// bookingDetails.length = 0;
+bookingDetails.length = 0;
 
 const bookingTableHeaders: string[] = [...tableHeaders, "Action"];
+
+const staffTableHeaders: string[] = [
+  "Staff Name",
+  "No of Bookings",
+  "Joined Date",
+  "Status",
+  "Action",
+];
 
 const dummyServices: TDummyServices[] = [
   {
@@ -211,7 +222,7 @@ const dummyServices: TDummyServices[] = [
   },
 ];
 
-dummyServices.length = 0;
+// dummyServices.length = 0;
 
 const dummyCustomers: TDummyCustomers[] = [
   {
@@ -429,11 +440,144 @@ const dummyCustomers: TDummyCustomers[] = [
 
 // dummyCustomers.length = 0;
 
+const dummyStaffs: TDummyStaffs[] = [
+  {
+    staffName: "Ifedeyo Ojo",
+    joinedDate: "2024-03-15",
+    status: "Active",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "John Deo",
+    joinedDate: "2023-11-02",
+    status: "Inactive",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Alice Johnson",
+    joinedDate: "2022-09-18",
+    status: "Active",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Michael Smith",
+    joinedDate: "2024-05-27",
+    status: "Suspended",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Sophia Williams",
+    joinedDate: "2021-12-10",
+    status: "Active",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Daniel Brown",
+    joinedDate: "2023-07-03",
+    status: "Inactive",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Olivia Davis",
+    joinedDate: "2022-01-25",
+    status: "Active",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "James Miller",
+    joinedDate: "2024-02-14",
+    status: "Suspended",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Emily Garcia",
+    joinedDate: "2023-03-30",
+    status: "Active",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "William Martinez",
+    joinedDate: "2022-08-19",
+    status: "Inactive",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Ava Robinson",
+    joinedDate: "2024-06-22",
+    status: "Active",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Henry Clark",
+    joinedDate: "2023-04-11",
+    status: "Suspended",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Isabella Rodriguez",
+    joinedDate: "2021-10-05",
+    status: "Inactive",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Ethan Lewis",
+    joinedDate: "2022-11-09",
+    status: "Active",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Charlotte Walker",
+    joinedDate: "2023-01-17",
+    status: "Suspended",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Mason Hall",
+    joinedDate: "2024-07-28",
+    status: "Active",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Mia Allen",
+    joinedDate: "2023-09-13",
+    status: "Inactive",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Benjamin Young",
+    joinedDate: "2022-04-21",
+    status: "Active",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Harper Hernandez",
+    joinedDate: "2024-08-02",
+    status: "Suspended",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Lucas King",
+    joinedDate: "2023-05-15",
+    status: "Inactive",
+    numberOfBookings: "Regular Package",
+  },
+  {
+    staffName: "Ella Wright",
+    joinedDate: "2021-11-29",
+    status: "Active",
+    numberOfBookings: "Regular Package",
+  },
+];
+
+// dummyStaffs.length = 0;
+
 export {
   bookingDetails,
   bookingTableHeaders,
   customersTableHeaders,
   dummyCustomers,
   dummyServices,
+  dummyStaffs,
+  staffTableHeaders,
   tableHeaders,
 };

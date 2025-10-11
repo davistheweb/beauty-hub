@@ -28,7 +28,7 @@ export default function Customers() {
                 <div className="flex gap-4 rounded-md border border-[#C2C2C2] px-[10px] py-[5px] md:gap-2">
                   <span className="font-semibold">Status:</span>
                   <div className="flex cursor-pointer items-center">
-                    <select className="text-custom-green block inline-block w-fit cursor-pointer appearance-none font-semibold outline-none">
+                    <select className="text-custom-green inline-block w-fit cursor-pointer appearance-none font-semibold outline-none">
                       {["All", "Active", "InActive"].map((option, i) => (
                         <option
                           key={i}

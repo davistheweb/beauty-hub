@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { sendOtpViaMail } from "@/services/Auth";
-import { TReoveryStage } from "@/types/TRecoveryStage";
+import { TReoveryStage } from "@/types";
 import maskMail from "@/utils/maskMail";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -102,6 +102,7 @@ export default function AccountRecovery() {
                         type="email"
                         name="email"
                         className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                        disabled={email_form.formState.isSubmitting}
                       />
                     </FormControl>
                     <FormMessage />
