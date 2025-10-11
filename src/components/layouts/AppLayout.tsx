@@ -3,16 +3,7 @@
 import { Toaster } from "sonner";
 import Navbar from "../navbar";
 import Sidebar from "../Sidebar";
-
-// import { Session } from "@/hooks/Auth";
-
 function AppLayout({ children }: { children: React.ReactNode }) {
-  // const user = useSelector((state) => state.User);
-  // const isAuthenticated = Session(user);
-  // const router = useRouter();
-  // if (isAuthenticated.status === "unauthenticated") {
-  //   router.push("/auth/login");
-  // } else {
   return (
     <div className="flex h-screen items-center justify-center overflow-hidden">
       <div className="relative flex h-full min-h-svh w-full max-w-[1400px] bg-white">
@@ -31,5 +22,5 @@ function AppLayout({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-// }
+
 export default AppLayout;
