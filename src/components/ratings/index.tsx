@@ -5,7 +5,7 @@ import RatingsCard from "./RatingsCard";
 export default function Ratings() {
   return (
     <>
-      <div className="scrollbar-thin h-full w-full overflow-x-auto p-1">
+      <div className="scrollbar-thin h-full w-full p-1 lg:overflow-y-auto">
         {!dummyRatings.length ? (
           <div className="h-full w-full items-center justify-center">
             <NoDataFoundElement

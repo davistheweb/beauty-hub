@@ -18,7 +18,7 @@ export default function RatingsPage() {
         <h1 className="inline-block text-2xl font-bold">Ratings</h1>
         <div className="mt-3 flex w-full flex-col gap-3 p-2">
           {/* Customers Table*/}
-          <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
+          <div className="flex w-full flex-col rounded-md bg-white p-1 lg:h-[598px]">
             <div className="flex h-12 w-full items-center justify-center">
               {dummyRatings.length > 0 && (
                 <div className="flex h-[30px] w-full items-center justify-between p-2 md:p-4">

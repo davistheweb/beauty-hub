@@ -742,7 +742,6 @@ const dummyRatings: TDummyRatings[] = [
   },
 ];
 
-
 // dummyRatings.length = 0;
 export {
   bookingDetails,
