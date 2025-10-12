@@ -1,6 +1,7 @@
 import {
   TBookingDetails,
   TDummyCustomers,
+  TDummyRatings,
   TDummyServices,
   TDummyStaffs,
 } from "@/types";
@@ -571,11 +572,64 @@ const dummyStaffs: TDummyStaffs[] = [
 
 // dummyStaffs.length = 0;
 
+const dummyRatings: TDummyRatings[] = [
+  {
+    ratingDate: "Jan 20 2025",
+    starsCount: 5,
+    userName: "Alex K",
+    comment:
+      "Working at Sam.AI has been an incredible journey so far. The technology we're building is truly cutting-edge, and being a part of a team that's revolutionizing how people achieve their goals is immensely fulfilling. ",
+  },
+  {
+    ratingDate: "Jan 20 2025",
+    starsCount: 5,
+    userName: "Josiah Davis",
+    title: "Software engineer",
+    comment:
+      "Working at Sam.AI has been an incredible journey so far. The technology we're building is truly cutting-edge, and being a part of a team that's revolutionizing how people achieve their goals is immensely fulfilling. ",
+  },
+
+  {
+    ratingDate: "Jan 20 2025",
+    starsCount: 2,
+    userName: "Josiah Davis",
+    title: "Software engineer",
+    comment:
+      "Working at Sam.AI has been an incredible journey so far. The technology we're building is truly cutting-edge, and being a part of a team that's revolutionizing how people achieve their goals is immensely fulfilling. ",
+  },
+  {
+    ratingDate: "Jan 20 2025",
+    starsCount: 3,
+    userName: "Josiah Davis",
+    title: "Software engineer",
+    comment:
+      "Working at Sam.AI has been an incredible journey so far. The technology we're building is truly cutting-edge, and being a part of a team that's revolutionizing how people achieve their goals is immensely fulfilling. ",
+  },
+  {
+    ratingDate: "Jan 20 2025",
+    starsCount: 4,
+    userName: "Josiah Davis",
+    title: "Software engineer",
+    comment:
+      "Working at Sam.AI has been an incredible journey so far. The technology we're building is truly cutting-edge, and being a part of a team that's revolutionizing how people achieve their goals is immensely fulfilling. ",
+  },
+  {
+    ratingDate: "Jan 20 2025",
+    starsCount: 1,
+    userName: "Josiah Davis",
+    title: "Software engineer",
+    comment:
+      "Working at Sam.AI has been an incredible journey so far. The technology we're building is truly cutting-edge, and being a part of a team that's revolutionizing how people achieve their goals is immensely fulfilling. ",
+  },
+];
+
+// dummyRatings.length = 0;
 export {
   bookingDetails,
   bookingTableHeaders,
   customersTableHeaders,
   dummyCustomers,
+  dummyRatings,
   dummyServices,
   dummyStaffs,
   staffTableHeaders,

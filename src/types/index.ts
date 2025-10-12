@@ -30,9 +30,18 @@ type TDummyStaffs = {
   numberOfBookings: string;
 };
 
+type TDummyRatings = {
+  ratingDate: string;
+  starsCount: number;
+  userName: string;
+  title?: string;
+  comment: string;
+};
+
 export type {
   TBookingDetails,
   TDummyCustomers,
+  TDummyRatings,
   TDummyServices,
   TDummyStaffs,
   TReoveryStage,

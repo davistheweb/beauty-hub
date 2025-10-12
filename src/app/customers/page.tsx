@@ -4,6 +4,7 @@ import {
   NoDataFoundTableDesktopComponent,
   NoDataFoundTableMobileComponent,
 } from "@/components/no-data";
+import { Label } from "@/components/ui/label";
 import SearchInput from "@/components/ui/SearchInput";
 import { customersTableHeaders, dummyCustomers } from "@/data";
 import { ChevronDown, Dot, EllipsisVertical } from "lucide-react";
@@ -25,11 +26,12 @@ export default function Customers() {
               <div className="flex h-[30px] w-full items-center justify-between p-2 md:p-4">
                 {/* Search  */}
                 <SearchInput />
-                <div className="flex gap-4 rounded-md border border-[#C2C2C2] px-[10px] py-[5px] md:gap-2">
-                  <span className="font-semibold">Status:</span>
-                  <div className="flex cursor-pointer items-center">
-                    <select className="text-custom-green inline-block w-fit cursor-pointer appearance-none font-semibold outline-none">
-                      {["All", "Active", "InActive"].map((option, i) => (
+                <div className="flex max-w-fit gap-4 rounded-md border border-[#C2C2C2] px-[10px] py-[5px] md:gap-2">
+                  <Label className="font-semibold">Status:</Label>
+
+                  <div className="relative flex items-center">
+                    <select className="text-custom-green cursor-pointer appearance-none pr-5 font-semibold outline-none">
+                      {["All", "Active", "Inactive"].map((option, i) => (
                         <option
                           key={i}
                           value={option}
@@ -42,6 +44,7 @@ export default function Customers() {
                     <CaretDownIcon
                       size={15}
                       color="#1AB65C"
+                      className="pointer-events-none absolute right-0"
                     />
                   </div>
                 </div>
