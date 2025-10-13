@@ -26,7 +26,7 @@ export default function Ratings() {
                   .join("")
                   .slice(0, 3)}
                 userName={ratingsInfo.userName}
-                title={ratingsInfo.title}
+                title={ratingsInfo?.title}
                 comment={ratingsInfo.comment}
                 key={i}
               />

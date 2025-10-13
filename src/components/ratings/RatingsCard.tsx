@@ -30,7 +30,7 @@ const RatingsCard = ({
       </span>
     </div>
     <div className="flex gap-2">
-      {Array.from({ length: starsCount }, (arr, i) => i).map((i) => (
+      {Array.from({ length: starsCount }, (_, i) => i).map((i) => (
         <Star
           key={i}
           fill="#FC9A27"
