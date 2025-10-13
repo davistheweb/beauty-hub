@@ -1,4 +1,4 @@
-import { DashboardCard } from "@/components/DashboardCard ";
+import { DashboardCard } from "@/components/DashboardCard";
 import DashboardChart from "@/components/DashboardChart";
 import { CustomGreenBookICon, StylistIcon } from "@/components/icons";
 import { CustomWalletICon } from "@/components/icons/CustomWalletICon";

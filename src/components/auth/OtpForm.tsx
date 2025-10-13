@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/form";
 import { InputOTP, InputOTPSlot } from "@/components/ui/input-otp";
 import { resendOtp, verifyOtpCode } from "@/services/Auth";
-import { TReoveryStage } from "@/types/TRecoveryStage";
+import { TReoveryStage } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useEffect, useState } from "react";

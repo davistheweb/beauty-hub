@@ -1,7 +1,8 @@
 import AppLayout from "@/components/layouts/AppLayout";
-import { Services } from "@/components/services-components";
+import { Services } from "@/components/services";
 import { Button } from "@/components/ui/button";
 import SearchInput from "@/components/ui/SearchInput";
+import { Plus } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -18,6 +19,9 @@ export default function ServicesPage() {
           </h1>
           <div className="px-4 lg:px-0">
             <Button className="bg-custom-green w-full cursor-pointer rounded-full px-[50px] font-semibold transition-all duration-500 ease-in-out hover:-translate-y-0.5 hover:bg-[#169B4E] hover:shadow-lg">
+              <span>
+                <Plus />
+              </span>
               Add New Service
             </Button>
           </div>
@@ -25,7 +29,7 @@ export default function ServicesPage() {
 
         {/* Customers Layout  */}
 
-        <div className="mt-5 flex h-[800px] w-full flex-col rounded-md bg-white p-1">
+        <div className="mt-5 flex w-full flex-col rounded-md bg-white p-1 md:h-[800px]">
           <div className="flex h-12 w-full items-center justify-center">
             <div className="flex h-[30px] w-full items-center p-2 md:p-1">
               {/* Search  */}

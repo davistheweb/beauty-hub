@@ -35,10 +35,11 @@ API.interceptors.request.use(
 API.interceptors.response.use(
   async (response: AxiosResponse): Promise<AxiosResponse> => {
     if (response.status === 401) {
-      deleteAccessBearerToken();
-      if (typeof window !== "undefined") {
-        window.location.reload();
-      }
+      await deleteAccessBearerToken().then(() => {
+        if (typeof window !== "undefined") {
+          window.location.reload();
+        }
+      });
     }
     return response;
   },
