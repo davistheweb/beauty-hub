@@ -26,6 +26,8 @@ export default function AccountRecovery() {
   const [recoveryStage, setRecoveryStage] =
     useState<TReoveryStage>("email-form");
   const [userMail, setUserMail] = useState<string>("");
+
+  
   const ForgotPasswordFormSchema = z.object({
     email: z.email({ error: "Account's email is required" }),
   });
