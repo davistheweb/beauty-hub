@@ -10,13 +10,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { createNewPassword } from "@/services/Auth";
+import {
+  PasswordResetFormSchema,
+  PasswordResetFormValues,
+} from "@/utils/validators/PasswordResetFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import z from "zod";
 
 export default function PasswordReset({ userMail }: { userMail: string }) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -24,25 +27,6 @@ export default function PasswordReset({ userMail }: { userMail: string }) {
     useState<boolean>(false);
 
   const router = useRouter();
-
-  const PasswordResetFormSchema = z
-    .object({
-      password: z
-        .string()
-        .nonempty({ error: "Password is required" })
-        .min(8, { error: "Password must be 8 charaters or more" }),
-      confirmPassword: z
-        .string()
-        .nonempty({ error: "Confirm  password is required" }),
-    })
-    .refine(
-      (val) => {
-        return val.password === val.confirmPassword;
-      },
-      { error: "Passwords do not match", path: ["confirmPassword"] },
-    );
-
-  type PasswordResetFormValues = z.infer<typeof PasswordResetFormSchema>;
 
   const form = useForm<PasswordResetFormValues>({
     resolver: zodResolver(PasswordResetFormSchema),

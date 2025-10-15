@@ -5,7 +5,10 @@ export const SecurityFormSchema = z
     currentPassword: z
       .string()
       .nonempty({ error: "Current Password is required" }),
-    newPassword: z.string().nonempty({ error: "Password is required" }),
+    newPassword: z
+      .string()
+      .nonempty({ error: "Password is required" })
+      .min(8, { error: "Password must be 8 charaters or more" }),
     confirmNewPassword: z
       .string()
       .nonempty({ error: "Confirm Password is required" }),
