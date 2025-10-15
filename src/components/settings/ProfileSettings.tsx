@@ -33,7 +33,7 @@ export default function ProfileSettings() {
   };
 
   return (
-    <div className="mt-5 h-[500px] w-full rounded-2xl border border-[#E2E8F0] p-4">
+    <div className="mt-5 w-full rounded-2xl border border-[#E2E8F0] p-4">
       <Form {...profileForm}>
         <form
           onSubmit={profileForm.handleSubmit(handleProfileUpdate)}

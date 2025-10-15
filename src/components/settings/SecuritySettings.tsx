@@ -44,7 +44,7 @@ export default function SecuritySettings() {
       <Form {...securityForm}>
         <form
           onSubmit={securityForm.handleSubmit(handlePasswordUpdate)}
-          className="mt-5 flex w-full flex-col gap-4 xl:gap-7"
+          className="mt-5 flex w-full flex-col gap-2 xl:gap-7"
         >
           <FormField
             name="currentPassword"
