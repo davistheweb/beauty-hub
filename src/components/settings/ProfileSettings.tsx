@@ -37,7 +37,7 @@ export default function ProfileSettings() {
       <Form {...profileForm}>
         <form
           onSubmit={profileForm.handleSubmit(handleProfileUpdate)}
-          className="mt-5 flex w-full flex-col gap-4 xl:gap-7"
+          className="mt-3 flex w-full flex-col gap-4 xl:gap-4"
         >
           {/* Image */}
           <FormField
