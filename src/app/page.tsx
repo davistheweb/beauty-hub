@@ -1,9 +1,5 @@
 import Redirect from "@/Redirect";
 
 export default function page() {
-  return (
-    <>
-      <Redirect url="dashboard" />
-    </>
-  );
+  return <Redirect url="dashboard" />;
 }
