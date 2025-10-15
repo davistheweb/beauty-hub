@@ -29,6 +29,7 @@ export default function MobileNavMenu({
 
   const handleLogout = async () => {
     await logoutAdmin().then(() => {
+      localStorage.clear();
       window.location.reload();
     });
   };
