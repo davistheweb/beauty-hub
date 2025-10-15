@@ -18,7 +18,6 @@ import CustomUploadIcon from "../icons/CustomUploadIcon";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-
 export default function ProfileSettings() {
   const profileForm = useForm<ProfileFormValues>({
     resolver: zodResolver(ProfileFormSchema),
