@@ -1,5 +1,7 @@
 type TReoveryStage = "email-form" | "otp-form" | "reset-form";
 
+type TCurrentSettingTab = "profile-tab" | "security-tab" | "banner-tab";
+
 type TBookingDetails = {
   customer: string;
   package: string;
@@ -40,6 +42,7 @@ type TDummyRatings = {
 
 export type {
   TBookingDetails,
+  TCurrentSettingTab,
   TDummyCustomers,
   TDummyRatings,
   TDummyServices,

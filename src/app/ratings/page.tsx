@@ -17,7 +17,7 @@ export default function RatingsPage() {
       <div className="flex h-full flex-1 flex-col md:p-2">
         <h1 className="inline-block text-2xl font-bold">Ratings</h1>
         <div className="mt-3 flex w-full flex-col gap-3 p-2">
-          {/* Customers Table*/}
+          {/* Ratings */}
           <div className="flex w-full flex-col rounded-md bg-white p-1 lg:h-[598px]">
             <div className="flex h-12 w-full items-center justify-center">
               {dummyRatings.length > 0 && (
@@ -30,7 +30,7 @@ export default function RatingsPage() {
 
                     <div className="relative flex items-center">
                       <select className="text-custom-green cursor-pointer appearance-none pr-5 font-semibold outline-none">
-                        {["All", "Active", "Inactive"].map((option, i) => (
+                        {["All", "Recent", "Last Month"].map((option, i) => (
                           <option
                             key={i}
                             value={option}
