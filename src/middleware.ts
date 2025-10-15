@@ -7,13 +7,13 @@ export function middleware(request: NextRequest) {
   console.log("userHasToken:", hasToken);
   console.log(pathname, "is pathname from middleware");
 
-  // if (!hasToken && !pathname.startsWith("/auth/login")) {
-  //   return NextResponse.redirect(new URL("/auth/login", request.url));
-  // }
+  if (!hasToken && !pathname.startsWith("/auth/login")) {
+    return NextResponse.redirect(new URL("/auth/login", request.url));
+  }
 
-  // if (pathname.startsWith("/auth/login") && hasToken) {
-  //   return NextResponse.redirect(new URL("/dashboard", request.url));
-  // }
+  if (pathname.startsWith("/auth/login") && hasToken) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
   return NextResponse.next();
 }
 
