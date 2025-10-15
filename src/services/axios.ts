@@ -37,7 +37,7 @@ API.interceptors.response.use(
     if (response.status === 401) {
       await deleteAccessBearerToken().then(() => {
         if (typeof window !== "undefined") {
-          localStorage.clear()
+          localStorage.clear();
           window.location.reload();
         }
       });
