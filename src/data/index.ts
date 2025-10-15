@@ -1,5 +1,6 @@
 import {
   TBookingDetails,
+  TDummyBannerSettings,
   TDummyCustomers,
   TDummyRatings,
   TDummyServices,
@@ -743,10 +744,76 @@ const dummyRatings: TDummyRatings[] = [
 ];
 
 // dummyRatings.length = 0;
+
+const dummyBannerSettings: TDummyBannerSettings[] = [
+  {
+    imgSrc: "/images/barbing1.png",
+    title: "Happy Glowing Day!",
+    message: "Where Style Meets Confidence.",
+    status: "Active",
+  },
+  {
+    imgSrc: "/images/barbingImage.png",
+    title: "Happy Glowing Day!",
+    message: "Where Style Meets Confidence.",
+    status: "Inactive",
+  },
+  {
+    imgSrc: "/images/barbing1.png",
+    title: "Happy Glowing Day!",
+    message: "Where Style Meets Confidence.",
+    status: "Active",
+  },
+  {
+    imgSrc: "/images/barbingImage.png",
+    title: "Happy Glowing Day!",
+    message: "Where Style Meets Confidence.",
+    status: "Inactive",
+  },
+  {
+    imgSrc: "/images/barbingImage.png",
+    title: "Happy Glowing Day!",
+    message: "Where Style Meets Confidence.",
+    status: "Inactive",
+  },
+  {
+    imgSrc: "/images/barbingImage.png",
+    title: "Happy Glowing Day!",
+    message: "Where Style Meets Confidence.",
+    status: "Inactive",
+  },
+  {
+    imgSrc: "/images/barbingImage.png",
+    title: "Happy Glowing Day!",
+    message: "Where Style Meets Confidence.",
+    status: "Inactive",
+  },
+  {
+    imgSrc: "/images/barbingImage.png",
+    title: "Happy Glowing Day!",
+    message: "Where Style Meets Confidence.",
+    status: "Inactive",
+  },
+  {
+    imgSrc: "/images/barbingImage.png",
+    title: "Happy Glowing Day!",
+    message: "Where Style Meets Confidence.",
+    status: "Inactive",
+  },
+  {
+    imgSrc: "/images/barbingImage.png",
+    title: "Happy Glowing Day!",
+    message: "Where Style Meets Confidence.",
+    status: "Inactive",
+  },
+];
+
+// dummyBannerSettings.length = 0
 export {
   bookingDetails,
   bookingTableHeaders,
   customersTableHeaders,
+  dummyBannerSettings,
   dummyCustomers,
   dummyRatings,
   dummyServices,

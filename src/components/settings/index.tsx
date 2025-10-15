@@ -27,7 +27,7 @@ export default function Settings() {
   };
 
   return (
-    <div className="mt-5 flex w-full flex-col rounded-md bg-white pb-5 p-1 px-1 lg:px-8">
+    <div className="mt-5 flex w-full flex-col rounded-md bg-white p-1 px-1 pb-1 lg:px-8">
       <div className="flex h-12 w-full items-center justify-center gap-2 lg:justify-start">
         <Button
           className={`cursor-pointer rounded-[4px] border ${

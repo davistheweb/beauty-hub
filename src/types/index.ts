@@ -40,9 +40,17 @@ type TDummyRatings = {
   comment: string;
 };
 
+type TDummyBannerSettings = {
+  imgSrc: string;
+  title: string;
+  message: string;
+  status: "Active" | "Inactive";
+};
+
 export type {
   TBookingDetails,
   TCurrentSettingTab,
+  TDummyBannerSettings,
   TDummyCustomers,
   TDummyRatings,
   TDummyServices,
