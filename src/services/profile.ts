@@ -17,4 +17,9 @@ const updateAccountPassword = async (
     new_password,
   }).then(getApiResponse);
 
-export { updateAccountPassword, updateProfile };
+const changeProfileAvatar = async (formData: FormData) =>
+  API.post("/admin/profile/change_avatar", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  }).then(getApiResponse);
+
+export { changeProfileAvatar, updateAccountPassword, updateProfile };

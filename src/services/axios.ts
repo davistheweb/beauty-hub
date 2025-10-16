@@ -43,13 +43,13 @@ API.interceptors.response.use(
   async (error: AxiosError) => {
     if (error.response && error.response.status === 401) {
       console.log("interceptor response", error);
-
-      await deleteAccessBearerToken().then(() => {
+      deleteAccessBearerToken().then(() => {
         if (typeof window !== "undefined") {
           localStorage.clear();
           window.location.reload();
         }
       });
+      return;
     }
 
     return Promise.reject(error);
