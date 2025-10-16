@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import CustomUploadIcon from "../icons/CustomUploadIcon";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 export default function ProfileSettings() {
   const profileForm = useForm<ProfileFormValues>({
@@ -30,52 +31,41 @@ export default function ProfileSettings() {
 
   const handleProfileUpdate = async (data: ProfileFormValues) => {
     await new Promise((resolve) => setTimeout(resolve, 1500));
+    console.log(data);
   };
 
   return (
     <div className="mt-5 w-full rounded-2xl border border-[#E2E8F0] p-4">
+      {/* Image */}
+
+      <form>
+        <Label
+          htmlFor="upload_profile_image"
+          className="flex h-[100px] w-full cursor-pointer items-center justify-center rounded-xl border-[2px] border-dashed border-[#898A8C] bg-[#7E7E7E0D] xl:h-[132px]"
+        >
+          <div className="flex h-max w-[265px] flex-col items-center justify-center gap-3 p-2 py-2">
+            <span className="flex h-[35px] w-[35px] items-center justify-center rounded-full bg-[#D1F0DE]">
+              <CustomUploadIcon size={15} />
+            </span>
+            <span className="text-center text-sm font-normal text-[#5C5A55]">
+              Click to upload or drag and drop PNG or JPG (max, 1030x170px)
+            </span>
+          </div>
+        </Label>
+
+        <Input
+          className="hidden h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none"
+          type="file"
+          accept="image/*"
+          id="upload_profile_image"
+        />
+      </form>
+
       <Form {...profileForm}>
         <form
           onSubmit={profileForm.handleSubmit(handleProfileUpdate)}
-          className="mt-3 flex w-full flex-col gap-4 xl:gap-4"
+          className="mt-5 flex w-full flex-col gap-4 xl:gap-4"
         >
-          {/* Image */}
-          <FormField
-            name="profileImage"
-            control={profileForm.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel
-                  htmlFor="profileImage"
-                  className="flex h-[100px] w-full cursor-pointer items-center justify-center rounded-xl border-[2px] border-dashed border-[#898A8C] bg-[#7E7E7E0D] xl:h-[132px]"
-                >
-                  <div className="flex h-max w-[265px] flex-col items-center justify-center gap-3 p-2 py-2">
-                    <span className="flex h-[35px] w-[35px] items-center justify-center rounded-full bg-[#D1F0DE]">
-                      <CustomUploadIcon size={15} />
-                    </span>
-                    <span className="text-center text-sm font-normal text-[#5C5A55]">
-                      Click to upload or drag and drop PNG or JPG (max,
-                      1030x170px)
-                    </span>
-                  </div>
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    className="hidden h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none"
-                    placeholder="Full name"
-                    type="file"
-                    accept="image/*"
-                    name="profileImage"
-                    id="profileImage"
-                    disabled={profileForm.formState.isSubmitting}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
           <FormField
             name="fullName"
             control={profileForm.control}
@@ -141,18 +131,10 @@ export default function ProfileSettings() {
           </div>
           <div className="flex w-full items-center justify-center xl:justify-start">
             <Button
-              className={`bg-custom-green ${profileForm.formState.isSubmitting ? "w-4" : "h-[55px] w-full xl:w-[365px]"} cursor-pointer rounded-full hover:bg-[#16aa53]`}
+              className={`bg-custom-green h-[55px] cursor-pointer w-full rounded-full hover:bg-[#16aa53] xl:w-[365px]`}
               disabled={profileForm.formState.isSubmitting}
             >
-              {profileForm.formState.isSubmitting ? (
-                <div className="flex items-center justify-center">
-                  <div className="bg-custom-green w-fit rounded-full p-2">
-                    <div className="h-5 w-5 animate-spin rounded-full border-3 border-gray-200 border-t-[#1AB65C]" />
-                  </div>
-                </div>
-              ) : (
-                "Save"
-              )}
+              Save
             </Button>
           </div>
         </form>

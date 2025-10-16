@@ -14,13 +14,13 @@ const BannerCard = ({
   message: string;
   status: "Active" | "Inactive";
 }) => (
-  <div className="relative flex h-[340px] w-[330px] flex-col items-center justify-between overflow-hidden rounded-md border border-[#E6E6E6] bg-white pb-2 md:w-[370px] xl:w-[450px]">
+  <div className="relative flex h-[340px] w-[330px] flex-col items-center justify-between overflow-hidden rounded-md border border-[#E6E6E6] bg-white pb-2 sm:w-[300px] md:w-[360px] xl:w-[450px]">
     <div className="relative h-[270px] min-w-full overflow-hidden rounded-md bg-white">
       <Image
         src={imgSrc}
         alt="service image"
         fill
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 60vw"
         className="rounded-md object-cover"
         draggable={false}
       />
@@ -29,10 +29,10 @@ const BannerCard = ({
     <div className="flex h-full w-full flex-col justify-between gap-2">
       <div className="flex w-full items-center justify-between p-4">
         <span className="flex flex-col">
-          <span className="text-[18px] font-semibold text-[#070500]">
+          <span className="text-[14px] lg:text-[18px] font-semibold text-[#070500]">
             {title}
           </span>
-          <span className="font-normal text-[#5C5A55]">{message}</span>
+          <span className="font-normal text-[14px] text-[#5C5A55]">{message}</span>
         </span>
         <span className="cursor-pointer">
           <CustomTrashIcon
