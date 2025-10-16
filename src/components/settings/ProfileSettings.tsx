@@ -62,42 +62,45 @@ export default function ProfileSettings() {
       });
   };
 
-  const onDrop = useCallback(async (acceptedFiles: File[]) => {
-    const file = acceptedFiles[0];
-    if (!file) return;
+  const onDrop = useCallback(
+    async (acceptedFiles: File[]) => {
+      const file = acceptedFiles[0];
+      if (!file) return;
 
-    console.log(file);
+      console.log(file);
 
-    const validTypes = ["image/jpeg", "image/png", "image/jpg"];
+      const validTypes = ["image/jpeg", "image/png", "image/jpg"];
 
-    if (!validTypes.includes(file.type)) {
-      toast.error("Only JPG and PNG files are allowed");
-      return;
-    }
+      if (!validTypes.includes(file.type)) {
+        toast.error("Only JPG and PNG files are allowed");
+        return;
+      }
 
-    setIsUploadloading(true);
-    const formData = new FormData();
-    formData.append("avatar", file);
+      setIsUploadloading(true);
+      const formData = new FormData();
+      formData.append("avatar", file);
 
-    await changeProfileAvatar(formData)
-      .then((res) => {
-        if (res.status) {
-          console.log(res);
-          toast.success(res.data?.message);
-          dispatch(
-            setProfile({
-              ...adminState,
-              avatar: res?.data?.data[0].avatar,
-            }),
-          );
-        }
-      })
-      .catch((err) => {
-        const error = getErrorResponse(err);
-        toast.error(error?.errorMsg?.message || "Something went wrong");
-      })
-      .finally(() => setIsUploadloading(false));
-  }, []);
+      await changeProfileAvatar(formData)
+        .then((res) => {
+          if (res.status) {
+            console.log(res);
+            toast.success(res.data?.message);
+            dispatch(
+              setProfile({
+                ...adminState,
+                avatar: res?.data?.data[0].avatar,
+              }),
+            );
+          }
+        })
+        .catch((err) => {
+          const error = getErrorResponse(err);
+          toast.error(error?.errorMsg?.message || "Something went wrong");
+        })
+        .finally(() => setIsUploadloading(false));
+    },
+    [adminState, dispatch],
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,

@@ -31,7 +31,7 @@ export default function MobileNavigation() {
             width={27}
             height={27}
             className="object-cover"
-            priority={true}
+            unoptimized
           />
         </div>
         <button onClick={() => setIsOpen((prev) => !prev)}>
