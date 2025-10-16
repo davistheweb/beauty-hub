@@ -47,7 +47,7 @@ export default function ProfileSettings({
 
   const handleProfileUpdate = async (data: ProfileFormValues) => {
     setComponentIsUploading(true);
-    await updateProfile(data.fullName, data.email, data.phoneNumber)
+    await updateProfile(data.fullName, data.phoneNumber)
       .then((res) => {
         if (res.status) {
           toast.success(res.data?.message);
@@ -193,7 +193,7 @@ export default function ProfileSettings({
                       className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]"
                       type="email"
                       name="email"
-                      disabled={profileForm.formState.isSubmitting}
+                      disabled
                     />
                   </FormControl>
                   <FormMessage />

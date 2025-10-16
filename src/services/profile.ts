@@ -1,10 +1,10 @@
 import { API } from "./axios";
 import { getApiResponse } from "./helpers";
 
-const updateProfile = async (name: string, email: string, phoneNuber: string) =>
+const updateProfile = async (name: string, phoneNuber: string) =>
   API.post("/admin/profile/update_profile", {
     name,
-    email,
+    
     phone: phoneNuber,
   }).then(getApiResponse);
 
