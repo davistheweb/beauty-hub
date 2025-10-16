@@ -46,6 +46,12 @@ export default function ProfileSettings({
   });
 
   const handleProfileUpdate = async (data: ProfileFormValues) => {
+    if (
+      profileForm.getValues("fullName") === adminState?.fullName &&
+      profileForm.getValues("email") === adminState.email
+    ) {
+      return;
+    }
     setComponentIsUploading(true);
     await updateProfile(data.fullName, data.phoneNumber)
       .then((res) => {
