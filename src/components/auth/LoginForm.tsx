@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import { loginAdmin } from "@/services/Auth";
 import { getErrorResponse } from "@/services/helpers";
 import { storeAccessBearerToken } from "@/services/lib";
+import { AppDispatch } from "@/store";
+import { setProfile } from "@/store/utils/adminProfileSlice";
 import {
   LoginFormSchema,
   LoginFormValues,
@@ -22,10 +24,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
+
   const router = useRouter();
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(LoginFormSchema),
@@ -39,8 +44,18 @@ export default function LoginForm() {
     await loginAdmin(values.email, values.password)
       .then(async (res) => {
         if (res.status) {
-          await storeAccessBearerToken(res?.data?.data.bearer_token).then(() =>
-            router.push("/dashboard"),
+          await storeAccessBearerToken(res?.data?.data.bearer_token).then(
+            () => {
+              router.push("/dashboard");
+              dispatch(
+                setProfile({
+                  fullName: res?.data?.data.user.name,
+                  email: res?.data?.data.user.email,
+                  phoneNumber: res?.data?.data.user.phone,
+                  avatar: res?.data.data.user.avatar,
+                }),
+              );
+            },
           );
         }
       })

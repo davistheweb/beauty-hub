@@ -1,8 +1,11 @@
 import { useDate } from "@/hooks/useDate";
+import { RootState } from "@/store";
 import Image from "next/image";
+import { useSelector } from "react-redux";
 import Notifications from "../Notifications";
-
 export default function DesktopNavigation() {
+  const avatar =
+    useSelector((state: RootState) => state.admin.profile?.avatar) || "";
   const { customDate } = useDate();
   return (
     <nav className="hidden h-[40px] w-auto items-center justify-between border-b-2 border-b-[#D1F0DE] bg-white p-6 lg:flex">
@@ -16,7 +19,7 @@ export default function DesktopNavigation() {
         </button>
         <div className="flex h-[28px] w-[28px] cursor-pointer items-center justify-center overflow-hidden rounded-full">
           <Image
-            src="/images/admin-img.png"
+            src={avatar}
             className="object-cover"
             alt="profile-img"
             width={28}

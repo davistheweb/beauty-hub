@@ -8,30 +8,55 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { getErrorResponse } from "@/services/helpers";
+import { updateProfile } from "@/services/profile";
+import { AppDispatch, RootState } from "@/store";
+import { setProfile } from "@/store/utils/adminProfileSlice";
 import {
   ProfileFormSchema,
   ProfileFormValues,
 } from "@/utils/validators/ProfileFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 import CustomUploadIcon from "../icons/CustomUploadIcon";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
 export default function ProfileSettings() {
+  const dispatch = useDispatch<AppDispatch>();
+  const adminState = useSelector((state: RootState) => state.admin.profile);
+
   const profileForm = useForm<ProfileFormValues>({
     resolver: zodResolver(ProfileFormSchema),
     defaultValues: {
-      fullName: "",
-      email: "",
-      phoneNumber: "",
+      fullName: adminState?.fullName,
+      email: adminState?.email,
+      phoneNumber: adminState?.phoneNumber,
     },
   });
 
   const handleProfileUpdate = async (data: ProfileFormValues) => {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log(data);
+    await updateProfile(data.fullName, data.email, data.phoneNumber)
+      .then((res) => {
+        if (res.status) {
+          toast.success(res.data?.message);
+          dispatch(
+            setProfile({
+              ...adminState,
+              fullName: res?.data?.data[0].name,
+              email: res?.data?.data[0].email,
+              phoneNumber: res?.data?.data[0].phone,
+            }),
+          );
+        }
+      })
+      .catch((err) => {
+        const error = getErrorResponse(err);
+        toast.error(error?.errorMsg?.message || "Something went wrong");
+      });
   };
 
   return (
@@ -131,7 +156,7 @@ export default function ProfileSettings() {
           </div>
           <div className="flex w-full items-center justify-center xl:justify-start">
             <Button
-              className={`bg-custom-green h-[55px] cursor-pointer w-full rounded-full hover:bg-[#16aa53] xl:w-[365px]`}
+              className={`bg-custom-green h-[55px] w-full cursor-pointer rounded-full hover:bg-[#16aa53] xl:w-[365px]`}
               disabled={profileForm.formState.isSubmitting}
             >
               Save

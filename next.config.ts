@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
         hostname: "api.bigdaymi.com",
       },
       { protocol: "https", hostname: "www.google.com" },
+      { protocol: "https", hostname: "beauty.literesults.net" },
     ],
   },
 };

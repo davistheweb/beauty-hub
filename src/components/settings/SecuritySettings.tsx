@@ -8,6 +8,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { getErrorResponse } from "@/services/helpers";
+import { updateAccountPassword } from "@/services/profile";
 import {
   SecurityFormSchema,
   SecurityFormValues,
@@ -16,6 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
@@ -36,7 +39,16 @@ export default function SecuritySettings() {
   });
 
   const handlePasswordUpdate = async (data: SecurityFormValues) => {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await updateAccountPassword(data.currentPassword, data.newPassword)
+      .then((res) => {
+        if (res.status) {
+          toast.success(res.data?.message);
+        }
+      })
+      .catch((err) => {
+        const error = getErrorResponse(err);
+        toast.error(error?.errorMsg?.message || "Something went wrong");
+      });
   };
 
   return (
@@ -156,18 +168,10 @@ export default function SecuritySettings() {
           </div>
           <div className="flex w-full items-center justify-center xl:justify-start">
             <Button
-              className={`bg-custom-green ${securityForm.formState.isSubmitting ? "w-4" : "h-[55px] w-full xl:w-[365px]"} cursor-pointer rounded-full hover:bg-[#16aa53]`}
+              className={`bg-custom-green h-[55px] w-full cursor-pointer rounded-full hover:bg-[#16aa53] xl:w-[365px]`}
               disabled={securityForm.formState.isSubmitting}
             >
-              {securityForm.formState.isSubmitting ? (
-                <div className="flex items-center justify-center">
-                  <div className="bg-custom-green w-fit rounded-full p-2">
-                    <div className="h-5 w-5 animate-spin rounded-full border-3 border-gray-200 border-t-[#1AB65C]" />
-                  </div>
-                </div>
-              ) : (
-                "Save"
-              )}
+              Save
             </Button>
           </div>
         </form>

@@ -26,7 +26,7 @@ export default function Settings() {
     const now = new Date();
 
     const settingsStoreExpirationTime = new Date(now.getTime() + 1 * 60 * 1000);
-    
+
     Cookies.set("currentSettingsTab", tab, {
       expires: settingsStoreExpirationTime,
     });

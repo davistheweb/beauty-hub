@@ -29,10 +29,12 @@ const BannerCard = ({
     <div className="flex h-full w-full flex-col justify-between gap-2">
       <div className="flex w-full items-center justify-between p-4">
         <span className="flex flex-col">
-          <span className="text-[14px] lg:text-[18px] font-semibold text-[#070500]">
+          <span className="text-[14px] font-semibold text-[#070500] lg:text-[18px]">
             {title}
           </span>
-          <span className="font-normal text-[14px] text-[#5C5A55]">{message}</span>
+          <span className="text-[14px] font-normal text-[#5C5A55]">
+            {message}
+          </span>
         </span>
         <span className="cursor-pointer">
           <CustomTrashIcon
