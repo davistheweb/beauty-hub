@@ -24,6 +24,7 @@ export default function DesktopNavigation() {
             alt="profile-img"
             width={28}
             height={28}
+            priority={true}
           />
         </div>
       </div>
