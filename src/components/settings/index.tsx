@@ -1,6 +1,7 @@
 "use client";
 
 import { TCurrentSettingTab } from "@/types";
+import Cookies from "js-cookie";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import BannerSettings from "./BannerSettings";
@@ -10,7 +11,7 @@ import SecuritySettings from "./SecuritySettings";
 export default function Settings() {
   const [currentSettingsTab, setCurrentSettingsTab] =
     useState<TCurrentSettingTab>(() => {
-      const savedSettingsTab = localStorage.getItem("currentSettingsTab");
+      const savedSettingsTab = Cookies.get("currentSettingsTab");
       if (
         savedSettingsTab === "profile-tab" ||
         savedSettingsTab === "security-tab" ||
@@ -22,7 +23,14 @@ export default function Settings() {
     });
 
   const handleCurrentSettingsChange = (tab: TCurrentSettingTab) => {
-    localStorage.setItem("currentSettingsTab", tab);
+    const now = new Date();
+
+    const settingsStoreExpirationTime = new Date(now.getTime() + 1 * 60 * 1000);
+    
+    Cookies.set("currentSettingsTab", tab, {
+      expires: settingsStoreExpirationTime,
+    });
+
     setCurrentSettingsTab(tab);
   };
 
