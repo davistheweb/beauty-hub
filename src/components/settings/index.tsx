@@ -26,7 +26,7 @@ export default function Settings() {
 
   const handleCurrentSettingsChange = (tab: TCurrentSettingTab) => {
     if (componentIsUploading) {
-      alert("A Settings Tab is busy, Please wait...");
+      alert("A settings tab is currently busy, Please wait...");
       return;
     }
     const now = new Date();
