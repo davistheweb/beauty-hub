@@ -17,7 +17,7 @@ import {
   ProfileFormValues,
 } from "@/utils/validators/ProfileFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +27,11 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
-export default function ProfileSettings() {
+export default function ProfileSettings({
+  setComponentIsUploading,
+}: {
+  setComponentIsUploading: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [isUploading, setIsUploadloading] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
   const adminState = useSelector((state: RootState) => state.admin.profile);
@@ -42,6 +46,7 @@ export default function ProfileSettings() {
   });
 
   const handleProfileUpdate = async (data: ProfileFormValues) => {
+    setComponentIsUploading(true);
     await updateProfile(data.fullName, data.email, data.phoneNumber)
       .then((res) => {
         if (res.status) {
@@ -59,7 +64,8 @@ export default function ProfileSettings() {
       .catch((err) => {
         const error = getErrorResponse(err);
         toast.error(error?.errorMsg?.message || "Something went wrong");
-      });
+      })
+      .finally(() => setComponentIsUploading(false));
   };
 
   const onDrop = useCallback(
@@ -77,6 +83,7 @@ export default function ProfileSettings() {
       }
 
       setIsUploadloading(true);
+      setComponentIsUploading(true);
       const formData = new FormData();
       formData.append("avatar", file);
 
@@ -97,7 +104,10 @@ export default function ProfileSettings() {
           const error = getErrorResponse(err);
           toast.error(error?.errorMsg?.message || "Something went wrong");
         })
-        .finally(() => setIsUploadloading(false));
+        .finally(() => {
+          setIsUploadloading(false);
+          setComponentIsUploading(false);
+        });
     },
     [adminState, dispatch],
   );
@@ -119,6 +129,10 @@ export default function ProfileSettings() {
         {...getRootProps()}
         className="flex h-[100px] w-full cursor-pointer items-center justify-center rounded-xl border-[2px] border-dashed border-[#898A8C] bg-[#7E7E7E0D] xl:h-[132px]"
       >
+        <input
+          className="hidden"
+          {...getInputProps()}
+        />
         {isDragActive ? (
           <div>
             <span>Drop Here</span>
@@ -137,11 +151,6 @@ export default function ProfileSettings() {
             </span>
           </div>
         )}
-
-        <input
-          className="hidden"
-          {...getInputProps()}
-        />
       </Label>
 
       <Form {...profileForm}>

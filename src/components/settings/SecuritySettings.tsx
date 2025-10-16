@@ -22,7 +22,11 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-export default function SecuritySettings() {
+export default function SecuritySettings({
+  setComponentIsUploading,
+}: {
+  setComponentIsUploading: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [showCurrentPassword, setShowCurrentPassword] =
     useState<boolean>(false);
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
@@ -39,6 +43,7 @@ export default function SecuritySettings() {
   });
 
   const handlePasswordUpdate = async (data: SecurityFormValues) => {
+    setComponentIsUploading(true);
     await updateAccountPassword(data.currentPassword, data.newPassword)
       .then((res) => {
         if (res.status) {
@@ -48,7 +53,8 @@ export default function SecuritySettings() {
       .catch((err) => {
         const error = getErrorResponse(err);
         toast.error(error?.errorMsg?.message || "Something went wrong");
-      });
+      })
+      .finally(() => setComponentIsUploading(false));
   };
 
   return (

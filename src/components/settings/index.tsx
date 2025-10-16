@@ -21,8 +21,14 @@ export default function Settings() {
 
       return "profile-tab";
     });
+  const [componentIsUploading, setComponentIsUploading] =
+    useState<boolean>(false);
 
   const handleCurrentSettingsChange = (tab: TCurrentSettingTab) => {
+    if (componentIsUploading) {
+      alert("A Settings Tab is busy, Please wait...");
+      return;
+    }
     const now = new Date();
 
     const settingsStoreExpirationTime = new Date(now.getTime() + 1 * 60 * 1000);
@@ -69,9 +75,9 @@ export default function Settings() {
         </Button>
       </div>
       {currentSettingsTab === "profile-tab" ? (
-        <ProfileSettings />
+        <ProfileSettings setComponentIsUploading={setComponentIsUploading} />
       ) : currentSettingsTab === "security-tab" ? (
-        <SecuritySettings />
+        <SecuritySettings setComponentIsUploading={setComponentIsUploading} />
       ) : (
         currentSettingsTab === "banner-tab" && <BannerSettings />
       )}
