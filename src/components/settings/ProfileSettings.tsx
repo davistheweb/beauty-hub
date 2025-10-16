@@ -120,6 +120,7 @@ export default function ProfileSettings({
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
+    noClick: true,
     multiple: false,
     accept: {
       "image/jpeg": [],
