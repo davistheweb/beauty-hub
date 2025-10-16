@@ -1,4 +1,8 @@
-import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import axios, {
+  AxiosError,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
 import { headersConfig, timeoutConfig } from "./httpConfig";
 import { deleteAccessBearerToken, getAccessToken } from "./lib";
 
@@ -34,7 +38,12 @@ API.interceptors.request.use(
 
 API.interceptors.response.use(
   async (response: AxiosResponse): Promise<AxiosResponse> => {
-    if (response.status === 401) {
+    return response;
+  },
+  async (error: AxiosError) => {
+    if (error.response && error.response.status === 401) {
+      console.log("interceptor response", error);
+
       await deleteAccessBearerToken().then(() => {
         if (typeof window !== "undefined") {
           localStorage.clear();
@@ -42,9 +51,7 @@ API.interceptors.response.use(
         }
       });
     }
-    return response;
-  },
-  (error) => {
+
     return Promise.reject(error);
   },
 );

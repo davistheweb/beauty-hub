@@ -21,7 +21,9 @@ const createNewPassword = async (password: string, email: string) =>
   }).then(getApiResponse);
 
 const logoutAdmin = async () => {
-  await deleteAccessBearerToken();
+  await API.post("/admin/profile/logout").then(
+    async () => await deleteAccessBearerToken(),
+  );
 };
 
 export {

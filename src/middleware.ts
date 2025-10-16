@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const hasToken = request.cookies.has("access_bearer_token");
+  const hasToken = request.cookies.has("beauty_atk");
 
   console.log("userHasToken:", hasToken);
   console.log(pathname, "is pathname from middleware");

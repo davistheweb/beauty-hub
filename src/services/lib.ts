@@ -9,7 +9,7 @@ const storeAccessBearerToken = async (bearer_token: string) => {
   console.log("AccessBearerToken: ", bearer_token);
 
   userCookie.set({
-    name: "access_bearer_token",
+    name: "beauty_atk", //beauty_access_token
     value: bearer_token,
     httpOnly: true,
     secure: true,
@@ -20,15 +20,13 @@ const storeAccessBearerToken = async (bearer_token: string) => {
 };
 
 const getAccessToken = async () => {
-  const token: string | undefined = (await cookies()).get(
-    "access_bearer_token",
-  )?.value;
+  const token: string | undefined = (await cookies()).get("beauty_atk")?.value;
 
   return token;
 };
 
 const deleteAccessBearerToken = async () => {
-  (await cookies()).delete("access_bearer_token");
+  (await cookies()).delete("beauty_atk");
 };
 
 export { deleteAccessBearerToken, getAccessToken, storeAccessBearerToken };
