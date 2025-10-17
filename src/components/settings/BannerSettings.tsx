@@ -403,12 +403,12 @@ export default function BannerSettings({
         </div>
       ) : (
         <div className="mt-2 h-full w-full px-1">
-          <div className="scrollbar-thin mt-2 grid h-full grid-cols-1 justify-items-center gap-15 overflow-x-hidden px-8 py-3 sm:grid-cols-2 md:gap-15 lg:h-[598px] lg:gap-24 lg:overflow-y-auto xl:gap-25">
+          <div className="scrollbar-thin mt-2 grid h-full grid-cols-1 justify-items-center gap-8 overflow-x-hidden px-8 py-3 sm:grid-cols-2 sm:gap-15 md:gap-15 lg:h-[598px] lg:gap-10 lg:overflow-y-auto xl:gap-10">
             {isLoading
               ? Array.from({ length: 6 }, (_, i) => i).map((i) => (
                   <Skeleton
                     key={i}
-                    className="h-[340px] w-[330px] bg-[#E6E6E6] sm:w-[300px] md:w-[360px] xl:w-[450px]"
+                    className="h-[340px] w-[330px] bg-[#E6E6E6] sm:w-[300px] md:w-[330px] lg:w-[300px] xl:w-[450px]"
                   />
                 ))
               : banners.map((data, _i: number) => (

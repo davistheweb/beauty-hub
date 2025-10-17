@@ -20,7 +20,7 @@ const BannerCard = ({
   handleDeleteBanner,
   handleUpdateBanner,
 }: IBannerCardProps) => (
-  <div className="relative flex h-[340px] w-[330px] flex-col items-center justify-between overflow-hidden rounded-md border border-[#E6E6E6] bg-white pb-2 sm:w-[300px] md:w-[360px] xl:w-[450px]">
+  <div className="relative flex h-[340px] w-[330px] flex-col items-center justify-between overflow-hidden rounded-md border border-[#E6E6E6] bg-white pb-2 sm:w-[300px] md:w-[330px] lg:w-[300px] xl:w-[450px]">
     <div className="relative h-[270px] min-w-full overflow-hidden rounded-md bg-white">
       <Image
         src={imgSrc}
