@@ -43,6 +43,8 @@ export default function LoginForm() {
   const handleLogin = async (values: LoginFormValues) => {
     await loginAdmin(values.email, values.password)
       .then(async (res) => {
+        console.log(res);
+
         if (res.status) {
           await storeAccessBearerToken(res?.data?.data.bearer_token).then(
             () => {

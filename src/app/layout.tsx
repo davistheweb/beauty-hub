@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import QueryProvider from "./QueryProvider";
 import ReduxProvider from "./ReduxProvider";
 
 const dm_sans = DM_Sans({ subsets: ["latin"] });
@@ -20,7 +21,9 @@ export default function RootLayout({
       <body
         className={`${dm_sans.className} h-screen w-full overflow-x-hidden antialiased`}
       >
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <QueryProvider>{children}</QueryProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

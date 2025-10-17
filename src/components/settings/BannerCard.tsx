@@ -8,11 +8,13 @@ const BannerCard = ({
   title,
   message,
   status,
+  onClick,
 }: {
   imgSrc: string;
   title: string;
   message: string;
-  status: "Active" | "Inactive";
+  status: "active" | "inactive";
+  onClick: () => void;
 }) => (
   <div className="relative flex h-[340px] w-[330px] flex-col items-center justify-between overflow-hidden rounded-md border border-[#E6E6E6] bg-white pb-2 sm:w-[300px] md:w-[360px] xl:w-[450px]">
     <div className="relative h-[270px] min-w-full overflow-hidden rounded-md bg-white">
@@ -23,6 +25,7 @@ const BannerCard = ({
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 60vw"
         className="rounded-md object-cover"
         draggable={false}
+        unoptimized
       />
     </div>
 
@@ -36,7 +39,10 @@ const BannerCard = ({
             {message}
           </span>
         </span>
-        <span className="cursor-pointer">
+        <span
+          className="cursor-pointer"
+          onClick={onClick}
+        >
           <CustomTrashIcon
             color="#FF3333"
             size={15}
@@ -46,8 +52,10 @@ const BannerCard = ({
       <div className="flex w-full items-center justify-between p-4">
         <span
           className={`top-[8px] right-3 z-1 rounded-[42.58px] bg-[#EDF5FE] ${
-            status === "Active" ? "text-[#00C247]" : "text-[#004CE8]"
-          } flex h-[25px] w-[90px] items-center justify-center gap-1 text-[14px] select-none`}
+            status.toUpperCase() === "ACTIVE"
+              ? "text-[#00C247]"
+              : status.toUpperCase() === "INACTIVE" && "text-[#004CE8]"
+          } flex h-[25px] w-[90px] items-center justify-center gap-1 text-[14px] capitalize select-none`}
         >
           <span className="flex h-3 w-3 items-center justify-center">
             <Dot

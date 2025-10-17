@@ -4,7 +4,7 @@ import { getApiResponse } from "./helpers";
 const updateProfile = async (name: string, phoneNuber: string) =>
   API.post("/admin/profile/update_profile", {
     name,
-    
+
     phone: phoneNuber,
   }).then(getApiResponse);
 

@@ -118,7 +118,7 @@ export default function ProfileSettings({
           setComponentIsUploading(false);
         });
     },
-    [adminState, dispatch],
+    [adminState, dispatch, setIsUploadloading],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
