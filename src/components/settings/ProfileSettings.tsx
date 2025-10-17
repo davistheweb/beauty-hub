@@ -47,8 +47,9 @@ export default function ProfileSettings({
 
   const handleProfileUpdate = async (data: ProfileFormValues) => {
     if (
-      profileForm.getValues("fullName") === adminState?.fullName &&
-      profileForm.getValues("email") === adminState.email
+      profileForm.getValues("fullName").trim() ===
+        adminState?.fullName?.trim() &&
+      profileForm.getValues("email").trim() === adminState.email?.trim()
     ) {
       return;
     }
@@ -81,10 +82,12 @@ export default function ProfileSettings({
 
       console.log(file);
 
-      const validTypes = ["image/jpeg", "image/png", "image/jpg"];
+      const validTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
 
       if (!validTypes.includes(file.type)) {
-        toast.error("Only JPG and PNG files are allowed");
+        toast.error(
+          "Can't upload. Use an image in one of these formats: .jpg, .png, .bmp, .jpeg",
+        );
         return;
       }
 
@@ -122,11 +125,6 @@ export default function ProfileSettings({
     onDrop,
     noClick: true,
     multiple: false,
-    accept: {
-      "image/jpeg": [],
-      "image/png": [],
-      "image/jpg": [],
-    },
   });
 
   return (
