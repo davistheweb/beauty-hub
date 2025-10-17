@@ -49,7 +49,9 @@ export default function ProfileSettings({
     if (
       profileForm.getValues("fullName").trim() ===
         adminState?.fullName?.trim() &&
-      profileForm.getValues("email").trim() === adminState.email?.trim()
+      profileForm.getValues("email").trim() === adminState.email?.trim() &&
+      profileForm.getValues("phoneNumber").trim() ===
+        adminState.phoneNumber?.trim()
     ) {
       return;
     }
