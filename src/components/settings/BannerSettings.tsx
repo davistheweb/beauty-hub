@@ -11,7 +11,11 @@ import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 import BannerCard from "./BannerCard";
 
-export default function BannerSettings() {
+export default function BannerSettings({
+  setComponentIsUploading,
+}: {
+  setComponentIsUploading: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
@@ -29,10 +33,11 @@ export default function BannerSettings() {
     mutationFn: deleteBannerService,
     onSuccess: (data) => {
       toast.success(data.message);
-
+      setComponentIsUploading(false);
       queryClient.invalidateQueries({ queryKey: ["banners"] });
     },
     onError: (err) => {
+      setComponentIsUploading(false);
       console.log(err);
     },
   });
@@ -78,7 +83,10 @@ export default function BannerSettings() {
                     title={data.title}
                     message={data.subtitle}
                     status={data.status}
-                    onClick={() => deleteBanner.mutate(data.id)}
+                    onClick={() => {
+                      setComponentIsUploading(true);
+                      deleteBanner.mutate(data.id);
+                    }}
                   />
                 ))}
           </div>

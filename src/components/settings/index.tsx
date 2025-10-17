@@ -79,7 +79,9 @@ export default function Settings() {
       ) : currentSettingsTab === "security-tab" ? (
         <SecuritySettings setComponentIsUploading={setComponentIsUploading} />
       ) : (
-        currentSettingsTab === "banner-tab" && <BannerSettings />
+        currentSettingsTab === "banner-tab" && (
+          <BannerSettings setComponentIsUploading={setComponentIsUploading} />
+        )
       )}
     </div>
   );
