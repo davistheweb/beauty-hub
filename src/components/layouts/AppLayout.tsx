@@ -6,7 +6,7 @@ import Sidebar from "../Sidebar";
 function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen items-center justify-center overflow-hidden">
-      <div className="relative flex h-full min-h-svh w-full max-w-[1400px] bg-white">
+      <div className="relative flex h-full min-h-svh w-full max-w-[2000px] bg-white">
         <Toaster
           richColors
           position="top-right"
