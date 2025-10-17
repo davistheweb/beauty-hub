@@ -68,7 +68,7 @@ export default function BannerSettings({
               Add New Banner
             </Button>
           </div>
-          <div className="scrollbar-thin mt-2 grid h-full grid-cols-1 justify-center gap-15 overflow-x-hidden px-8 py-3 sm:grid-cols-2 md:gap-15 lg:h-[598px] lg:gap-24 lg:overflow-y-auto xl:gap-25">
+          <div className="scrollbar-thin mt-2 grid h-full grid-cols-1 justify-items-center gap-15 overflow-x-hidden px-8 py-3 sm:grid-cols-2 md:gap-15 lg:h-[598px] lg:gap-24 lg:overflow-y-auto xl:gap-25">
             {isLoading
               ? Array.from({ length: 6 }, (_, i) => i).map((i) => (
                   <Skeleton
