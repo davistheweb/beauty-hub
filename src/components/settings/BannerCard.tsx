@@ -3,19 +3,23 @@ import Image from "next/image";
 import CustomTrashIcon from "../icons/CustomTrashIcon";
 import { Button } from "../ui/button";
 
+interface IBannerCardProps {
+  imgSrc: string;
+  title: string;
+  message: string;
+  status: "active" | "inactive";
+  handleDeleteBanner: () => void;
+  handleUpdateBanner: () => void;
+}
+
 const BannerCard = ({
   imgSrc,
   title,
   message,
   status,
-  onClick,
-}: {
-  imgSrc: string;
-  title: string;
-  message: string;
-  status: "active" | "inactive";
-  onClick: () => void;
-}) => (
+  handleDeleteBanner,
+  handleUpdateBanner,
+}: IBannerCardProps) => (
   <div className="relative flex h-[340px] w-[330px] flex-col items-center justify-between overflow-hidden rounded-md border border-[#E6E6E6] bg-white pb-2 sm:w-[300px] md:w-[360px] xl:w-[450px]">
     <div className="relative h-[270px] min-w-full overflow-hidden rounded-md bg-white">
       <Image
@@ -26,6 +30,7 @@ const BannerCard = ({
         className="rounded-md object-cover"
         draggable={false}
         unoptimized
+        priority
       />
     </div>
 
@@ -41,7 +46,7 @@ const BannerCard = ({
         </span>
         <span
           className="cursor-pointer"
-          onClick={onClick}
+          onClick={handleDeleteBanner}
         >
           <CustomTrashIcon
             color="#FF3333"
@@ -65,7 +70,10 @@ const BannerCard = ({
           </span>
           <span className="text-xs font-medium">{status}</span>
         </span>
-        <Button className="text-custom-green bg-custom-green px[20px] w-[100px] cursor-pointer rounded-full border border-[#1AB65C] text-sm font-semibold text-white hover:bg-[#198f4a]">
+        <Button
+          className="text-custom-green bg-custom-green px[20px] w-[100px] cursor-pointer rounded-full border border-[#1AB65C] text-sm font-semibold text-white hover:bg-[#198f4a]"
+          onClick={handleUpdateBanner}
+        >
           Edit
         </Button>
       </div>

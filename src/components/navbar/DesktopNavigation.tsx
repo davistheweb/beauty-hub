@@ -19,6 +19,7 @@ export default function DesktopNavigation() {
         </button>
         <div className="flex h-[28px] w-[28px] cursor-pointer items-center justify-center overflow-hidden rounded-full">
           <Image
+            draggable={false}
             src={avatar}
             className="object-cover"
             alt="profile-img"

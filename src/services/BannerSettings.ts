@@ -8,6 +8,26 @@ const fetchBannersService = async (): Promise<IFetchBannerResponse> => {
   return getApiResponse(res);
 };
 
+const addBannerService = async (data: FormData) => {
+  const res = await API.post("/admin/banner/add_banner", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return getApiResponse(res);
+};
+
+const updateBannerService = async (data: FormData) => {
+  const res = await API.post("/admin/banner/update_banner", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return getApiResponse(res);
+};
+
 const deleteBannerService = async (
   id: number,
 ): Promise<{
@@ -18,4 +38,10 @@ const deleteBannerService = async (
 
   return getApiResponse(res);
 };
-export { deleteBannerService, fetchBannersService };
+
+export {
+  addBannerService,
+  deleteBannerService,
+  fetchBannersService,
+  updateBannerService,
+};
