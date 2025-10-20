@@ -1,10 +1,5 @@
 "use client";
-import {
-  addBannerService,
-  deleteBannerService,
-  fetchBannersService,
-  updateBannerService,
-} from "@/services/BannerSettings";
+import { useBanner } from "@/hooks";
 import { IBanner } from "@/types/IBanner";
 import {
   addBannerFormSchema,
@@ -14,7 +9,6 @@ import {
   editBannerFormValues,
 } from "@/utils/validators/BannerFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -61,7 +55,10 @@ export default function BannerSettings({
 
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  const queryClient = useQueryClient();
+  //Banners Hooks
+
+  const { banners, isLoading, deleteBanner, addBanner, updateBanner } =
+    useBanner();
 
   const addResolver = zodResolver(
     addBannerFormSchema,
@@ -96,65 +93,6 @@ export default function BannerSettings({
       setPreviewImage(updateBannerValues.image || null);
     }
   }, [updateBannerValues, bannerAction, editBannerForm]);
-
-  const { data, isLoading } = useQuery({
-    queryKey: ["banners"],
-    queryFn: fetchBannersService,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
-  });
-
-  console.log(data);
-
-  const banners = data?.data.data.data || [];
-
-  const deleteBanner = useMutation({
-    mutationFn: deleteBannerService,
-    onSuccess: (data) => {
-      toast.success(data.message);
-      setComponentIsUploading(false);
-      queryClient.invalidateQueries({ queryKey: ["banners"] });
-    },
-    onError: (err) => {
-      setComponentIsUploading(false);
-      console.log(err);
-    },
-  });
-
-  const addBanner = useMutation({
-    mutationFn: addBannerService,
-    onSuccess: (data) => {
-      toast.success(data.message);
-      setComponentIsUploading(false);
-      addBannerForm.reset();
-      setPreviewImage(null);
-      queryClient.invalidateQueries({ queryKey: ["banners"] });
-    },
-    onError: (err) => {
-      setComponentIsUploading(false);
-      console.log(err);
-    },
-  });
-
-  const updateBanner = useMutation({
-    mutationFn: updateBannerService,
-    onSuccess: (data) => {
-      toast.success(data.message);
-      setComponentIsUploading(false);
-      editBannerForm.reset();
-      setPreviewImage(null);
-      setUpdateBannerValues(null);
-      setTimeout(() => {
-        setOpenDialog(false);
-        setBannerAction("addBanner");
-      }, 1200);
-      queryClient.invalidateQueries({ queryKey: ["banners"] });
-    },
-    onError: (err) => {
-      setComponentIsUploading(false);
-      console.log(err);
-    },
-  });
 
   const form = bannerAction === "addBanner" ? addBannerForm : editBannerForm;
 
@@ -192,7 +130,18 @@ export default function BannerSettings({
       formData.append("subtitle", addBannerFormDataValues.subtitle);
       formData.append("image", addBannerFormDataValues.image);
 
-      await addBanner.mutate(formData);
+      await addBanner.mutate(formData, {
+        onSuccess: (data) => {
+          toast.success(data.message);
+          setComponentIsUploading(false);
+          addBannerForm.reset();
+          setPreviewImage(null);
+        },
+        onError: (err) => {
+          setComponentIsUploading(false);
+          console.log(err);
+        },
+      });
     } else if (bannerAction === "updateBanner") {
       if (
         editBannerForm.getValues("title").trim() ===
@@ -218,7 +167,23 @@ export default function BannerSettings({
         );
       }
 
-      await updateBanner.mutate(formData);
+      await updateBanner.mutate(formData, {
+        onSuccess: (data) => {
+          toast.success(data.message);
+          setComponentIsUploading(false);
+          editBannerForm.reset();
+          setPreviewImage(null);
+          setUpdateBannerValues(null);
+          setTimeout(() => {
+            setOpenDialog(false);
+            setBannerAction("addBanner");
+          }, 1200);
+        },
+        onError: (err) => {
+          setComponentIsUploading(false);
+          console.log(err);
+        },
+      });
     }
   };
 
@@ -420,7 +385,16 @@ export default function BannerSettings({
                     status={data.status}
                     handleDeleteBanner={() => {
                       setComponentIsUploading(true);
-                      deleteBanner.mutate(data.id);
+                      deleteBanner.mutate(data.id, {
+                        onSuccess: (data) => {
+                          toast.success(data.message);
+                          setComponentIsUploading(false);
+                        },
+                        onError: (err) => {
+                          setComponentIsUploading(false);
+                          console.log(err);
+                        },
+                      });
                     }}
                     handleUpdateBanner={() => {
                       setBannerAction("updateBanner");

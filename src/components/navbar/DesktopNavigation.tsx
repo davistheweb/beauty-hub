@@ -1,4 +1,4 @@
-import { useDate } from "@/hooks/useDate";
+import { useDate } from "@/hooks";
 import { RootState } from "@/store";
 import Image from "next/image";
 import { useSelector } from "react-redux";

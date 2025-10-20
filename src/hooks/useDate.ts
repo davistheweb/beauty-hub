@@ -1,4 +1,4 @@
-export const useDate = () => {
+const useDate = () => {
   const date = new Date();
   const day = date.getUTCDate();
   const month = date.toLocaleString("en-GB", {
@@ -17,3 +17,5 @@ export const useDate = () => {
   const customDate = `${day} ${month} ${year} | ${hours}:${minutes} ${ampm} GMT`;
   return { customDate };
 };
+
+export default useDate;
