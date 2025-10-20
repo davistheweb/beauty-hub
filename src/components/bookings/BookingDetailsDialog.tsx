@@ -31,6 +31,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import CopyIcon from "../icons/CopyIcon";
+import PhoneIcon from "../icons/PhoneIcon";
 
 interface BookingDetailsDialogProps {
   openDialog: boolean;
@@ -102,15 +103,15 @@ export const BookingDetailsDialog = ({
     >
       <DialogContent className="max-w-fit">
         <DialogHeader>
-          <DialogTitle className="text-custom-green text-[18px] font-bold lg:text-2xl">
+          <DialogTitle className="text-custom-green text-[16px] font-bold lg:text-2xl">
             Booking Details
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
           {/* Customer information will be displayed here. */}
           <div className="w-full">
-            <span className="text-[18px] font-semibold lg:text-xl">
+            <span className="text-[16px] font-semibold lg:text-xl">
               Customer Information
             </span>
             <div className="flex w-full flex-col rounded-[4px] border border-[#E4E4E4]">
@@ -150,10 +151,10 @@ export const BookingDetailsDialog = ({
               </div>
               <div className="flex w-full flex-col justify-between gap-2 border-t border-[#E4E4E4] p-3 md:flex-row">
                 <span className="flex items-center gap-2">
-                  <Phone
+                  <PhoneIcon
                     size={15}
                     fill="#5C5C5C"
-                    className="text-[#5C5C5C]"
+                    color="text-[#5C5C5C]"
                   />
                   <span className="font-[#898A8C] text-[14px]">
                     {selectedBookingDetails.user.phone}
@@ -171,34 +172,36 @@ export const BookingDetailsDialog = ({
           </div>
           {/* Booking information will display here */}
           <div className="w-full">
-            <span className="text-[18px] font-semibold lg:text-xl">
+            <span className="text-[16px] font-semibold lg:text-xl">
               Booking Information
             </span>
-            <div className="flex flex-col rounded-[4px] border border-[#E4E4E4] p-4">
-              <div className="flex w-[300px] flex-col gap-3">
-                <span className="flex flex-col">
-                  <span className="text-xs font-normal text-[#727272]">
-                    Types of packages
-                  </span>
-                  <span className="font-medium">
-                    {selectedBookingDetails.package.name}
-                  </span>
-                </span>
-                <span className="flex justify-between gap-3">
+            <div className="flex flex-col rounded-[4px] border border-[#E4E4E4] p-2">
+              <div className="flex w-[300px] flex-col gap-1 md:gap-3">
+                <span className="grid grid-cols-2">
                   <span className="flex flex-col">
                     <span className="text-xs font-normal text-[#727272]">
-                      Booking amount
+                      Types of packages
                     </span>
-                    <span className="text-semibold">
-                      ₦{selectedBookingDetails.amount}
+                    <span className="font-medium">
+                      {selectedBookingDetails.package.name}
                     </span>
                   </span>
-                  <span className="flex flex-col">
-                    <span className="text-xs font-normal text-[#727272]">
-                      Date
+                  <span className="flex justify-between gap-3">
+                    <span className="flex flex-col">
+                      <span className="text-[10px] md:text-xs font-normal text-[#727272]">
+                        Booking amount
+                      </span>
+                      <span className="text-semibold text-xs md:text-[16px]">
+                        ₦{selectedBookingDetails.amount}
+                      </span>
                     </span>
-                    <span className="text-semibold">
-                      {selectedBookingDetails.booking_date}
+                    <span className="flex flex-col">
+                      <span className="text-xs font-normal text-[#727272]">
+                        Date
+                      </span>
+                      <span className="text-semibold">
+                        {selectedBookingDetails.booking_date}
+                      </span>
                     </span>
                   </span>
                 </span>

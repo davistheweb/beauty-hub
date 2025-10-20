@@ -11,10 +11,10 @@ const storeAccessBearerToken = async (bearer_token: string) => {
   userCookie.set({
     name: "beauty_atk", //beauty_access_token
     value: bearer_token,
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
-    path: "/",
+    // httpOnly: true,
+    // secure: true,
+    // sameSite: "strict",
+    // path: "/",
     maxAge: 7 * 24 * 60 * 60,
   });
 };
