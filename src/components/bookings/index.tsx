@@ -9,7 +9,8 @@ import { useBookingDetailsByID, useBookings } from "@/hooks";
 import { IBookings } from "@/types/IBookings";
 import { ChevronDown, Dot, EllipsisVertical, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Skeleton } from "../ui/skeleton";
+import { CardSkeleton } from "../ui/CardSkeleton";
+import { TabkeSkeleton } from "../ui/TabkeSkeleton";
 import { BookingDetailsDialog } from "./BookingDetailsDialog";
 
 export default function Bookings() {
@@ -98,84 +99,66 @@ export default function Bookings() {
               />
             ) : (
               <tbody className="w-full divide-y divide-gray-100">
-                {isAllBookingsDataLoading
-                  ? Array.from(
-                      { length: bookingTableHeaders.length },
-                      (_, i) => i,
-                    ).map((i) => (
-                      <tr
-                        key={i}
-                        className="h-[4px] w-full hover:bg-gray-50"
+                {isAllBookingsDataLoading ? (
+                  <TabkeSkeleton length={bookingTableHeaders.length} />
+                ) : (
+                  bookings.map((bookingDetail, index) => (
+                    <tr
+                      key={index}
+                      className="h-[48px] w-full hover:bg-gray-50"
+                    >
+                      <td className="px-8 py-2 text-center text-[14px] font-normal">
+                        {bookingDetail.user.name}
+                      </td>
+                      <td className="px-4 py-2 text-center text-[14px] text-[#727272]">
+                        {bookingDetail.package.name}
+                      </td>
+                      <td className="px-4 py-2 text-center text-[13px] font-normal text-[#727272]">
+                        {bookingDetail.booking_date}
+                      </td>
+                      <td
+                        className={`flex items-center justify-center px-10 py-1`}
                       >
-                        {Array.from(
-                          { length: bookingTableHeaders.length },
-                          (_, i) => i,
-                        ).map((i) => (
-                          <td
-                            key={i}
-                            className="h-[10px] px-8 py-2 text-center text-[14px] font-normal"
-                          >
-                            <Skeleton className="z-10 h-[10px] bg-[#E6E6E6]" />
-                          </td>
-                        ))}
-                      </tr>
-                    ))
-                  : bookings.map((bookingDetail, index) => (
-                      <tr
-                        key={index}
-                        className="h-[48px] w-full hover:bg-gray-50"
-                      >
-                        <td className="px-8 py-2 text-center text-[14px] font-normal">
-                          {bookingDetail.user.name}
-                        </td>
-                        <td className="px-4 py-2 text-center text-[14px] text-[#727272]">
-                          {bookingDetail.package.name}
-                        </td>
-                        <td className="px-4 py-2 text-center text-[13px] font-normal text-[#727272]">
-                          {bookingDetail.booking_date}
-                        </td>
-                        <td
-                          className={`flex items-center justify-center px-10 py-1`}
+                        <span
+                          className={`rounded-[38.32px] bg-[#EDF5FE] select-none ${bookingDetail.status === "pending" ? "text-[#004CE8]" : bookingDetail.status === "completed" ? "text-[#00C247]" : bookingDetail.status === "confirmed" ? "text-[#333]" : bookingDetail.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] items-center justify-center gap-2 px-2`}
                         >
-                          <span
-                            className={`rounded-[38.32px] bg-[#EDF5FE] select-none ${bookingDetail.status === "pending" ? "text-[#004CE8]" : bookingDetail.status === "completed" ? "text-[#00C247]" : bookingDetail.status === "confirmed" ? "text-[#333]" : bookingDetail.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] items-center justify-center gap-2 px-2`}
-                          >
-                            <span className="flex h-3 w-3 items-center justify-center">
-                              <Dot
-                                size={40}
-                                className="shrink-0"
-                              />
-                            </span>
+                          <span className="flex h-3 w-3 items-center justify-center">
+                            <Dot
+                              size={40}
+                              className="shrink-0"
+                            />
+                          </span>
 
-                            <span className="w-fit text-center text-[12px]">
-                              {bookingDetail.status === "pending"
-                                ? "In Progress"
-                                : bookingDetail.status === "completed"
-                                  ? "Done"
-                                  : bookingDetail.status === "confirmed"
-                                    ? "Confirmed"
-                                    : bookingDetail.status === "cancelled" &&
-                                      "Canceled"}
-                            </span>
+                          <span className="w-fit text-center text-[12px]">
+                            {bookingDetail.status === "pending"
+                              ? "In Progress"
+                              : bookingDetail.status === "completed"
+                                ? "Done"
+                                : bookingDetail.status === "confirmed"
+                                  ? "Confirmed"
+                                  : bookingDetail.status === "cancelled" &&
+                                    "Canceled"}
                           </span>
-                        </td>
-                        <td className="">
-                          <span
-                            className="flex cursor-pointer items-center justify-center rounded-xs text-center text-[14px] font-medium"
-                            onClick={() =>
-                              handleViewBookingDetails(bookingDetail.id)
-                            }
-                          >
-                            {bookingDetailsDataIsLoading &&
-                            selectedBookingId === bookingDetail.id ? (
-                              <Loader2 className="h-4 w-4 animate-spin" />
-                            ) : (
-                              <EllipsisVertical />
-                            )}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
+                        </span>
+                      </td>
+                      <td className="">
+                        <span
+                          className="flex cursor-pointer items-center justify-center rounded-xs text-center text-[14px] font-medium"
+                          onClick={() =>
+                            handleViewBookingDetails(bookingDetail.id)
+                          }
+                        >
+                          {bookingDetailsDataIsLoading &&
+                          selectedBookingId === bookingDetail.id ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            <EllipsisVertical />
+                          )}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             )}
           </table>
@@ -191,12 +174,7 @@ export default function Bookings() {
           ) : isAllBookingsDataLoading ? (
             <div className="h-full w-full">
               <div className="flex w-full flex-col items-center justify-center gap-3">
-                {Array.from({ length: 5 }, (_, i) => i).map((i) => (
-                  <Skeleton
-                    key={i}
-                    className="h-[340px] w-[330px] bg-[#E6E6E6] sm:w-[300px] md:w-[330px] lg:w-[300px] xl:w-[450px]"
-                  />
-                ))}
+                <CardSkeleton />
               </div>
             </div>
           ) : (

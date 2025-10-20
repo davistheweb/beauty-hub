@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import CustomUploadIcon from "../icons/CustomUploadIcon";
 import { NoDataFoundElement } from "../no-data";
 import { Button } from "../ui/button";
+import { CardSkeleton } from "../ui/CardSkeleton";
 import {
   Dialog,
   DialogContent,
@@ -34,7 +35,6 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { Skeleton } from "../ui/skeleton";
 import { Textarea } from "../ui/textarea";
 import BannerCard from "./BannerCard";
 
@@ -365,43 +365,40 @@ export default function BannerSettings({
       ) : (
         <div className="mt-2 h-full w-full px-1">
           <div className="scrollbar-thin mt-2 grid h-full grid-cols-1 justify-items-center gap-8 overflow-x-hidden px-8 py-3 sm:grid-cols-2 sm:gap-15 md:gap-15 lg:h-[598px] lg:gap-10 lg:overflow-y-auto xl:gap-10">
-            {isLoading
-              ? Array.from({ length: 6 }, (_, i) => i).map((i) => (
-                  <Skeleton
-                    key={i}
-                    className="h-[340px] w-[330px] bg-[#E6E6E6] sm:w-[300px] md:w-[330px] lg:w-[300px] xl:w-[450px]"
-                  />
-                ))
-              : banners.map((data, _i: number) => (
-                  <BannerCard
-                    key={_i}
-                    imgSrc={data.image}
-                    title={data.title}
-                    message={data.subtitle}
-                    status={data.status}
-                    handleDeleteBanner={() => {
-                      setComponentIsUploading(true);
-                      deleteBanner.mutate(data.id, {
-                        onSuccess: (data) => {
-                          toast.success(data.message);
-                          setComponentIsUploading(false);
-                        },
-                        onError: (err) => {
-                          setComponentIsUploading(false);
-                          console.log(err);
-                        },
-                      });
-                    }}
-                    handleUpdateBanner={() => {
-                      setBannerAction("updateBanner");
-                      setOpenDialog((prev) => !prev);
-                      if (data) {
-                        setUpdateBannerValues(data);
-                        console.log(data);
-                      }
-                    }}
-                  />
-                ))}
+            {isLoading ? (
+              <CardSkeleton />
+            ) : (
+              banners.map((data, _i: number) => (
+                <BannerCard
+                  key={_i}
+                  imgSrc={data.image}
+                  title={data.title}
+                  message={data.subtitle}
+                  status={data.status}
+                  handleDeleteBanner={() => {
+                    setComponentIsUploading(true);
+                    deleteBanner.mutate(data.id, {
+                      onSuccess: (data) => {
+                        toast.success(data.message);
+                        setComponentIsUploading(false);
+                      },
+                      onError: (err) => {
+                        setComponentIsUploading(false);
+                        console.log(err);
+                      },
+                    });
+                  }}
+                  handleUpdateBanner={() => {
+                    setBannerAction("updateBanner");
+                    setOpenDialog((prev) => !prev);
+                    if (data) {
+                      setUpdateBannerValues(data);
+                      console.log(data);
+                    }
+                  }}
+                />
+              ))
+            )}
           </div>
         </div>
       )}
