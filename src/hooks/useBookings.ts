@@ -44,7 +44,7 @@ const useBookingDetailsByID = (bookingId?: number) => {
     },
   });
 
-  const bookingDetails: IBookings | null = bookingDetailsData?.data.data;
+  const bookingDetails: IBookings = bookingDetailsData?.data.data;
 
   console.log("Booking detail is", bookingDetails);
 

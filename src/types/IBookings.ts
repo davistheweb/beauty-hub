@@ -74,10 +74,5 @@ interface IBookingsResponse {
   };
 }
 
-interface IBookingDetailsResponse {
-  success: boolean;
-  message: string;
-  data: IBookings;
-}
 
 export type { IBookings, IBookingsResponse };
