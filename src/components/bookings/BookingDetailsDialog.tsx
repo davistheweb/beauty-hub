@@ -133,7 +133,7 @@ export const BookingDetailsDialog = ({
                   </span>
                 </span>
                 <span
-                  className={`rounded-[38.32px] select-none bg-[#EDF5FE] ${selectedBookingDetails.status === "pending" ? "text-[#004CE8]" : selectedBookingDetails.status === "completed" ? "text-[#00C247]" : selectedBookingDetails.status === "confirmed" ? "text-[#333]" : selectedBookingDetails.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] items-center justify-center gap-2 px-2 w-[110px]`}
+                  className={`rounded-[38.32px] bg-[#EDF5FE] select-none ${selectedBookingDetails.status === "pending" ? "text-[#004CE8]" : selectedBookingDetails.status === "completed" ? "text-[#00C247]" : selectedBookingDetails.status === "confirmed" ? "text-[#333]" : selectedBookingDetails.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] w-[110px] items-center justify-center gap-2 px-2`}
                 >
                   <span className="flex h-3 w-3 items-center justify-center">
                     <Dot
@@ -214,7 +214,7 @@ export const BookingDetailsDialog = ({
                   <span className="text-xs font-normal text-[#727272]">
                     Location
                   </span>
-                  <span className="flex items-center gap-2 text-xs md:text-[16px] font-medium">
+                  <span className="flex items-center gap-2 text-xs font-medium md:text-[16px]">
                     {selectedBookingDetails.location}
                   </span>
                   <span className="cursor-pointer">
