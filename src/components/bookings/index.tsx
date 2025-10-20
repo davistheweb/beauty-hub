@@ -5,15 +5,53 @@ import {
 } from "@/components/no-data";
 import SearchInput from "@/components/ui/SearchInput";
 import { bookingTableHeaders } from "@/data";
-import useBookings from "@/hooks/useBookings";
-import { ChevronDown, Dot, EllipsisVertical } from "lucide-react";
+import { useBookingDetailsByID, useBookings } from "@/hooks";
+import { IBookings } from "@/types/IBookings";
+import { ChevronDown, Dot, EllipsisVertical, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Skeleton } from "../ui/skeleton";
+import { BookingDetailsDialog } from "./BookingDetailsDialog";
 
 export default function Bookings() {
-  const { bookings, isLoading } = useBookings();
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [selectedBookingId, setSelectedBookingId] = useState<number | null>(
+    null,
+  );
+  const [selectedBookingDetails, setSelectedBookingDetails] =
+    useState<IBookings | null>(null);
+  const { bookingDetails, bookingDetailsDataIsLoading, } = useBookingDetailsByID(
+    selectedBookingId ?? undefined,
+  );
+
+  const { bookings, isAllBookingsDataLoading } = useBookings();
+
+  useEffect(() => {
+    if (bookingDetails) {
+      setSelectedBookingDetails(bookingDetails);
+      setOpenDialog(true);
+      console.log(bookingDetails);
+    }
+  }, [bookingDetails]);
+
+  const handleViewBookingDetails = (booking_id: number) => {
+    setSelectedBookingId(booking_id);
+
+    if (bookingDetails !== undefined) {
+      console.log("Booking details", bookingDetails);
+    }
+  };
 
   return (
     <div className="mt-3 flex w-full flex-col gap-3 p-2">
+      {selectedBookingDetails && openDialog && (
+        <BookingDetailsDialog
+          openDialog={openDialog}
+          setOpenDialog={setOpenDialog}
+          setSelectedBookingId={setSelectedBookingId}
+          selectedBookingDetails={selectedBookingDetails}
+          setSelectedBookingDetails={setSelectedBookingDetails}
+        />
+      )}
       {/* Bookins Table  */}
       <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
         <div className="flex h-12 w-full items-center justify-center">
@@ -51,7 +89,7 @@ export default function Bookings() {
                 ))}
               </tr>
             </thead>
-            {!isLoading && !bookings.length ? (
+            {!isAllBookingsDataLoading && !bookings.length ? (
               <NoDataFoundTableDesktopComponent
                 title="No Information Yet!"
                 subtitle="Once your users start booking an appointment, all informations will be
@@ -60,7 +98,7 @@ export default function Bookings() {
               />
             ) : (
               <tbody className="w-full divide-y divide-gray-100">
-                {isLoading
+                {isAllBookingsDataLoading
                   ? Array.from(
                       { length: bookingTableHeaders.length },
                       (_, i) => i,
@@ -104,7 +142,7 @@ export default function Bookings() {
                           >
                             <Dot
                               size={40}
-                              className="inline-block"
+                              className="inline-blocki"
                             />
                             <span className="w-fit text-center text-[12px]">
                               {bookingDetail.status === "pending"
@@ -119,8 +157,18 @@ export default function Bookings() {
                           </span>
                         </td>
                         <td className="">
-                          <span className="flex cursor-pointer items-center justify-center rounded-xs text-center text-[14px] font-medium">
-                            <EllipsisVertical className="text-[#737375] hover:bg-[#EDF5FE]" />
+                          <span
+                            className="flex cursor-pointer items-center justify-center rounded-xs text-center text-[14px] font-medium"
+                            onClick={() =>
+                              handleViewBookingDetails(bookingDetail.id)
+                            }
+                          >
+                            {bookingDetailsDataIsLoading &&
+                            selectedBookingId === bookingDetail.id ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <EllipsisVertical />
+                            )}
                           </span>
                         </td>
                       </tr>
@@ -131,13 +179,13 @@ export default function Bookings() {
         </div>
         {/* Customers Display Card  */}
         <div className="scrollbar-thin flex h-full w-full items-center justify-center overflow-y-auto md:hidden">
-          {!isLoading && !bookings.length ? (
+          {!isAllBookingsDataLoading && !bookings.length ? (
             <NoDataFoundTableMobileComponent
               title="No Information Yet!"
               subtitle="Once your users start booking an appointment, all informations will be
         displayed here"
             />
-          ) : isLoading ? (
+          ) : isAllBookingsDataLoading ? (
             <div className="flex w-full flex-col gap-3">
               {Array.from({ length: 5 }, (_, i) => i).map((i) => (
                 <Skeleton

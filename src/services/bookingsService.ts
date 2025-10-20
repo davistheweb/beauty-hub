@@ -14,10 +14,13 @@ const fetchBookingDetails = async (id: number) => {
   return getApiResponse(res);
 };
 
-const updateBookingsStatus = async (
-  id: number,
-  status: "pending" | "confirmed" | "completed" | "cancelled",
-) => {
+const updateBookingsStatus = async ({
+  id,
+  status,
+}: {
+  id: number;
+  status: string;
+}) => {
   const res = await API.post("/admin/booking/update_booking_status", {
     id,
     status,

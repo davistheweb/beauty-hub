@@ -227,123 +227,119 @@ export default function BannerSettings({
                 ? "Add New Banner"
                 : bannerAction === "updateBanner" && "Update Banner"}
             </DialogTitle>
-
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(handleAddOREditBannerAction)}
-                className="space-y-2"
-              >
-                <FormField
-                  control={form.control}
-                  name="image"
-                  render={() => (
-                    <FormItem>
-                      <FormControl>
-                        <div
-                          {...getRootProps()}
-                          className={`flex h-[120px] w-full cursor-pointer items-center justify-center rounded-xl border-[2px] border-dashed border-[#898A8C] transition-all ${
-                            isDragActive
-                              ? "border-[#1AB65C] bg-[#E9F9EF]"
-                              : "border-[#C8C8C8] bg-[#F8F8F8]"
-                          }`}
-                        >
-                          <input {...getInputProps()} />
-                          {previewImage ? (
-                            <div className="relative h-[110px] w-full overflow-hidden rounded-lg">
-                              <Image
-                                src={previewImage}
-                                alt="preview"
-                                fill
-                                className="rounded-lg object-cover"
-                              />
-                            </div>
-                          ) : isDragActive ? (
-                            <div>
-                              <span>Drop Here</span>
-                            </div>
-                          ) : (
-                            <div className="text-muted-foreground flex w-[265px] flex-col items-center justify-center gap-2 text-center text-sm">
-                              <span className="flex h-[35px] w-[35px] items-center justify-center rounded-full bg-[#D1F0DE]">
-                                <CustomUploadIcon size={15} />
-                              </span>
-                              <span className="text-center font-normal text-[#5C5A55]">
-                                Click to upload or drag and drop PNG or JPG
-                                (max, 1030x170px)
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Title</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="Title"
-                          className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]"
-                          type="text"
-                          name="title"
-                          disabled={
-                            addBanner.isPending || updateBanner.isPending
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="subtitle"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Message</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          {...field}
-                          placeholder="Message"
-                          className="h-[130px] resize-none selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]"
-                          name="subtitle"
-                          disabled={
-                            addBanner.isPending || updateBanner.isPending
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <div className="flex w-full items-center justify-center">
-                  <Button
-                    type="submit"
-                    className={`bg-custom-green cursor-pointer rounded-full hover:bg-[#1fc966] ${addBanner.isPending || updateBanner.isPending ? "w-5" : "w-full"} transition-all duration-500 ease-in-out`}
-                    disabled={addBanner.isPending || updateBanner.isPending}
-                  >
-                    {addBanner.isPending || updateBanner.isPending ? (
-                      <div className="flex items-center justify-center">
-                        <div className="bg-custom-green w-fit rounded-full p-2">
-                          <div className="h-5 w-5 animate-spin rounded-full border-3 border-gray-200 border-t-[#1AB65C]" />
-                        </div>
-                      </div>
-                    ) : bannerAction === "addBanner" ? (
-                      "Upload"
-                    ) : (
-                      bannerAction === "updateBanner" && "Update"
-                    )}
-                  </Button>
-                </div>
-              </form>
-            </Form>
           </DialogHeader>
+
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleAddOREditBannerAction)}
+              className="space-y-2"
+            >
+              <FormField
+                control={form.control}
+                name="image"
+                render={() => (
+                  <FormItem>
+                    <FormControl>
+                      <div
+                        {...getRootProps()}
+                        className={`flex h-[120px] w-full cursor-pointer items-center justify-center rounded-xl border-[2px] border-dashed border-[#898A8C] transition-all ${
+                          isDragActive
+                            ? "border-[#1AB65C] bg-[#E9F9EF]"
+                            : "border-[#C8C8C8] bg-[#F8F8F8]"
+                        }`}
+                      >
+                        <input {...getInputProps()} />
+                        {previewImage ? (
+                          <div className="relative h-[110px] w-full overflow-hidden rounded-lg">
+                            <Image
+                              src={previewImage}
+                              alt="preview"
+                              fill
+                              className="rounded-lg object-cover"
+                            />
+                          </div>
+                        ) : isDragActive ? (
+                          <div>
+                            <span>Drop Here</span>
+                          </div>
+                        ) : (
+                          <div className="text-muted-foreground flex w-[265px] flex-col items-center justify-center gap-2 text-center text-sm">
+                            <span className="flex h-[35px] w-[35px] items-center justify-center rounded-full bg-[#D1F0DE]">
+                              <CustomUploadIcon size={15} />
+                            </span>
+                            <span className="text-center font-normal text-[#5C5A55]">
+                              Click to upload or drag and drop PNG or JPG (max,
+                              1030x170px)
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Title</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Title"
+                        className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]"
+                        type="text"
+                        name="title"
+                        disabled={addBanner.isPending || updateBanner.isPending}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="subtitle"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Message</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        placeholder="Message"
+                        className="h-[130px] resize-none selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]"
+                        name="subtitle"
+                        disabled={addBanner.isPending || updateBanner.isPending}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="flex w-full items-center justify-center">
+                <Button
+                  type="submit"
+                  className={`bg-custom-green cursor-pointer rounded-full hover:bg-[#1fc966] ${addBanner.isPending || updateBanner.isPending ? "w-5" : "w-full"} transition-all duration-500 ease-in-out`}
+                  disabled={addBanner.isPending || updateBanner.isPending}
+                >
+                  {addBanner.isPending || updateBanner.isPending ? (
+                    <div className="flex items-center justify-center">
+                      <div className="bg-custom-green w-fit rounded-full p-2">
+                        <div className="h-5 w-5 animate-spin rounded-full border-3 border-gray-200 border-t-[#1AB65C]" />
+                      </div>
+                    </div>
+                  ) : bannerAction === "addBanner" ? (
+                    "Upload"
+                  ) : (
+                    bannerAction === "updateBanner" && "Update"
+                  )}
+                </Button>
+              </div>
+            </form>
+          </Form>
         </DialogContent>
       </Dialog>
 
