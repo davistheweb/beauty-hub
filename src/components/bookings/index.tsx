@@ -189,13 +189,15 @@ export default function Bookings() {
         displayed here"
             />
           ) : isAllBookingsDataLoading ? (
-            <div className="flex w-full flex-col gap-3">
-              {Array.from({ length: 5 }, (_, i) => i).map((i) => (
-                <Skeleton
-                  key={i}
-                  className="h-[340px] w-[330px] bg-[#E6E6E6] sm:w-[300px] md:w-[330px] lg:w-[300px] xl:w-[450px]"
-                />
-              ))}
+            <div className="h-full w-full">
+              <div className="flex w-full flex-col items-center justify-center gap-3">
+                {Array.from({ length: 5 }, (_, i) => i).map((i) => (
+                  <Skeleton
+                    key={i}
+                    className="h-[340px] w-[330px] bg-[#E6E6E6] sm:w-[300px] md:w-[330px] lg:w-[300px] xl:w-[450px]"
+                  />
+                ))}
+              </div>
             </div>
           ) : (
             <div className="h-full w-full">
