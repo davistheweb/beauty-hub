@@ -1,12 +1,16 @@
 "use client";
+import { RootState } from "@/store";
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import Notifications from "../Notifications";
 import Logo from "../ui/Logo";
 import MobileNavMenu from "./MobileNavMenu";
 
 export default function MobileNavigation() {
+  const avatar =
+    useSelector((state: RootState) => state.admin.profile?.avatar) || "";
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <nav className="border-b-gray-[#A4B9DA] fixed top-0 right-0 z-10 flex w-full items-center justify-between border-b-1 bg-white p-2 lg:hidden">
@@ -20,12 +24,14 @@ export default function MobileNavigation() {
       {/* Navitems */}
       <div className="flex items-center justify-center gap-3">
         <Notifications />
-        <div className="flex items-center justify-center rounded-full">
+        <div className="flex h-[27px] w-[27px] items-center justify-center overflow-hidden rounded-full">
           <Image
-            src="/images/admin-img.png"
+            src={avatar}
             alt="profile-img"
-            width={35}
-            height={35}
+            width={27}
+            height={27}
+            className="object-cover"
+            unoptimized
           />
         </div>
         <button onClick={() => setIsOpen((prev) => !prev)}>

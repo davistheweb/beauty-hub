@@ -1,11 +1,11 @@
-import { DashboardCard } from "@/components/DashboardCard ";
+import { DashboardCard } from "@/components/DashboardCard";
 import DashboardChart from "@/components/DashboardChart";
 import { CustomGreenBookICon, StylistIcon } from "@/components/icons";
 import { CustomWalletICon } from "@/components/icons/CustomWalletICon";
 import AppLayout from "@/components/layouts/AppLayout";
 import {
-  NoDataFoundDesktopComponent,
-  NoDataFoundMobileComponent,
+  NoDataFoundTableDesktopComponent,
+  NoDataFoundTableMobileComponent,
 } from "@/components/no-data";
 import { bookingDetails, tableHeaders } from "@/data";
 import { Dot } from "lucide-react";
@@ -28,31 +28,31 @@ export default function Dashboard() {
             icon={<CustomGreenBookICon />}
           />
           <DashboardCard
-            title="AllBarbers"
+            title="All Staffs"
             subtitle={0}
             icon={<StylistIcon />}
           />
           <DashboardCard
-            title="TotalRevenue"
+            title="Total Users"
             subtitle={0}
             icon={<CustomWalletICon />}
           />
         </div>
 
         {/* Table and Statistics Container */}
-        <div className="mt-3 flex w-full flex-col items-center justify-center gap-3 p-2 lg:flex-row">
+        <div className="mt-3 flex w-full flex-col justify-center gap-3 p-2 lg:flex-row">
           {/* Customers Display*/}
           <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
             <div className="flex h-12 w-full items-center justify-center">
               <div className="flex h-[30px] w-full items-center justify-end p-4">
                 <div className="flex gap-2">
-                  <button className="text-custom-green cursor-pointer rounded-xs bg-[#E6E6E6] p-1 pr-2 pl-2 text-center text-[14px] font-medium">
+                  <button className="text-custom-green cursor-pointer rounded-xs bg-[#F9FFFB] p-1 pr-2 pl-2 text-center text-[14px] font-medium">
                     Day
                   </button>
-                  <button className="cursor-pointer rounded-xs p-1 pr-2 pl-2 text-[14px] font-medium text-[#898A8C] duration-300 hover:bg-[#E6E6E6] hover:text-[#1AB65C]">
+                  <button className="cursor-pointer rounded-xs p-1 pr-2 pl-2 text-[14px] font-medium text-[#898A8C] duration-300 hover:bg-[#F9FFFB] hover:text-[#1AB65C]">
                     Month
                   </button>
-                  <button className="cursor-pointer rounded-xs p-1 pr-2 pl-2 text-[14px] font-medium text-[#898A8C] duration-300 hover:bg-[#E6E6E6] hover:text-[#1AB65C]">
+                  <button className="cursor-pointer rounded-xs p-1 pr-2 pl-2 text-[14px] font-medium text-[#898A8C] duration-300 hover:bg-[#F9FFFB] hover:text-[#1AB65C]">
                     Year
                   </button>
                 </div>
@@ -69,7 +69,7 @@ export default function Dashboard() {
                     {tableHeaders.map((header, _i) => (
                       <th
                         key={_i}
-                        className="w-[200px] border-b border-gray-200 px-4 py-2 text-center text-[14px] font-medium tracking-wide"
+                        className={`${header === "Status" ? "w-[150px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-center text-[14px] font-medium tracking-wide`}
                       >
                         {header}
                       </th>
@@ -77,10 +77,11 @@ export default function Dashboard() {
                   </tr>
                 </thead>
                 {!bookingDetails.length ? (
-                  <NoDataFoundDesktopComponent
+                  <NoDataFoundTableDesktopComponent
                     title="No Information Yet!"
                     subtitle="Once your users start booking an appointment, all informations will be
         displayed here"
+                    colSpan={tableHeaders.length}
                   />
                 ) : (
                   <tbody className="w-full divide-y divide-gray-100">
@@ -95,17 +96,22 @@ export default function Dashboard() {
                         <td className="px-4 py-2 text-center text-[14px] text-[#727272]">
                           {bookingDetail.package}
                         </td>
-                        <td className="px-4 py-2 text-center text-[14px] font-normal text-[#727272]">
+                        <td className="px-4 py-2 text-center text-[13px] font-normal text-[#727272]">
                           {bookingDetail.date}
                         </td>
                         <td
-                          className={`flex items-center justify-center px-4 py-2`}
+                          className={`flex items-center justify-center px-1 py-1`}
                         >
                           <span
-                            className={`rounded-md bg-[#EDF5FE] pt-[4.26px] pr-[8.52px] pb-[4.26px] pl-[8.52px] ${bookingDetail.status === "In Progress" ? "text-[#004CE8]" : bookingDetail.status === "Done" ? "text-[#00C247]" : "text-[#FF3333]"} flex w-[120px] items-center text-[14px]`}
+                            className={`rounded-[38.32px] bg-[#EDF5FE] ${bookingDetail.status === "In Progress" ? "text-[#004CE8]" : bookingDetail.status === "Done" ? "text-[#00C247]" : "text-[#FF3333]"} flex w-full items-center justify-center`}
                           >
-                            <Dot size={30} />
-                            <span>{bookingDetail.status}</span>
+                            <Dot
+                              size={40}
+                              className="inline-block"
+                            />
+                            <span className="w-fit text-center text-[12px]">
+                              {bookingDetail.status}
+                            </span>
                           </span>
                         </td>
                       </tr>
@@ -117,13 +123,13 @@ export default function Dashboard() {
             {/* Customers Display Card  */}
             <div className="flex h-full w-full items-center justify-center overflow-y-auto md:hidden">
               {!bookingDetails.length ? (
-                <NoDataFoundMobileComponent
+                <NoDataFoundTableMobileComponent
                   title="No Information Yet!"
                   subtitle="Once your users start booking an appointment, all informations will be
         displayed here"
                 />
               ) : (
-                <div className="w-full">
+                <div className="h-full w-full">
                   <div className="flex h-14 w-full items-center justify-center bg-[#F5F5F5]">
                     <h1 className="text-custom-green font-semibold">
                       Team Members Details

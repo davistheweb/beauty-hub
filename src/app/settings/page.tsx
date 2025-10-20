@@ -1,15 +1,17 @@
 import AppLayout from "@/components/layouts/AppLayout";
+import Settings from "@/components/settings";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Beauty - Settings",
 };
 
-export default function Settings() {
+export default function SettingsPage() {
   return (
     <AppLayout>
-      <div className="flex-1">
-        <p>Settings</p>
+      <div className="flex h-full flex-1 flex-col md:p-2">
+        <h1 className="inline-block text-2xl font-bold">Settings</h1>
+        <Settings />
       </div>
     </AppLayout>
   );

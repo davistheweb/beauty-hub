@@ -1,16 +1,13 @@
 "use client";
 
-import Store from "@/Store";
-import { ReactNode, useState } from "react";
+import { persistor, store } from "@/store";
+import { ReactNode } from "react";
 import { Provider } from "react-redux";
-import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 
 export default function ReduxProvider({ children }: { children: ReactNode }) {
-  const [persistor] = useState(() => persistStore(Store));
-
   return (
-    <Provider store={Store}>
+    <Provider store={store}>
       <PersistGate
         loading={
           <div className="flex h-screen items-center justify-center py-20">

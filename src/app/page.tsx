@@ -1,3 +1,5 @@
+import Redirect from "@/Redirect";
+
 export default function page() {
-  return <div>page</div>;
+  return <Redirect url="dashboard" />;
 }

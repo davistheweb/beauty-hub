@@ -1,6 +1,10 @@
-"use client";
-import ForgotPasswordForm from "../_components/ForgotPasswordForm";
+import AccountRecovery from "@/components/auth/AccountRecovery";
+import { Metadata } from "next";
 
-export default function LoginPage() {
-  return <ForgotPasswordForm />;
+export const metadata: Metadata = {
+  title: "Beauty- Account Recovery",
+};
+
+export default function AccountRecoveryPage() {
+  return <AccountRecovery />;
 }
