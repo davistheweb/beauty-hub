@@ -90,14 +90,14 @@ export const BookingDetailsDialog = ({
           </DialogTitle>
         </DialogHeader>
 
-        <div className=" flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           {/* Customer information will be displayed here. */}
           <div className="w-full">
             <span className="text-[18px] font-semibold lg:text-xl">
               Customer Information
             </span>
-            <div className="flex flex-col rounded-[4px] border border-[#E4E4E4]  w-full">
-              <div className="flex flex-col justify-start md:justify-between w-full gap-2 md:gap-0: p-3 md:flex-row">
+            <div className="flex w-full flex-col rounded-[4px] border border-[#E4E4E4]">
+              <div className="md:gap-0: flex w-full flex-col justify-start gap-2 p-3 md:flex-row md:justify-between">
                 <span className="item-center flex gap-2">
                   <div className="flex h-[28px] w-[28px] cursor-pointer items-center justify-center overflow-hidden rounded-full">
                     <Image
