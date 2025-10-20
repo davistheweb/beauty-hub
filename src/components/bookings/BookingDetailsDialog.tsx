@@ -133,11 +133,16 @@ export const BookingDetailsDialog = ({
                   </span>
                 </span>
                 <span
-                  className={`h-[25px] w-[70px] rounded-[42.58px] bg-[#EDF5FE] pt-[4.73px] pr-[9.46px] pb-[4.73px] pl-[9.46px] ${selectedBookingDetails.status === "pending" ? "text-[#004CE8]" : selectedBookingDetails.status === "completed" ? "text-[#00C247]" : selectedBookingDetails.status === "confirmed" ? "text-[#333]" : selectedBookingDetails.status === "cancelled" && "text-[#FF3333]"} flex w-[130px] items-center justify-center text-[14px]`}
+                  className={`rounded-[38.32px] select-none bg-[#EDF5FE] ${selectedBookingDetails.status === "pending" ? "text-[#004CE8]" : selectedBookingDetails.status === "completed" ? "text-[#00C247]" : selectedBookingDetails.status === "confirmed" ? "text-[#333]" : selectedBookingDetails.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] items-center justify-center gap-2 px-2 w-[110px]`}
                 >
-                  <Dot size={40} />
-                  <span>
-                    {" "}
+                  <span className="flex h-3 w-3 items-center justify-center">
+                    <Dot
+                      size={40}
+                      className="shrink-0"
+                    />
+                  </span>
+
+                  <span className="w-fit text-center text-[12px]">
                     {selectedBookingDetails.status === "pending"
                       ? "In Progress"
                       : selectedBookingDetails.status === "completed"
@@ -177,12 +182,12 @@ export const BookingDetailsDialog = ({
             </span>
             <div className="flex flex-col rounded-[4px] border border-[#E4E4E4] p-2">
               <div className="flex w-[300px] flex-col gap-1 md:gap-3">
-                <span className="grid grid-cols-2">
+                <span className="grid grid-cols-2 md:grid-cols-1 md:gap-3">
                   <span className="flex flex-col">
                     <span className="text-xs font-normal text-[#727272]">
                       Types of packages
                     </span>
-                    <span className="font-medium text-xs md:text-[16px]">
+                    <span className="text-xs font-medium md:text-[16px]">
                       {selectedBookingDetails.package.name}
                     </span>
                   </span>
@@ -209,7 +214,7 @@ export const BookingDetailsDialog = ({
                   <span className="text-xs font-normal text-[#727272]">
                     Location
                   </span>
-                  <span className="flex items-center gap-2 text-xs font-medium">
+                  <span className="flex items-center gap-2 text-xs md:text-[16px] font-medium">
                     {selectedBookingDetails.location}
                   </span>
                   <span className="cursor-pointer">

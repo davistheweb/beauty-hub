@@ -138,7 +138,7 @@ export default function Bookings() {
                           className={`flex items-center justify-center px-10 py-1`}
                         >
                           <span
-                            className={`rounded-[38.32px] bg-[#EDF5FE] ${bookingDetail.status === "pending" ? "text-[#004CE8]" : bookingDetail.status === "completed" ? "text-[#00C247]" : bookingDetail.status === "confirmed" ? "text-[#333]" : bookingDetail.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] items-center justify-center gap-2 px-2`}
+                            className={`rounded-[38.32px] bg-[#EDF5FE] select-none ${bookingDetail.status === "pending" ? "text-[#004CE8]" : bookingDetail.status === "completed" ? "text-[#00C247]" : bookingDetail.status === "confirmed" ? "text-[#333]" : bookingDetail.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] items-center justify-center gap-2 px-2`}
                           >
                             <span className="flex h-3 w-3 items-center justify-center">
                               <Dot
@@ -235,7 +235,7 @@ export default function Bookings() {
                       <span className="flex items-center justify-between">
                         <h1 className="text-[18px] font-medium">Status</h1>
                         <span
-                          className={`rounded-[38.32px] bg-[#EDF5FE] ${bookingDetail.status === "pending" ? "text-[#004CE8]" : bookingDetail.status === "completed" ? "text-[#00C247]" : bookingDetail.status === "confirmed" ? "text-[#333]" : bookingDetail.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] items-center justify-center gap-2 px-2`}
+                          className={`rounded-[38.32px] bg-[#EDF5FE] select-none ${bookingDetail.status === "pending" ? "text-[#004CE8]" : bookingDetail.status === "completed" ? "text-[#00C247]" : bookingDetail.status === "confirmed" ? "text-[#333]" : bookingDetail.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] items-center justify-center gap-2 px-2`}
                         >
                           <span className="flex h-3 w-3 items-center justify-center">
                             <Dot
