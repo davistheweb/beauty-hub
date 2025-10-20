@@ -66,6 +66,7 @@ export const BookingDetailsDialog = ({
       setTimeout(() => setCopyStatus("copy"), 2000);
     } catch (err) {
       toast.error("Failed to copy location.");
+      console.log(err);
     }
   };
 
@@ -197,7 +198,7 @@ export const BookingDetailsDialog = ({
                         Booking amount
                       </span>
                       <span className="text-semibold text-xs md:text-[16px]">
-                        ₦{selectedBookingDetails.amount}
+                        ₦{selectedBookingDetails.amount.split(".")[0]}
                       </span>
                     </span>
                     <span className="flex flex-col">

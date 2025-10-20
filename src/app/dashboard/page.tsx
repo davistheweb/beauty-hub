@@ -28,12 +28,12 @@ export default function Dashboard() {
             icon={<CustomGreenBookICon />}
           />
           <DashboardCard
-            title="AllBarbers"
+            title="All Staffs"
             subtitle={0}
             icon={<StylistIcon />}
           />
           <DashboardCard
-            title="TotalRevenue"
+            title="Total Users"
             subtitle={0}
             icon={<CustomWalletICon />}
           />

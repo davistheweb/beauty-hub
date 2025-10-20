@@ -25,7 +25,7 @@ export default function StaffsPage() {
                 <span>
                   <Plus />
                 </span>
-                Add Stylist
+                Add Staff
               </Button>
             </div>
           )}

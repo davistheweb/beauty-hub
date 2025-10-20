@@ -31,7 +31,6 @@ export const editBannerFormSchema = baseBannerSchema.extend({
     ),
 });
 
-// 👇 Shared type
 export type BannerFormValues = {
   title: string;
   subtitle: string;

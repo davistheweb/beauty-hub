@@ -21,8 +21,8 @@ export const NavLinks: {
     Icon: CustomGrayBookICon,
   },
   {
-    title: "Services",
-    href: "/services",
+    title: "Packages",
+    href: "/packages",
     Icon: MdOutlineDashboardCustomize,
   },
   { title: "Staff", href: "/staffs", Icon: GrayStylistGIcon },
