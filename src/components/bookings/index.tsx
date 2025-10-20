@@ -138,12 +138,15 @@ export default function Bookings() {
                           className={`flex items-center justify-center px-10 py-1`}
                         >
                           <span
-                            className={`rounded-[38.32px] bg-[#EDF5FE] ${bookingDetail.status === "pending" ? "text-[#004CE8]" : bookingDetail.status === "completed" ? "text-[#00C247]" : bookingDetail.status === "confirmed" ? "text-[#333]" : bookingDetail.status === "cancelled" && "text-[#FF3333]"} flex w-full items-center justify-center`}
+                            className={`rounded-[38.32px] bg-[#EDF5FE] ${bookingDetail.status === "pending" ? "text-[#004CE8]" : bookingDetail.status === "completed" ? "text-[#00C247]" : bookingDetail.status === "confirmed" ? "text-[#333]" : bookingDetail.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] items-center justify-center gap-2 px-2`}
                           >
-                            <Dot
-                              size={40}
-                              className="inline-blocki"
-                            />
+                            <span className="flex h-3 w-3 items-center justify-center">
+                              <Dot
+                                size={40}
+                                className="shrink-0"
+                              />
+                            </span>
+
                             <span className="w-fit text-center text-[12px]">
                               {bookingDetail.status === "pending"
                                 ? "In Progress"
@@ -232,11 +235,16 @@ export default function Bookings() {
                       <span className="flex items-center justify-between">
                         <h1 className="text-[18px] font-medium">Status</h1>
                         <span
-                          className={`rounded-[42.58px] bg-[#EDF5FE] pt-[4.73px] pr-[9.46px] pb-[4.73px] pl-[9.46px] ${bookingDetail.status === "pending" ? "text-[#004CE8]" : bookingDetail.status === "completed" ? "text-[#00C247]" : bookingDetail.status === "confirmed" ? "text-[#333]" : bookingDetail.status === "cancelled" && "text-[#FF3333]"} flex w-[130px] items-center justify-center text-[14px]`}
+                          className={`rounded-[38.32px] bg-[#EDF5FE] ${bookingDetail.status === "pending" ? "text-[#004CE8]" : bookingDetail.status === "completed" ? "text-[#00C247]" : bookingDetail.status === "confirmed" ? "text-[#333]" : bookingDetail.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] items-center justify-center gap-2 px-2`}
                         >
-                          <Dot size={40} />
-                          <span>
-                            {" "}
+                          <span className="flex h-3 w-3 items-center justify-center">
+                            <Dot
+                              size={40}
+                              className="shrink-0"
+                            />
+                          </span>
+
+                          <span className="w-fit text-center text-[12px]">
                             {bookingDetail.status === "pending"
                               ? "In Progress"
                               : bookingDetail.status === "completed"
