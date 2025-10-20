@@ -62,6 +62,8 @@ export const BookingDetailsDialog = ({
       {
         onSuccess: (data) => {
           toast.success(data.message);
+           setSelectedBookingId(null);
+           setSelectedBookingDetails(null);
           setTimeout(() => {
             setOpenDialog(false);
           }, 1000);
