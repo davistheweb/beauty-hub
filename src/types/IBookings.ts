@@ -74,5 +74,4 @@ interface IBookingsResponse {
   };
 }
 
-
 export type { IBookings, IBookingsResponse };

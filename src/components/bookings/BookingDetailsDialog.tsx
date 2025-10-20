@@ -1,7 +1,7 @@
 "use client";
 
 import { IBookings } from "@/types/IBookings";
-import { Dot, Mail, Phone } from "lucide-react";
+import { Check, Dot, Mail, Phone } from "lucide-react";
 import Image from "next/image";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
@@ -27,8 +27,10 @@ import {
   bookingStatusSchema,
 } from "@/utils/validators/updateBookingDetailsSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import CopyIcon from "../icons/CopyIcon";
 
 interface BookingDetailsDialogProps {
   openDialog: boolean;
@@ -45,13 +47,26 @@ export const BookingDetailsDialog = ({
   setSelectedBookingDetails,
   selectedBookingDetails,
 }: BookingDetailsDialogProps) => {
+  const [copyStatus, setCopyStatus] = useState<"copy" | "copied">("copy");
+
   const { updateBookingStatus } = useBookingDetailsByID();
+
   const form = useForm<BookingStatusFormValues>({
     resolver: zodResolver(bookingStatusSchema),
     defaultValues: {
       status: "",
     },
   });
+
+  const handleCopyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopyStatus("copied");
+      setTimeout(() => setCopyStatus("copy"), 2000);
+    } catch (err) {
+      toast.error("Failed to copy location.");
+    }
+  };
 
   const handleUpdateBookingStatus = (data: BookingStatusFormValues) => {
     updateBookingStatus.mutate(
@@ -62,8 +77,8 @@ export const BookingDetailsDialog = ({
       {
         onSuccess: (data) => {
           toast.success(data.message);
-           setSelectedBookingId(null);
-           setSelectedBookingDetails(null);
+          setSelectedBookingId(null);
+          setSelectedBookingDetails(null);
           setTimeout(() => {
             setOpenDialog(false);
           }, 1000);
@@ -187,12 +202,28 @@ export const BookingDetailsDialog = ({
                     </span>
                   </span>
                 </span>
-                <span className="flex flex-col">
+                <span className="flex flex-col gap-1">
                   <span className="text-xs font-normal text-[#727272]">
                     Location
                   </span>
-                  <span className="font-medium">
+                  <span className="flex items-center gap-2 font-medium">
                     {selectedBookingDetails.location}
+                  </span>
+                  <span className="cursor-pointer">
+                    {copyStatus === "copy" ? (
+                      <CopyIcon
+                        color="#898A8C"
+                        size={16}
+                        onClick={() =>
+                          handleCopyToClipboard(selectedBookingDetails.location)
+                        }
+                      />
+                    ) : (
+                      <Check
+                        className="text-[#898A8C]"
+                        size={16}
+                      />
+                    )}
                   </span>
                 </span>
               </div>
