@@ -19,7 +19,7 @@ export default function Bookings() {
   );
   const [selectedBookingDetails, setSelectedBookingDetails] =
     useState<IBookings | null>(null);
-  const { bookingDetails, bookingDetailsDataIsLoading, } = useBookingDetailsByID(
+  const { bookingDetails, bookingDetailsDataIsLoading } = useBookingDetailsByID(
     selectedBookingId ?? undefined,
   );
 
@@ -250,8 +250,18 @@ export default function Bookings() {
                       </span>
                     </div>
                     <div className="flex justify-end pr-4">
-                      <button className="text-custom-green text-[14px] font-medium">
-                        Action
+                      <button
+                        className="text-custom-green text-[14px] font-medium"
+                        onClick={() =>
+                          handleViewBookingDetails(bookingDetail.id)
+                        }
+                      >
+                        {bookingDetailsDataIsLoading &&
+                        selectedBookingId === bookingDetail.id ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          " Action"
+                        )}
                       </button>
                     </div>
                   </div>

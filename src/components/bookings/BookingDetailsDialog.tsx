@@ -64,7 +64,7 @@ export const BookingDetailsDialog = ({
           toast.success(data.message);
           setTimeout(() => {
             setOpenDialog(false);
-          }, 1500);
+          }, 1000);
         },
         onError: (err) => {
           toast.error(err.message);
