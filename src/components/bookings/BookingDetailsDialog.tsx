@@ -83,21 +83,21 @@ export const BookingDetailsDialog = ({
         }
       }}
     >
-      <DialogContent>
+      <DialogContent className="max-w-fit">
         <DialogHeader>
           <DialogTitle className="text-custom-green text-[18px] font-bold lg:text-2xl">
             Booking Details
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex flex-col gap-4">
+        <div className=" flex flex-col gap-4">
           {/* Customer information will be displayed here. */}
           <div className="w-full">
             <span className="text-[18px] font-semibold lg:text-xl">
               Customer Information
             </span>
-            <div className="flex flex-col rounded-[4px] border border-[#E4E4E4]">
-              <div className="flex items-center justify-between p-2">
+            <div className="flex flex-col rounded-[4px] border border-[#E4E4E4]  w-full">
+              <div className="flex flex-col justify-start md:justify-between w-full gap-2 md:gap-0: p-3 md:flex-row">
                 <span className="item-center flex gap-2">
                   <div className="flex h-[28px] w-[28px] cursor-pointer items-center justify-center overflow-hidden rounded-full">
                     <Image
@@ -131,7 +131,7 @@ export const BookingDetailsDialog = ({
                   </span>
                 </span>
               </div>
-              <div className="flex w-full justify-between border-t border-[#E4E4E4] p-2">
+              <div className="flex w-full flex-col justify-between gap-2 border-t border-[#E4E4E4] p-3 md:flex-row">
                 <span className="flex items-center gap-2">
                   <Phone
                     size={15}
@@ -212,7 +212,7 @@ export const BookingDetailsDialog = ({
                         onValueChange={field.onChange}
                         value={field.value || ""}
                       >
-                        <SelectTrigger className="h-12 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]">
+                        <SelectTrigger className="h-12 w-full focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none">
                           <SelectValue placeholder="-- Select Status --" />
                         </SelectTrigger>
                         <SelectContent>

@@ -2,7 +2,8 @@ import { z } from "zod";
 
 export const bookingStatusSchema = z.object({
   status: z
-    .string().nonempty({error:  "Please select a status"})
+    .string()
+    .nonempty({ error: "Please select a status" })
     .refine(
       (val) => ["pending", "confirmed", "completed", "cancelled"].includes(val),
       {

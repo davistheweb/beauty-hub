@@ -1,12 +1,5 @@
 import Bookings from "@/components/bookings";
 import AppLayout from "@/components/layouts/AppLayout";
-import {
-  NoDataFoundTableDesktopComponent,
-  NoDataFoundTableMobileComponent,
-} from "@/components/no-data";
-import SearchInput from "@/components/ui/SearchInput";
-import { bookingDetails, bookingTableHeaders } from "@/data";
-import { ChevronDown, Dot, EllipsisVertical } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
