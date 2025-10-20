@@ -1,7 +1,7 @@
 "use client";
 
 import { IBookings } from "@/types/IBookings";
-import { Check, Dot, Mail, Phone } from "lucide-react";
+import { Check, Dot, Mail } from "lucide-react";
 import Image from "next/image";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
@@ -149,7 +149,7 @@ export const BookingDetailsDialog = ({
                   </span>
                 </span>
               </div>
-              <div className="flex w-full flex-col justify-between gap-2 border-t border-[#E4E4E4] p-3 md:flex-row">
+              <div className="flex w-full flex-col justify-between gap-1 border-t border-[#E4E4E4] p-3 md:flex-row md:gap-2">
                 <span className="flex items-center gap-2">
                   <PhoneIcon
                     size={15}
@@ -182,13 +182,13 @@ export const BookingDetailsDialog = ({
                     <span className="text-xs font-normal text-[#727272]">
                       Types of packages
                     </span>
-                    <span className="font-medium">
+                    <span className="font-medium text-xs md:text-[16px]">
                       {selectedBookingDetails.package.name}
                     </span>
                   </span>
                   <span className="flex justify-between gap-3">
                     <span className="flex flex-col">
-                      <span className="text-[10px] md:text-xs font-normal text-[#727272]">
+                      <span className="text-[10px] font-normal text-[#727272] md:text-xs">
                         Booking amount
                       </span>
                       <span className="text-semibold text-xs md:text-[16px]">
@@ -199,7 +199,7 @@ export const BookingDetailsDialog = ({
                       <span className="text-xs font-normal text-[#727272]">
                         Date
                       </span>
-                      <span className="text-semibold">
+                      <span className="text-semibold text-xs md:text-[16px]">
                         {selectedBookingDetails.booking_date}
                       </span>
                     </span>
@@ -209,7 +209,7 @@ export const BookingDetailsDialog = ({
                   <span className="text-xs font-normal text-[#727272]">
                     Location
                   </span>
-                  <span className="flex items-center gap-2 font-medium">
+                  <span className="flex items-center gap-2 text-xs font-medium">
                     {selectedBookingDetails.location}
                   </span>
                   <span className="cursor-pointer">
