@@ -1,4 +1,4 @@
-import { IPackagesResponse } from "@/types/IServices";
+import { IPackagesResponse } from "@/types/IPackages";
 import { API } from "./axios";
 import { getApiResponse } from "./helpers";
 

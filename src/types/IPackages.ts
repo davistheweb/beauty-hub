@@ -13,7 +13,7 @@ interface IPackage {
   description: string | null;
   price: string;
   image: string;
-  status: string;
+  status: "active" | "inactive";
   created_at: string | null;
   updated_at: string | null;
   services: IService[];

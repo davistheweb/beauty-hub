@@ -62,7 +62,7 @@ const Package = () => {
                     allServices={packageItem.services.map(
                       (service) => service.name,
                     )}
-                    status={packageItem.status as "" | "Active" | "Inactive"}
+                    status={packageItem.status}
                   />
                 ))
               )}

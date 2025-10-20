@@ -8,7 +8,7 @@ interface IPackageCardProps {
   packageType: string;
   serviceAmount: string;
   allServices: string[];
-  status: "" | "Active" | "Inactive";
+  status: "active" | "inactive";
 }
 
 const PackageCard = ({
@@ -22,7 +22,7 @@ const PackageCard = ({
     {status && (
       <span
         className={`absolute top-[8px] right-3 z-1 rounded-[42.58px] bg-[#EDF5FE] ${
-          status === "Active" ? "text-[#00C247]" : "text-[#004CE8]"
+          status === "active" ? "text-[#00C247]" : "text-[#004CE8]"
         } flex h-[25px] w-[90px] items-center justify-center gap-1 text-[14px] select-none`}
       >
         <span className="flex h-3 w-3 items-center justify-center">
@@ -31,7 +31,9 @@ const PackageCard = ({
             className="shrink-0"
           />
         </span>
-        <span className="text-xs font-medium">{status}</span>
+        <span className="text-xs font-medium">
+          {status === "active" ? "Active" : status === "inactive" && "Inactive"}
+        </span>
       </span>
     )}
     <div className="relative h-[243px] min-w-full overflow-hidden rounded-md">

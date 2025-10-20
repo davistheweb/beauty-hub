@@ -38,4 +38,4 @@ export type BannerFormValues = {
 };
 
 export type addBannerFormValues = z.infer<typeof addBannerFormSchema>;
-export type editBannerFormValues = z.infer<typeof editBannerFormSchema>
+export type editBannerFormValues = z.infer<typeof editBannerFormSchema>;
