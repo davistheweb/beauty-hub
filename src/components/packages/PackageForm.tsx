@@ -195,7 +195,7 @@ const PackageForm = ({
           }, 1000);
         },
         onError: (err) => {
-          toast.error(err.message)
+          toast.error(err.message);
           console.log(err);
         },
       });
