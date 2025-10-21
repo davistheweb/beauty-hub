@@ -1,5 +1,6 @@
 import { API } from "./axios";
 import { getApiResponse } from "./helpers";
+import { multipartConfig } from "./httpConfig";
 
 const updateProfile = async (name: string, phoneNuber: string) =>
   API.post("/admin/profile/update_profile", {
@@ -19,7 +20,7 @@ const updateAccountPassword = async (
 
 const changeProfileAvatar = async (formData: FormData) =>
   API.post("/admin/profile/change_avatar", formData, {
-    headers: { "Content-Type": "multipart/form-data" },
+    ...multipartConfig,
   }).then(getApiResponse);
 
 export { changeProfileAvatar, updateAccountPassword, updateProfile };
