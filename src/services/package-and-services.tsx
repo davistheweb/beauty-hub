@@ -9,7 +9,7 @@ const fetchAllPackagesAndServices = async (): Promise<IPackagesResponse> => {
 };
 
 const addPackageAndService = async (data: FormData) => {
-  const res = await API.post("", data, {
+  const res = await API.post("/admin/package/add_package", data, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 

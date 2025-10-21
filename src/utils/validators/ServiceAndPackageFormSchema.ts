@@ -2,14 +2,9 @@ import z from "zod";
 
 const addPackageFormSchema = z.object({
   name: z.string().nonempty({ error: "Package name is required" }),
-  price: z.number({ error: "Price is required. eg: 2000.00" }),
-  services: z
-    .array(
-      z.object({
-        name: z.string().nonempty({ error: "This field is required" }),
-      }),
-    )
-    .min(1, "At least, One Service is required!"),
+  price: z.string().nonempty({ error: "Price is required. eg: 2000.00" }),
+  services: z.string().nonempty({ error: "This field is required" }),
+
   image: z
     .instanceof(File, { message: "Package photo is required" })
     .refine(

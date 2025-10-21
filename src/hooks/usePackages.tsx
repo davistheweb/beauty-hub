@@ -14,12 +14,12 @@ export default function usePackages() {
     gcTime: 1000 * 60 * 10,
   });
 
-  const addService = useMutation({
+  const addPackage = useMutation({
     mutationFn: addPackageAndService,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["packages"] }),
   });
 
   const packages = data?.data?.data || [];
 
-  return { packages, isLoading, addService };
+  return { packages, isLoading, addPackage };
 }

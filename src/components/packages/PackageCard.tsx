@@ -9,6 +9,7 @@ interface IPackageCardProps {
   serviceAmount: string;
   allServices: string[];
   status: "active" | "inactive";
+  handleViewServices: () => void;
 }
 
 const PackageCard = ({
@@ -17,6 +18,7 @@ const PackageCard = ({
   serviceAmount,
   allServices,
   status,
+  handleViewServices,
 }: IPackageCardProps) => (
   <div className="relative flex h-[407px] w-[320px] flex-col items-center justify-between overflow-hidden rounded-md border border-[#E6E6E6] bg-white pb-2">
     {status && (
@@ -52,12 +54,14 @@ const PackageCard = ({
     </div>
     <div className="relative flex h-[159px] w-full flex-col justify-between gap-1 overflow-hidden px-3 py-2">
       <div className="flex w-full justify-between">
-        <span className="text-[18px] font-semibold">{packageType}</span>
-        <span className="text-xl font-bold">₦{serviceAmount}</span>
+        <span className="truncate text-[16px] font-semibold">
+          {packageType}
+        </span>
+        <span className="truncate text-xl font-bold">₦{serviceAmount}</span>
       </div>
       <div className="flex w-full justify-between overflow-hidden px-1 py-2">
         {/* ALl Services */}
-        <div className="flex flex-col gap-2 overflow-hidden">
+        <div className="over flex flex-col gap-2">
           {allServices.slice(0, 3).map((service, i) => (
             <span
               key={i}
@@ -72,7 +76,10 @@ const PackageCard = ({
         </div>
         {/* Actions  */}
         <div className="flex flex-col items-center justify-center gap-2 overflow-hidden">
-          <button className="text-custom-green cursor-pointer text-[14px] font-medium">
+          <button
+            onClick={handleViewServices}
+            className="text-custom-green cursor-pointer text-[14px] font-medium"
+          >
             See all service
           </button>
           <Button className="text-custom-green cursor-pointer rounded-full border border-[#1AB65C] bg-[#F9FFFB] text-sm font-semibold hover:bg-[#f1faf4]">

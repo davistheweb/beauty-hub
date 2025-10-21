@@ -7,7 +7,7 @@ interface IService {
   updated_at: string | null;
 }
 
-interface IPackage {
+export interface IPackage {
   id: number;
   name: string;
   description: string | null;
