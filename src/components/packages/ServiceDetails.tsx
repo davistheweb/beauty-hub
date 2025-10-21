@@ -10,12 +10,14 @@ interface IServiceDetailsProps {
   setOpenServiceDetailsModal: React.Dispatch<React.SetStateAction<boolean>>;
   selectedPackage: IPackage | null;
   setSelectedPackage: React.Dispatch<React.SetStateAction<IPackage | null>>;
+  handleUpdatePackage: () => void;
 }
 export const ServiceDetails = ({
   openServiceDetailsModal,
   setOpenServiceDetailsModal,
   selectedPackage,
   setSelectedPackage,
+  handleUpdatePackage,
 }: IServiceDetailsProps) => (
   <Dialog
     open={openServiceDetailsModal}
@@ -93,7 +95,10 @@ export const ServiceDetails = ({
         </div>
         {/* Action Buttons  */}
         <div className="relative flex flex-col justify-between gap-5 lg:flex-row lg:gap-2">
-          <Button className="text-custom-green h-[50px] w-full cursor-pointer rounded-full border border-[#1AB65C] bg-[#F9FFFB] text-sm font-semibold hover:bg-[#f1faf4] lg:w-[200px]">
+          <Button
+            onClick={handleUpdatePackage}
+            className="text-custom-green h-[50px] w-full cursor-pointer rounded-full border border-[#1AB65C] bg-[#F9FFFB] text-sm font-semibold hover:bg-[#f1faf4] lg:w-[200px]"
+          >
             Update Package
           </Button>
           <Button className="h-[50px] w-full cursor-pointer rounded-full bg-[#FF3333] font-semibold hover:bg-red-400 lg:w-[200px]">

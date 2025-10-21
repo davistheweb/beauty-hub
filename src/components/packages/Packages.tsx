@@ -6,16 +6,20 @@ import { IPackage } from "@/types/IPackages";
 import { useState } from "react";
 import { NoDataFoundElement } from "../no-data";
 import { CardSkeleton } from "../ui/CardSkeleton";
-import AddPackageForm from "./AddPackageForm";
 import PackageCard from "./PackageCard";
+import PackageForm from "./PackageForm";
 import { ServiceDetails } from "./ServiceDetails";
 
 const Package = () => {
-  const [showAddPackageModal, setShowAddPackageModal] =
+  const [showPackageFormModal, setShowPackageFormModal] =
     useState<boolean>(false);
 
   const [openServiceDetailsModal, setOpenServiceDetailsModal] =
     useState<boolean>(false);
+
+  const [packageFormAction, setPackageFormAction] = useState<
+    "addPackage" | "updatePackage"
+  >("addPackage");
 
   const [selectedPackage, setSelectedPackage] = useState<IPackage | null>(null);
 
@@ -31,9 +35,13 @@ const Package = () => {
       <div className="flex flex-col gap-3 lg:flex-row lg:justify-between">
         <h1 className="inline-block text-2xl font-bold">Package Management</h1>
         <div className="px-4 lg:px-0">
-          <AddPackageForm
-            setShowAddPackageModal={setShowAddPackageModal}
-            showAddPackageModal={showAddPackageModal}
+          <PackageForm
+            setShowPackageFormModal={setShowPackageFormModal}
+            showPackageFormModal={showPackageFormModal}
+            selectedPackage={selectedPackage}
+            setSelectedPackage={setSelectedPackage}
+            packageFormAction={packageFormAction}
+            setPackageFormAction={setPackageFormAction}
           />
         </div>
       </div>
@@ -77,6 +85,11 @@ const Package = () => {
                     )}
                     status={packageItem.status}
                     handleViewServices={() => handleViewServices(packageItem)}
+                    handleUpdatePackage={() => {
+                      if (packageItem) setSelectedPackage(packageItem);
+                      setShowPackageFormModal((prev) => !prev);
+                      setPackageFormAction("updatePackage");
+                    }}
                   />
                 ))
               )}
@@ -89,6 +102,12 @@ const Package = () => {
             setOpenServiceDetailsModal={setOpenServiceDetailsModal}
             selectedPackage={selectedPackage}
             setSelectedPackage={setSelectedPackage}
+            handleUpdatePackage={() => {
+              setOpenServiceDetailsModal((prev) => !prev);
+              setSelectedPackage(selectedPackage);
+              setShowPackageFormModal((prev) => !prev);
+              setPackageFormAction("updatePackage");
+            }}
           />
         )}
       </div>

@@ -10,6 +10,7 @@ interface IPackageCardProps {
   allServices: string[];
   status: "active" | "inactive";
   handleViewServices: () => void;
+  handleUpdatePackage: () => void;
 }
 
 const PackageCard = ({
@@ -19,6 +20,7 @@ const PackageCard = ({
   allServices,
   status,
   handleViewServices,
+  handleUpdatePackage,
 }: IPackageCardProps) => (
   <div className="relative flex h-[407px] w-[320px] flex-col items-center justify-between overflow-hidden rounded-md border border-[#E6E6E6] bg-white pb-2">
     {status && (
@@ -82,7 +84,10 @@ const PackageCard = ({
           >
             See all service
           </button>
-          <Button className="text-custom-green cursor-pointer rounded-full border border-[#1AB65C] bg-[#F9FFFB] text-sm font-semibold hover:bg-[#f1faf4]">
+          <Button
+            onClick={handleUpdatePackage}
+            className="text-custom-green cursor-pointer rounded-full border border-[#1AB65C] bg-[#F9FFFB] text-sm font-semibold hover:bg-[#f1faf4]"
+          >
             Edit Info
           </Button>
         </div>

@@ -104,10 +104,11 @@ export default function BannerSettings({
       if (!file) return;
 
       // set the file dynamically based on the form type
+      const option: { shouldValidate: boolean } = { shouldValidate: true };
       if (bannerAction === "addBanner") {
-        addBannerForm.setValue("image", file, { shouldValidate: true });
+        addBannerForm.setValue("image", file, { ...option });
       } else {
-        editBannerForm.setValue("image", file, { shouldValidate: true });
+        editBannerForm.setValue("image", file, { ...option });
       }
 
       // preview image

@@ -17,10 +17,16 @@ const addPackageAndService = async (data: FormData) => {
   return getApiResponse(res);
 };
 
-const updatePackage = async (data: FormData) => {
+const updatePackageService = async (data: FormData) => {
   const res = await API.post("/admin/package/update_package", data, {
     ...multipartConfig,
   });
+
+  return getApiResponse(res);
 };
 
-export { addPackageAndService, fetchAllPackagesAndServices, updatePackage };
+export {
+  addPackageAndService,
+  fetchAllPackagesAndServices,
+  updatePackageService,
+};
