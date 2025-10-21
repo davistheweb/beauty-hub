@@ -226,9 +226,9 @@ const PackageForm = ({
         onSuccess: (data) => {
           toast.success(data.message);
           updatePackageForm.reset();
-          setPreviewImage(null);
-          setSelectedPackage(null);
           setTimeout(() => {
+            setPreviewImage(null);
+            setSelectedPackage(null);
             setShowPackageFormModal(false);
             setPackageFormAction("addPackage");
           }, 1200);
