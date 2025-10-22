@@ -1,5 +1,5 @@
 import { Star } from "lucide-react";
-import CustomTrashIcon from "../icons/CustomTrashIcon";
+import { CustomTrashIcon } from "../icons";
 
 interface RatingsCardProp {
   ratingDate: string;

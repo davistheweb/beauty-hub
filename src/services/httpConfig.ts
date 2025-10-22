@@ -13,4 +13,8 @@ const headersConfig = {
   "Content-Type": "application/json",
 };
 
-export { headersConfig, timeoutConfig };
+const multipartConfig = {
+  headers: { "Content-Type": "multipart/form-data" },
+};
+
+export { headersConfig, multipartConfig, timeoutConfig };

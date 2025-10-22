@@ -1,4 +1,4 @@
-import CaretDownIcon from "@/components/icons/CaretDownIcon";
+import { CaretDownIcon } from "@/components/icons";
 import AppLayout from "@/components/layouts/AppLayout";
 import Ratings from "@/components/ratings";
 import { Label } from "@/components/ui/label";

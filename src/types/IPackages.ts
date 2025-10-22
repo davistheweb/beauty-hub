@@ -7,13 +7,13 @@ interface IService {
   updated_at: string | null;
 }
 
-interface IPackage {
+export interface IPackage {
   id: number;
   name: string;
   description: string | null;
   price: string;
   image: string;
-  status: string;
+  status: "active" | "inactive";
   created_at: string | null;
   updated_at: string | null;
   services: IService[];

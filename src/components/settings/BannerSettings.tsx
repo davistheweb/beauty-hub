@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Resolver, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import CustomUploadIcon from "../icons/CustomUploadIcon";
+import { CustomUploadIcon } from "../icons";
 import { NoDataFoundElement } from "../no-data";
 import { Button } from "../ui/button";
 import { CardSkeleton } from "../ui/CardSkeleton";
@@ -104,10 +104,11 @@ export default function BannerSettings({
       if (!file) return;
 
       // set the file dynamically based on the form type
+      const option: { shouldValidate: boolean } = { shouldValidate: true };
       if (bannerAction === "addBanner") {
-        addBannerForm.setValue("image", file, { shouldValidate: true });
+        addBannerForm.setValue("image", file, { ...option });
       } else {
-        editBannerForm.setValue("image", file, { shouldValidate: true });
+        editBannerForm.setValue("image", file, { ...option });
       }
 
       // preview image

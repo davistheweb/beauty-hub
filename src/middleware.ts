@@ -23,7 +23,7 @@ export const config = {
     "/auth/login",
     "/dashboard/:path*",
     "/booking/:path*",
-    "/services/:path*",
+    "/packages/:path*",
     "/staffs/:path*",
     "/customers/:path*",
     "/ratings/:path*",

@@ -1,13 +1,31 @@
+import CaretDownIcon from "./CaretDownIcon";
+import CopyIcon from "./CopyIcon";
 import { CustomBellICon } from "./CustomBellICon";
 import { CustomGrayBookICon, CustomGreenBookICon } from "./CustomBookICon";
 import { CustomLogoutIcon } from "./CustomLogoutIcon";
+import CustomTrashIcon from "./CustomTrashIcon";
+import CustomUploadIcon from "./CustomUploadIcon";
+import CustomUploadIcon2 from "./CustomUploadIcon2";
+import { CustomWalletICon } from "./CustomWalletICon";
 import MarkGreenIcon from "./MarkGreenIcon";
-import { StylistIcon } from "./StylistIcon";
+import PhoneIcon from "./PhoneIcon";
+import RatingsIcon from "./RatingsIcon";
+import { GrayStylistIcon, StylistIcon } from "./StylistIcon";
+
 export {
+  CaretDownIcon,
+  CopyIcon,
   CustomBellICon,
   CustomGrayBookICon,
   CustomGreenBookICon,
   CustomLogoutIcon,
+  CustomTrashIcon,
+  CustomUploadIcon,
+  CustomUploadIcon2,
+  CustomWalletICon,
+  GrayStylistIcon,
   MarkGreenIcon,
+  PhoneIcon,
+  RatingsIcon,
   StylistIcon,
 };

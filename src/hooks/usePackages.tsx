@@ -1,6 +1,7 @@
 import {
   addPackageAndService,
   fetchAllPackagesAndServices,
+  updatePackageService,
 } from "@/services/package-and-services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -14,12 +15,17 @@ export default function usePackages() {
     gcTime: 1000 * 60 * 10,
   });
 
-  const addService = useMutation({
+  const addPackage = useMutation({
     mutationFn: addPackageAndService,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["packages"] }),
+  });
+
+  const updatePackage = useMutation({
+    mutationFn: updatePackageService,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["packages"] }),
   });
 
   const packages = data?.data?.data || [];
 
-  return { packages, isLoading, addService };
+  return { packages, isLoading, addPackage, updatePackage };
 }

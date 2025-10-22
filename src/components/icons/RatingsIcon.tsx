@@ -31,9 +31,3 @@ const RatingsIcon = () => (
 );
 
 export default RatingsIcon;
-
-// Usage examples:
-// <RatingsIcon />
-// <RatingsIcon size={32} color="#3B82F6" />
-// <RatingsIcon size="32" color="#3B82F6" />
-// <RatingsIcon className="hover:opacity-80" />
