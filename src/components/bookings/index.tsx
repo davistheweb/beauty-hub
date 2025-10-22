@@ -1,5 +1,6 @@
 "use client";
 import {
+  NoDataFoundElement,
   NoDataFoundTableDesktopComponent,
   NoDataFoundTableMobileComponent,
 } from "@/components/no-data";
@@ -24,7 +25,12 @@ export default function Bookings() {
     selectedBookingId ?? undefined,
   );
 
-  const { bookings, isAllBookingsDataLoading } = useBookings();
+  const {
+    bookings,
+    isAllBookingsDataLoading,
+    isFetchBookingsError,
+    fetchBookingsErrorMessage,
+  } = useBookings();
 
   useEffect(() => {
     if (bookingDetails) {
@@ -41,6 +47,16 @@ export default function Bookings() {
       console.log("Booking details", bookingDetails);
     }
   };
+
+  if (isFetchBookingsError)
+    return (
+      <div className="mt-3 flex h-[598px] w-full flex-col rounded-md bg-white p-1">
+        <NoDataFoundElement
+          title="Something went wrong"
+          subtitle={fetchBookingsErrorMessage}
+        />
+      </div>
+    );
 
   return (
     <div className="mt-3 flex w-full flex-col gap-3 p-2">

@@ -3,12 +3,13 @@ import {
   fetchAllPackagesAndServices,
   updatePackageService,
 } from "@/services/package-and-services";
+import getErrorMessage from "@/utils/getErrorMessage";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function usePackages() {
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error, isError } = useQuery({
     queryKey: ["packages"],
     queryFn: fetchAllPackagesAndServices,
     staleTime: 1000 * 60 * 5,
@@ -25,7 +26,18 @@ export default function usePackages() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["packages"] }),
   });
 
-  const packages = data?.data?.data || [];
+  const packages = (!isError && data?.data?.data) || [];
 
-  return { packages, isLoading, addPackage, updatePackage };
+  const fetchPackagesErrorMessage: string = isError
+    ? getErrorMessage(error)
+    : "Something went wrong";
+
+  return {
+    packages,
+    isLoading,
+    addPackage,
+    updatePackage,
+    isError,
+    fetchPackagesErrorMessage,
+  };
 }

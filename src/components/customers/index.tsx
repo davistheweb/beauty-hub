@@ -1,6 +1,7 @@
 "use client";
 import { CaretDownIcon } from "@/components/icons";
 import {
+  NoDataFoundElement,
   NoDataFoundTableDesktopComponent,
   NoDataFoundTableMobileComponent,
 } from "@/components/no-data";
@@ -14,7 +15,22 @@ import { CardSkeleton } from "../ui/CardSkeleton";
 import { TabkeSkeleton } from "../ui/TabkeSkeleton";
 
 export default function Customers() {
-  const { customers, isAllCustomersDataLoading } = useCustomers();
+  const {
+    customers,
+    isAllCustomersDataLoading,
+    isFetchCustomersError,
+    fetchCustomersErrorMessage,
+  } = useCustomers();
+
+  if (isFetchCustomersError)
+    return (
+      <div className="mt-3 flex h-[598px] w-full flex-col rounded-md bg-white p-1">
+        <NoDataFoundElement
+          title="Something went wrong"
+          subtitle={fetchCustomersErrorMessage}
+        />
+      </div>
+    );
 
   return (
     <div className="mt-3 flex w-full flex-col gap-3 p-2">

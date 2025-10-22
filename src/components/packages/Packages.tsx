@@ -23,12 +23,23 @@ const Package = () => {
 
   const [selectedPackage, setSelectedPackage] = useState<IPackage | null>(null);
 
-  const { packages, isLoading } = usePackages();
+  const { packages, isLoading, isError, fetchPackagesErrorMessage } =
+    usePackages();
 
   const handleViewServices = (packageItem: IPackage) => {
     setOpenServiceDetailsModal((prev) => !prev);
     setSelectedPackage(packageItem);
   };
+
+  if (isError)
+    return (
+      <div className="mt-5 flex w-full flex-col rounded-md bg-white p-1 md:h-[600px]">
+        <NoDataFoundElement
+          title="Something went wrong"
+          subtitle={fetchPackagesErrorMessage}
+        />
+      </div>
+    );
 
   return (
     <div className="flex h-full w-full flex-1 flex-col md:p-2">

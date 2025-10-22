@@ -203,7 +203,7 @@ const PackageForm = ({
           selectedPackage?.name.trim() &&
         updatePackageForm.getValues("price").trim() ===
           selectedPackage.price.trim() &&
-        updatePackageForm.getValues("image") !== undefined
+        updatePackageForm.getValues("image") === undefined
       )
         return;
 
