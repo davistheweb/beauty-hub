@@ -23,7 +23,7 @@ export default async function CustomerDetailsPage({
         </Link>
         <span className="text-[18px] font-normal text-[#898A8C]"> &gt; </span>
         <span className="text-custom-green text-[18px] font-semibold">
-          Customer's Information
+          Customer&apos;s Information
         </span>
       </span>
 

@@ -3,7 +3,7 @@ import {
   fetchCustomers,
 } from "@/services/customersServices";
 import { ICustomer } from "@/types/ICustomers";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const useCustomers = () => {
   const { data, isLoading: isAllCustomersDataLoading } = useQuery({
@@ -19,7 +19,7 @@ const useCustomers = () => {
 };
 
 const useCustomerDetailsByID = (customerId?: string) => {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   const { data: customerDetailsData, isLoading: customerDetailsDataIsLoading } =
     useQuery({
