@@ -111,7 +111,7 @@ export const CustomerDetails = ({ customerId }: { customerId: string }) => {
                       key={_i}
                       className="flex w-full flex-col rounded-[4px] border border-[#E4E4E4] p-2 pb-5"
                     >
-                      <div className="flex h-[200px] w-full flex-col gap-1 px-2 md:gap-3">
+                      <div className="flex h-fit w-full flex-col gap-1 px-2 md:gap-3">
                         <span className="flex w-full items-center justify-between border-b border-[#E4E4E4] pb-2">
                           <span className="flex flex-col">
                             <span className="text-xs text-[#727272]">
