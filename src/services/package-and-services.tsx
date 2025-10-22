@@ -3,27 +3,22 @@ import { API } from "./axios";
 import { getApiResponse } from "./helpers";
 import { multipartConfig } from "./httpConfig";
 
-const fetchAllPackagesAndServices = async (): Promise<IPackagesResponse> => {
-  const res = await API.post("/admin/package/fetch_all_packages");
+const fetchAllPackagesAndServices = async (): Promise<IPackagesResponse> =>
+  getApiResponse(await API.post("/admin/package/fetch_all_packages"));
 
-  return getApiResponse(res);
-};
+const addPackageAndService = async (data: FormData) =>
+  getApiResponse(
+    await API.post("/admin/package/add_package", data, {
+      ...multipartConfig,
+    }),
+  );
 
-const addPackageAndService = async (data: FormData) => {
-  const res = await API.post("/admin/package/add_package", data, {
-    ...multipartConfig,
-  });
-
-  return getApiResponse(res);
-};
-
-const updatePackageService = async (data: FormData) => {
-  const res = await API.post("/admin/package/update_package", data, {
-    ...multipartConfig,
-  });
-
-  return getApiResponse(res);
-};
+const updatePackageService = async (data: FormData) =>
+  getApiResponse(
+    await API.post("/admin/package/update_package", data, {
+      ...multipartConfig,
+    }),
+  );
 
 export {
   addPackageAndService,

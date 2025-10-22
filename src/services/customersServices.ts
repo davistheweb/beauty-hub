@@ -5,18 +5,12 @@ import {
 import { API } from "./axios";
 import { getApiResponse } from "./helpers";
 
-const fetchCustomers = async (): Promise<ICustomersResponse> => {
-  const res = await API.post("/admin/user/fetch_all_users");
-
-  return getApiResponse(res);
-};
+const fetchCustomers = async (): Promise<ICustomersResponse> =>
+  getApiResponse(await API.post("/admin/user/fetch_all_users"));
 
 const fetchCustomerDetails = async (
   id: string,
-): Promise<ICustomerDetailsResponse> => {
-  const res = await API.post("/admin/user/fetch_user_details", { id });
-
-  return getApiResponse(res);
-};
+): Promise<ICustomerDetailsResponse> =>
+  getApiResponse(await API.post("/admin/user/fetch_user_details", { id }));
 
 export { fetchCustomerDetails, fetchCustomers };
