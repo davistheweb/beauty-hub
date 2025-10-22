@@ -1,7 +1,10 @@
 import { DashboardCard } from "@/components/DashboardCard";
 import DashboardChart from "@/components/DashboardChart";
-import { CustomGreenBookICon, StylistIcon } from "@/components/icons";
-import { CustomWalletICon } from "@/components/icons/CustomWalletICon";
+import {
+  CustomGreenBookICon,
+  CustomWalletICon,
+  StylistIcon,
+} from "@/components/icons";
 import AppLayout from "@/components/layouts/AppLayout";
 import {
   NoDataFoundTableDesktopComponent,

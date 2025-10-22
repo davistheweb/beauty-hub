@@ -3,7 +3,7 @@
 import { useCustomerDetailsByID } from "@/hooks";
 import { Dot, Mail } from "lucide-react";
 import Image from "next/image";
-import PhoneIcon from "../icons/PhoneIcon";
+import { PhoneIcon } from "../icons";
 import { NoDataFoundElement } from "../no-data";
 import CustomerLoadingSkeletion from "./CustomerLoadingSkeletion";
 

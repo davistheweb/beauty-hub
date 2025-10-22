@@ -1,6 +1,4 @@
-import React from "react";
-
-export const CustomBellICon: React.FC = () => (
+export const CustomBellICon = () => (
   <svg
     width="28"
     height="28"

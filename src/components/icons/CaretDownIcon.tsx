@@ -9,28 +9,20 @@ const CaretDownIcon = ({
   size = 24,
   color = "#111827",
   ...props
-}: CaretDownIconProps) => {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 12 7"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <path
-        d="M11.6736 2.21875L6.89696 6.21875C6.63369 6.40625 6.3328 6.5 6.03191 6.5C5.69341 6.5 5.39252 6.40625 5.16685 6.21875L0.390224 2.21875C0.0141117 1.9375 -0.098722 1.5 0.0893341 1.125C0.27739 0.75 0.728725 0.5 1.21767 0.5H10.8085C11.2975 0.5 11.7112 0.75 11.8993 1.125C12.0873 1.5 12.0121 1.9375 11.6736 2.21875Z"
-        fill={color}
-      />
-    </svg>
-  );
-};
+}: CaretDownIconProps) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 12 7"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path
+      d="M11.6736 2.21875L6.89696 6.21875C6.63369 6.40625 6.3328 6.5 6.03191 6.5C5.69341 6.5 5.39252 6.40625 5.16685 6.21875L0.390224 2.21875C0.0141117 1.9375 -0.098722 1.5 0.0893341 1.125C0.27739 0.75 0.728725 0.5 1.21767 0.5H10.8085C11.2975 0.5 11.7112 0.75 11.8993 1.125C12.0873 1.5 12.0121 1.9375 11.6736 2.21875Z"
+      fill={color}
+    />
+  </svg>
+);
 
 export default CaretDownIcon;
-
-// Usage examples:
-// <CaretDownIcon />
-// <CaretDownIcon size={32} color="#3B82F6" />
-// <CaretDownIcon size="32" color="#3B82F6" />
-// <CaretDownIcon className="hover:opacity-80" />

@@ -22,7 +22,7 @@ import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
-import CustomUploadIcon from "../icons/CustomUploadIcon";
+import { CustomUploadIcon } from "../icons";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";

@@ -30,8 +30,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import CopyIcon from "../icons/CopyIcon";
-import PhoneIcon from "../icons/PhoneIcon";
+import { CopyIcon, PhoneIcon } from "../icons";
 
 interface BookingDetailsDialogProps {
   openDialog: boolean;

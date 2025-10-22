@@ -2,9 +2,7 @@ import { Settings, type LucideIcon } from "lucide-react";
 import { IconType } from "react-icons";
 import { CiUser } from "react-icons/ci";
 import { MdOutlineDashboardCustomize } from "react-icons/md";
-import { CustomGrayBookICon } from "../icons";
-import RatingsIcon from "../icons/RatingsIcon";
-import { GrayStylistGIcon } from "../icons/StylistIcon";
+import { CustomGrayBookICon, GrayStylistIcon, RatingsIcon } from "../icons";
 export const NavLinks: {
   title: string;
   href: string;
@@ -25,7 +23,7 @@ export const NavLinks: {
     href: "/packages",
     Icon: MdOutlineDashboardCustomize,
   },
-  { title: "Staff", href: "/staffs", Icon: GrayStylistGIcon },
+  { title: "Staff", href: "/staffs", Icon: GrayStylistIcon },
 
   { title: "Customers", href: "/customers", Icon: CiUser },
   { title: "Ratings", href: "/ratings", Icon: RatingsIcon },

@@ -1,5 +1,5 @@
 "use client";
-import CaretDownIcon from "@/components/icons/CaretDownIcon";
+import { CaretDownIcon } from "@/components/icons";
 import {
   NoDataFoundTableDesktopComponent,
   NoDataFoundTableMobileComponent,

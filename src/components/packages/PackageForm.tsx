@@ -15,9 +15,7 @@ import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Resolver, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { MarkGreenIcon } from "../icons";
-import CustomTrashIcon from "../icons/CustomTrashIcon";
-import CustomUploadIcon2 from "../icons/CustomUploadIcon2";
+import { CustomTrashIcon, CustomUploadIcon2, MarkGreenIcon } from "../icons";
 import { Button } from "../ui/button";
 import {
   Dialog,

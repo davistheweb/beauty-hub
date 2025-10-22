@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Resolver, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import CustomUploadIcon from "../icons/CustomUploadIcon";
+import { CustomUploadIcon } from "../icons";
 import { NoDataFoundElement } from "../no-data";
 import { Button } from "../ui/button";
 import { CardSkeleton } from "../ui/CardSkeleton";

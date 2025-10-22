@@ -1,6 +1,6 @@
 import { Dot } from "lucide-react";
 import Image from "next/image";
-import CustomTrashIcon from "../icons/CustomTrashIcon";
+import { CustomTrashIcon } from "../icons";
 import { Button } from "../ui/button";
 
 interface IBannerCardProps {

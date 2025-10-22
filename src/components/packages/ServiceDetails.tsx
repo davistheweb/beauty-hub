@@ -1,7 +1,6 @@
 import { IPackage } from "@/types/IPackages";
 import Image from "next/image";
-import { MarkGreenIcon } from "../icons";
-import CustomTrashIcon from "../icons/CustomTrashIcon";
+import { CustomTrashIcon, MarkGreenIcon } from "../icons";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
