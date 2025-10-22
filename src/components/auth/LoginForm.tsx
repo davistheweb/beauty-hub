@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { loginAdmin } from "@/services/Auth";
 import { getErrorResponse } from "@/services/helpers";
-import { storeAccessBearerToken } from "@/services/lib";
+import { storeAccessBearerToken } from "@/services/server";
 import { AppDispatch } from "@/store";
 import { setProfile } from "@/store/utils/adminProfileSlice";
 import {

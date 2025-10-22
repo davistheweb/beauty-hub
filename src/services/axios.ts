@@ -4,7 +4,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 import { headersConfig, timeoutConfig } from "./httpConfig";
-import { deleteAccessBearerToken, getAccessToken } from "./lib";
+import { deleteAccessBearerToken, getAccessToken } from "./server";
 
 const API_BASE_URL: string | undefined = process.env
   .NEXT_PUBLIC_API_BASE_URL as string;

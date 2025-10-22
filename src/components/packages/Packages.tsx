@@ -71,7 +71,7 @@ const Package = () => {
               {isLoading ? (
                 <CardSkeleton
                   length={8}
-                  sizes="h-[407px] w-[320px]"
+                  className="h-[407px] w-[320px]"
                 />
               ) : (
                 packages.map((packageItem, i) => (
