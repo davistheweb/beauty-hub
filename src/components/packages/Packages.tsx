@@ -103,7 +103,10 @@ const Package = () => {
             selectedPackage={selectedPackage}
             setSelectedPackage={setSelectedPackage}
             handleUpdatePackage={() => {
-              setOpenServiceDetailsModal((prev) => !prev);
+              setTimeout(
+                () => setOpenServiceDetailsModal((prev) => !prev),
+                900,
+              );
               setSelectedPackage(selectedPackage);
               setShowPackageFormModal((prev) => !prev);
               setPackageFormAction("updatePackage");
