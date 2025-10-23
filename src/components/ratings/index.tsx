@@ -6,6 +6,7 @@ import { useRatings } from "@/hooks";
 import { ChevronDown } from "lucide-react";
 import { NoDataFoundElement } from "../no-data";
 import { CardSkeleton } from "../ui/CardSkeleton";
+import { ErrorElement } from "../ui/ErrorElement";
 import RatingsCard from "./RatingsCard";
 
 export default function Ratings() {
@@ -15,9 +16,10 @@ export default function Ratings() {
   if (isFetchRatingsError)
     return (
       <div className="mt-3 flex w-full flex-col rounded-md bg-white p-1 lg:h-[598px]">
-        <NoDataFoundElement
+        <ErrorElement
           title="Something went wrong"
-          subtitle={fetchRatingsErrMessage}
+          subtitle={fetchRatingsErrMessage.message}
+          errorType={fetchRatingsErrMessage.type}
         />
       </div>
     );

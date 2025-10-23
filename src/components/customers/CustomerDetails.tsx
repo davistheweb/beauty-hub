@@ -5,6 +5,7 @@ import { Dot, Mail } from "lucide-react";
 import Image from "next/image";
 import { PhoneIcon } from "../icons";
 import { NoDataFoundElement } from "../no-data";
+import { ErrorElement } from "../ui/ErrorElement";
 import CustomerLoadingSkeletion from "./CustomerLoadingSkeletion";
 
 export const CustomerDetails = ({ customerId }: { customerId: string }) => {
@@ -51,9 +52,10 @@ export const CustomerDetails = ({ customerId }: { customerId: string }) => {
       {/* Customers Table*/}
       <div className="flex h-[598px] w-full flex-col overflow-hidden rounded-md bg-white p-2">
         {isFetchCustomerDetailsError ? (
-          <NoDataFoundElement
+          <ErrorElement
             title="Something went wrong"
-            subtitle={fetchCustomerDetailsErrorMessage as string}
+            subtitle={fetchCustomerDetailsErrorMessage.message}
+            errorType={fetchCustomerDetailsErrorMessage.type}
           />
         ) : (
           customerDetails && (

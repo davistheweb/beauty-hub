@@ -6,6 +6,7 @@ import { IPackage } from "@/types/IPackages";
 import { useState } from "react";
 import { NoDataFoundElement } from "../no-data";
 import { CardSkeleton } from "../ui/CardSkeleton";
+import { ErrorElement } from "../ui/ErrorElement";
 import PackageCard from "./PackageCard";
 import PackageForm from "./PackageForm";
 import { ServiceDetails } from "./ServiceDetails";
@@ -34,9 +35,10 @@ const Package = () => {
   if (isError)
     return (
       <div className="mt-5 flex w-full flex-col rounded-md bg-white p-1 md:h-[600px]">
-        <NoDataFoundElement
+        <ErrorElement
           title="Something went wrong"
-          subtitle={fetchPackagesErrorMessage}
+          subtitle={fetchPackagesErrorMessage.message}
+          errorType={fetchPackagesErrorMessage.type}
         />
       </div>
     );

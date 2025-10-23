@@ -2,10 +2,10 @@ import {
   fetchCustomerDetails,
   fetchCustomers,
 } from "@/services/customersServices";
+import { IErrorInfo } from "@/types/Error";
 import { ICustomer, ICustomerDetails } from "@/types/ICustomers";
 import getErrorMessage from "@/utils/getErrorMessage";
 import { useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 
 const useCustomers = () => {
   const {
@@ -16,6 +16,8 @@ const useCustomers = () => {
   } = useQuery({
     queryFn: fetchCustomers,
     queryKey: ["customers"],
+    retry: false,
+    networkMode: "always",
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,
   });
@@ -23,12 +25,12 @@ const useCustomers = () => {
   console.log(error?.message);
 
   const customers: ICustomer[] | [] = !isFetchCustomersError
-    ? data?.data.data.data || []
+    ? data?.data?.data?.data || []
     : [];
 
-  const fetchCustomersErrorMessage: string = isFetchCustomersError
+  const fetchCustomersErrorMessage = isFetchCustomersError
     ? getErrorMessage(error)
-    : "Something went wrong";
+    : ({ type: "unknown", message: "" } as IErrorInfo);
 
   return {
     customers,
@@ -51,12 +53,9 @@ const useCustomerDetailsByID = (customerId?: string) => {
     queryFn: () => fetchCustomerDetails(customerId!),
     enabled: !!customerId,
     staleTime: 1000 * 60 * 2,
-    retry: (failureCount, err) => {
-      if (err instanceof AxiosError && err.response?.status === 404)
-        return false;
-
-      return failureCount < 2;
-    },
+    retry: false,
+    networkMode: "always",
+    refetchOnReconnect: true,
   });
 
   const customerDetails: ICustomerDetails | null =
@@ -64,9 +63,9 @@ const useCustomerDetailsByID = (customerId?: string) => {
       ? customerDetailsData?.data?.data
       : null;
 
-  const fetchCustomerDetailsErrorMessage: string = isFetchCustomerDetailsError
+  const fetchCustomerDetailsErrorMessage = isFetchCustomerDetailsError
     ? getErrorMessage(error)
-    : "Something went wrong";
+    : ({ type: "unknown", message: "" } as IErrorInfo);
 
   return {
     customerDetails,

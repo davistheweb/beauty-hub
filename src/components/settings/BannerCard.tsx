@@ -20,7 +20,7 @@ const BannerCard = ({
   handleDeleteBanner,
   handleUpdateBanner,
 }: IBannerCardProps) => (
-  <div className="relative flex h-[340px] w-[330px] flex-col items-center justify-between overflow-hidden rounded-md border border-[#E6E6E6] bg-white pb-2 sm:w-[300px] md:w-[330px] lg:w-[300px] xl:w-[450px]">
+  <div className="relative flex w-[330px] flex-col items-center justify-between overflow-hidden rounded-md border border-[#E6E6E6] bg-white pb-1 sm:w-[300px] md:w-[330px] lg:w-[300px] xl:w-[450px]">
     <div className="relative h-[270px] min-w-full overflow-hidden rounded-md bg-white">
       <Image
         src={imgSrc}
@@ -35,14 +35,14 @@ const BannerCard = ({
     </div>
 
     <div className="flex h-full w-full flex-col justify-between gap-2">
-      <div className="flex w-full items-center justify-between p-4">
-        <span className="flex flex-col">
-          <span className="text-[14px] font-semibold text-[#070500] lg:text-[18px]">
+      <div className="flex h-full w-full items-center justify-between p-4">
+        <span className="h- flex w-full flex-col pr-3">
+          <span className="text-[14px] font-semibold break-words whitespace-normal text-[#070500] lg:text-[18px]">
             {title}
           </span>
-          <span className="text-[14px] font-normal text-[#5C5A55]">
+          <p className="text-[14px] font-normal break-words whitespace-normal text-[#5C5A55]">
             {message}
-          </span>
+          </p>
         </span>
         <span
           className="cursor-pointer"

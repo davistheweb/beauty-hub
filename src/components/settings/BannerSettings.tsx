@@ -26,6 +26,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+import { ErrorElement } from "../ui/ErrorElement";
 import {
   Form,
   FormControl,
@@ -57,8 +58,15 @@ export default function BannerSettings({
 
   //Banners Hooks
 
-  const { banners, isLoading, deleteBanner, addBanner, updateBanner } =
-    useBanner();
+  const {
+    banners,
+    isLoading,
+    isFetchBannerError,
+    fetchBannerErrorMessage,
+    deleteBanner,
+    addBanner,
+    updateBanner,
+  } = useBanner();
 
   const addResolver = zodResolver(
     addBannerFormSchema,
@@ -187,6 +195,17 @@ export default function BannerSettings({
       });
     }
   };
+
+  if (isFetchBannerError)
+    return (
+      <div className="mt-5 flex h-[500px] w-full flex-col rounded-md bg-white p-1 px-1 pb-1 lg:px-8">
+        <ErrorElement
+          title="Something went wrong"
+          subtitle={fetchBannerErrorMessage.message}
+          errorType={fetchBannerErrorMessage.type}
+        />
+      </div>
+    );
 
   return (
     <div className="mt-5 flex h-full w-full flex-col items-center justify-center rounded-2xl">

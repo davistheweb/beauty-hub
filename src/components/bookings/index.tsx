@@ -1,6 +1,5 @@
 "use client";
 import {
-  NoDataFoundElement,
   NoDataFoundTableDesktopComponent,
   NoDataFoundTableMobileComponent,
 } from "@/components/no-data";
@@ -11,6 +10,7 @@ import { IBookings } from "@/types/IBookings";
 import { ChevronDown, Dot, EllipsisVertical, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CardSkeleton } from "../ui/CardSkeleton";
+import { ErrorElement } from "../ui/ErrorElement";
 import { TabkeSkeleton } from "../ui/TabkeSkeleton";
 import { BookingDetailsDialog } from "./BookingDetailsDialog";
 
@@ -21,9 +21,13 @@ export default function Bookings() {
   );
   const [selectedBookingDetails, setSelectedBookingDetails] =
     useState<IBookings | null>(null);
-  const { bookingDetails, bookingDetailsDataIsLoading } = useBookingDetailsByID(
-    selectedBookingId ?? undefined,
-  );
+
+  const {
+    bookingDetails,
+    bookingDetailsDataIsLoading,
+    isFetchBookingDetailsError,
+    fetchBookingDetailsErrorMessage,
+  } = useBookingDetailsByID(selectedBookingId ?? undefined);
 
   const {
     bookings,
@@ -35,38 +39,38 @@ export default function Bookings() {
   useEffect(() => {
     if (bookingDetails) {
       setSelectedBookingDetails(bookingDetails);
-      setOpenDialog(true);
-      console.log(bookingDetails);
     }
   }, [bookingDetails]);
 
   const handleViewBookingDetails = (booking_id: number) => {
     setSelectedBookingId(booking_id);
-
-    if (bookingDetails !== undefined) {
-      console.log("Booking details", bookingDetails);
-    }
+    setSelectedBookingDetails(null);
+    setOpenDialog(true);
   };
 
   if (isFetchBookingsError)
     return (
       <div className="mt-3 flex h-[598px] w-full flex-col rounded-md bg-white p-1">
-        <NoDataFoundElement
+        <ErrorElement
           title="Something went wrong"
-          subtitle={fetchBookingsErrorMessage}
+          subtitle={fetchBookingsErrorMessage.message}
+          errorType={fetchBookingsErrorMessage.type}
         />
       </div>
     );
 
   return (
     <div className="mt-3 flex w-full flex-col gap-3 p-2">
-      {selectedBookingDetails && openDialog && (
+      {openDialog && (
         <BookingDetailsDialog
           openDialog={openDialog}
           setOpenDialog={setOpenDialog}
           setSelectedBookingId={setSelectedBookingId}
           selectedBookingDetails={selectedBookingDetails}
           setSelectedBookingDetails={setSelectedBookingDetails}
+          detailsIsLoading={bookingDetailsDataIsLoading}
+          isFetchBookingDetailsError={isFetchBookingDetailsError}
+          fetchBookingDetailsErrorMessage={fetchBookingDetailsErrorMessage}
         />
       )}
       {/* Bookins Table  */}
@@ -151,7 +155,7 @@ export default function Bookings() {
                             {bookingDetail.status === "pending"
                               ? "In Progress"
                               : bookingDetail.status === "completed"
-                                ? "Done"
+                                ? "Completed"
                                 : bookingDetail.status === "confirmed"
                                   ? "Confirmed"
                                   : bookingDetail.status === "cancelled" &&

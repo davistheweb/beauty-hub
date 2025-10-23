@@ -1,7 +1,6 @@
 "use client";
 import { CaretDownIcon } from "@/components/icons";
 import {
-  NoDataFoundElement,
   NoDataFoundTableDesktopComponent,
   NoDataFoundTableMobileComponent,
 } from "@/components/no-data";
@@ -12,6 +11,7 @@ import { useCustomers } from "@/hooks";
 import { ChevronDown, Dot, Eye } from "lucide-react";
 import Link from "next/link";
 import { CardSkeleton } from "../ui/CardSkeleton";
+import { ErrorElement } from "../ui/ErrorElement";
 import { TabkeSkeleton } from "../ui/TabkeSkeleton";
 
 export default function Customers() {
@@ -25,9 +25,10 @@ export default function Customers() {
   if (isFetchCustomersError)
     return (
       <div className="mt-3 flex h-[598px] w-full flex-col rounded-md bg-white p-1">
-        <NoDataFoundElement
+        <ErrorElement
           title="Something went wrong"
-          subtitle={fetchCustomersErrorMessage}
+          subtitle={fetchCustomersErrorMessage.message}
+          errorType={fetchCustomersErrorMessage.type}
         />
       </div>
     );
@@ -66,7 +67,7 @@ export default function Customers() {
         </div>
         {/* Customers Display Table  */}
         <div
-          className={`table-parent-scrollbar ${isAllCustomersDataLoading ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
+          className={`table-parent-scrollbar ${isAllCustomersDataLoading || !customers.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
         >
           <table
             className="h-full w-full overflow-x-auto bg-white"

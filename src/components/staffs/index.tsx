@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  NoDataFoundElement,
   NoDataFoundTableDesktopComponent,
   NoDataFoundTableMobileComponent,
 } from "@/components/no-data";
@@ -11,6 +10,7 @@ import { staffTableHeaders } from "@/data";
 import { useStaff } from "@/hooks";
 import { ChevronDown, Dot, EllipsisVertical, Plus } from "lucide-react";
 import { CardSkeleton } from "../ui/CardSkeleton";
+import { ErrorElement } from "../ui/ErrorElement";
 import { TabkeSkeleton } from "../ui/TabkeSkeleton";
 
 export default function Staffs() {
@@ -25,9 +25,10 @@ export default function Staffs() {
     return (
       <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
         {" "}
-        <NoDataFoundElement
+        <ErrorElement
           title="Something went wrong"
-          subtitle={fetchStaffsErrorMessage}
+          subtitle={fetchStaffsErrorMessage.message}
+          errorType={fetchStaffsErrorMessage.type}
         />
       </div>
     );

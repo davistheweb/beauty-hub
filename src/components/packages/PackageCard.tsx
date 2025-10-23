@@ -1,3 +1,4 @@
+import numberFormat from "@/utils/numberFormat";
 import { Dot } from "lucide-react";
 import Image from "next/image";
 import { MarkGreenIcon } from "../icons";
@@ -56,12 +57,14 @@ const PackageCard = ({
     </div>
     <div className="relative flex h-[159px] w-full flex-col justify-between gap-1 overflow-hidden px-3 py-2">
       <div className="flex w-full justify-between">
-        <span className="truncate text-[16px] font-semibold">
+        <span className="text-[16px] font-semibold break-words whitespace-normal">
           {packageType}
         </span>
-        <span className="truncate text-xl font-bold">₦{serviceAmount}</span>
+        <span className="truncate text-xl font-bold">
+          ₦{numberFormat(Number(serviceAmount))}
+        </span>
       </div>
-      <div className="flex w-full justify-between overflow-hidden px-1 py-2">
+      <div className="flex w-full justify-between overflow-hidden px-1">
         {/* ALl Services */}
         <div className="over flex flex-col gap-2">
           {allServices.slice(0, 3).map((service, i) => (
