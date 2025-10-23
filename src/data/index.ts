@@ -140,7 +140,7 @@ const bookingTableHeaders: string[] = [...tableHeaders, "Action"];
 
 const staffTableHeaders: string[] = [
   "Staff Name",
-  "No of Bookings",
+  // "No of Bookings",
   "Joined Date",
   "Status",
   "Action",

@@ -2,36 +2,77 @@ import {
   fetchCustomerDetails,
   fetchCustomers,
 } from "@/services/customersServices";
-import { ICustomer } from "@/types/ICustomers";
+import { IErrorInfo } from "@/types/Error";
+import { ICustomer, ICustomerDetails } from "@/types/ICustomers";
+import getErrorMessage from "@/utils/getErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 
 const useCustomers = () => {
-  const { data, isLoading: isAllCustomersDataLoading } = useQuery({
+  const {
+    data,
+    isLoading: isAllCustomersDataLoading,
+    error,
+    isError: isFetchCustomersError,
+  } = useQuery({
     queryFn: fetchCustomers,
     queryKey: ["customers"],
+    retry: false,
+    networkMode: "always",
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,
   });
 
-  const customers: ICustomer[] | [] = data?.data.data.data || [];
+  console.log(error?.message);
 
-  return { customers, isAllCustomersDataLoading };
+  const customers: ICustomer[] | [] = !isFetchCustomersError
+    ? data?.data?.data?.data || []
+    : [];
+
+  const fetchCustomersErrorMessage = isFetchCustomersError
+    ? getErrorMessage(error)
+    : ({ type: "unknown", message: "" } as IErrorInfo);
+
+  return {
+    customers,
+    isAllCustomersDataLoading,
+    isFetchCustomersError,
+    fetchCustomersErrorMessage,
+  };
 };
 
 const useCustomerDetailsByID = (customerId?: string) => {
   // const queryClient = useQueryClient();
 
-  const { data: customerDetailsData, isLoading: customerDetailsDataIsLoading } =
-    useQuery({
-      queryKey: ["customerDetailsData", customerId],
-      queryFn: () => fetchCustomerDetails(customerId!),
-      enabled: !!customerId,
-      staleTime: 1000 * 60 * 2,
-    });
+  const {
+    data: customerDetailsData,
+    isLoading: customerDetailsDataIsLoading,
+    error,
+    isError: isFetchCustomerDetailsError,
+  } = useQuery({
+    queryKey: ["customerDetailsData", customerId],
+    queryFn: () => fetchCustomerDetails(customerId!),
+    enabled: !!customerId,
+    staleTime: 1000 * 60 * 2,
+    retry: false,
+    networkMode: "always",
+    refetchOnReconnect: true,
+  });
 
-  const customerDetails = customerDetailsData?.data.data;
+  const customerDetails: ICustomerDetails | null =
+    !isFetchCustomerDetailsError && customerDetailsData?.data?.data
+      ? customerDetailsData?.data?.data
+      : null;
 
-  return { customerDetails, customerDetailsDataIsLoading };
+  const fetchCustomerDetailsErrorMessage = isFetchCustomerDetailsError
+    ? getErrorMessage(error)
+    : ({ type: "unknown", message: "" } as IErrorInfo);
+
+  return {
+    customerDetails,
+    customerDetailsDataIsLoading,
+    isFetchCustomerDetailsError,
+    fetchCustomerDetailsErrorMessage,
+  };
 };
 
 export { useCustomerDetailsByID, useCustomers };

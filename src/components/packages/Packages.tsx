@@ -6,6 +6,7 @@ import { IPackage } from "@/types/IPackages";
 import { useState } from "react";
 import { NoDataFoundElement } from "../no-data";
 import { CardSkeleton } from "../ui/CardSkeleton";
+import { ErrorElement } from "../ui/ErrorElement";
 import PackageCard from "./PackageCard";
 import PackageForm from "./PackageForm";
 import { ServiceDetails } from "./ServiceDetails";
@@ -23,12 +24,24 @@ const Package = () => {
 
   const [selectedPackage, setSelectedPackage] = useState<IPackage | null>(null);
 
-  const { packages, isLoading } = usePackages();
+  const { packages, isLoading, isError, fetchPackagesErrorMessage } =
+    usePackages();
 
   const handleViewServices = (packageItem: IPackage) => {
     setOpenServiceDetailsModal((prev) => !prev);
     setSelectedPackage(packageItem);
   };
+
+  if (isError)
+    return (
+      <div className="mt-5 flex w-full flex-col rounded-md bg-white p-1 md:h-[600px]">
+        <ErrorElement
+          title="Something went wrong"
+          subtitle={fetchPackagesErrorMessage.message}
+          errorType={fetchPackagesErrorMessage.type}
+        />
+      </div>
+    );
 
   return (
     <div className="flex h-full w-full flex-1 flex-col md:p-2">
@@ -103,7 +116,10 @@ const Package = () => {
             selectedPackage={selectedPackage}
             setSelectedPackage={setSelectedPackage}
             handleUpdatePackage={() => {
-              setOpenServiceDetailsModal((prev) => !prev);
+              setTimeout(
+                () => setOpenServiceDetailsModal((prev) => !prev),
+                900,
+              );
               setSelectedPackage(selectedPackage);
               setShowPackageFormModal((prev) => !prev);
               setPackageFormAction("updatePackage");

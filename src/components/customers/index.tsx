@@ -11,10 +11,27 @@ import { useCustomers } from "@/hooks";
 import { ChevronDown, Dot, Eye } from "lucide-react";
 import Link from "next/link";
 import { CardSkeleton } from "../ui/CardSkeleton";
+import { ErrorElement } from "../ui/ErrorElement";
 import { TabkeSkeleton } from "../ui/TabkeSkeleton";
 
 export default function Customers() {
-  const { customers, isAllCustomersDataLoading } = useCustomers();
+  const {
+    customers,
+    isAllCustomersDataLoading,
+    isFetchCustomersError,
+    fetchCustomersErrorMessage,
+  } = useCustomers();
+
+  if (isFetchCustomersError)
+    return (
+      <div className="mt-3 flex h-[598px] w-full flex-col rounded-md bg-white p-1">
+        <ErrorElement
+          title="Something went wrong"
+          subtitle={fetchCustomersErrorMessage.message}
+          errorType={fetchCustomersErrorMessage.type}
+        />
+      </div>
+    );
 
   return (
     <div className="mt-3 flex w-full flex-col gap-3 p-2">
@@ -49,7 +66,9 @@ export default function Customers() {
           </div>
         </div>
         {/* Customers Display Table  */}
-        <div className="table-parent-scrollbar hidden h-full w-full overflow-x-auto p-1 md:flex">
+        <div
+          className={`table-parent-scrollbar ${isAllCustomersDataLoading || !customers.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
+        >
           <table
             className="h-full w-full overflow-x-auto bg-white"
             suppressHydrationWarning={true}
@@ -102,7 +121,7 @@ export default function Customers() {
                         className={`flex h-full place-items-center justify-center px-10 py-1`}
                       >
                         <span
-                          className={`rounded-[38.32px] bg-[#EDF5FE] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" && "text-[#004CE8]"} flex w-full items-center justify-center gap-2 py-2`}
+                          className={`rounded-[38.32px] bg-[#EDF5FE] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" && "text-[#004CE8]"} flex w-fit items-center justify-center gap-2 px-5 py-2`}
                         >
                           <span className="flex h-3 w-3 items-center justify-center">
                             <Dot

@@ -8,10 +8,12 @@ import CustomUploadIcon from "./CustomUploadIcon";
 import CustomUploadIcon2 from "./CustomUploadIcon2";
 import { CustomWalletICon } from "./CustomWalletICon";
 import MarkGreenIcon from "./MarkGreenIcon";
+import NetWorkError from "./NetWorkError";
+import NotFound from "./NotFound";
 import PhoneIcon from "./PhoneIcon";
 import RatingsIcon from "./RatingsIcon";
 import { GrayStylistIcon, StylistIcon } from "./StylistIcon";
-
+import UnknownError from "./UnknownError";
 export {
   CaretDownIcon,
   CopyIcon,
@@ -25,7 +27,10 @@ export {
   CustomWalletICon,
   GrayStylistIcon,
   MarkGreenIcon,
+  NetWorkError,
+  NotFound,
   PhoneIcon,
   RatingsIcon,
   StylistIcon,
+  UnknownError,
 };

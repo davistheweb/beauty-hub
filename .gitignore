@@ -41,9 +41,11 @@ yarn-error.log*
 next-env.d.ts
 
 pnpm-lock.yaml
-img.txt
 book.json
 detail.json
 packageServiesapi.json
 customerResponse.json
 CustomerDetailsresponse.json
+Staffresponse.json
+statsresponse.json
+Ratingsresponse.json

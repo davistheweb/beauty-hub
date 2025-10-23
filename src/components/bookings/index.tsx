@@ -10,6 +10,7 @@ import { IBookings } from "@/types/IBookings";
 import { ChevronDown, Dot, EllipsisVertical, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CardSkeleton } from "../ui/CardSkeleton";
+import { ErrorElement } from "../ui/ErrorElement";
 import { TabkeSkeleton } from "../ui/TabkeSkeleton";
 import { BookingDetailsDialog } from "./BookingDetailsDialog";
 
@@ -20,41 +21,60 @@ export default function Bookings() {
   );
   const [selectedBookingDetails, setSelectedBookingDetails] =
     useState<IBookings | null>(null);
-  const { bookingDetails, bookingDetailsDataIsLoading } = useBookingDetailsByID(
-    selectedBookingId ?? undefined,
-  );
 
-  const { bookings, isAllBookingsDataLoading } = useBookings();
+  const {
+    bookingDetails,
+    bookingDetailsDataIsLoading,
+    isFetchBookingDetailsError,
+    fetchBookingDetailsErrorMessage,
+  } = useBookingDetailsByID(selectedBookingId ?? undefined);
+
+  const {
+    bookings,
+    isAllBookingsDataLoading,
+    isFetchBookingsError,
+    fetchBookingsErrorMessage,
+  } = useBookings();
 
   useEffect(() => {
     if (bookingDetails) {
       setSelectedBookingDetails(bookingDetails);
-      setOpenDialog(true);
-      console.log(bookingDetails);
     }
   }, [bookingDetails]);
 
   const handleViewBookingDetails = (booking_id: number) => {
     setSelectedBookingId(booking_id);
-
-    if (bookingDetails !== undefined) {
-      console.log("Booking details", bookingDetails);
-    }
+    setSelectedBookingDetails(null);
+    setOpenDialog(true);
   };
+
+  if (isFetchBookingsError)
+    return (
+      <div className="mt-3 flex h-[598px] w-full flex-col rounded-md bg-white p-1">
+        <ErrorElement
+          title="Something went wrong"
+          subtitle={fetchBookingsErrorMessage.message}
+          errorType={fetchBookingsErrorMessage.type}
+        />
+      </div>
+    );
 
   return (
     <div className="mt-3 flex w-full flex-col gap-3 p-2">
-      {selectedBookingDetails && openDialog && (
+      {openDialog && (
         <BookingDetailsDialog
           openDialog={openDialog}
           setOpenDialog={setOpenDialog}
           setSelectedBookingId={setSelectedBookingId}
           selectedBookingDetails={selectedBookingDetails}
           setSelectedBookingDetails={setSelectedBookingDetails}
+          detailsIsLoading={bookingDetailsDataIsLoading}
+          isFetchBookingDetailsError={isFetchBookingDetailsError}
+          fetchBookingDetailsErrorMessage={fetchBookingDetailsErrorMessage}
         />
       )}
       {/* Bookins Table  */}
-      <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
+      <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1 py-4">
         <div className="flex h-12 w-full items-center justify-center">
           <div className="flex h-[30px] w-full items-center justify-between p-2 md:p-4">
             {/* Search  */}
@@ -73,7 +93,9 @@ export default function Bookings() {
           </div>
         </div>
         {/* Customers Display Table  */}
-        <div className="table-parent-scrollbar hidden h-full w-full overflow-x-auto p-1 md:flex">
+        <div
+          className={`table-parent-scrollbar py-2 ${isAllBookingsDataLoading || !bookings.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
+        >
           <table
             className="h-full w-full overflow-x-auto bg-white"
             suppressHydrationWarning={true}
@@ -133,7 +155,7 @@ export default function Bookings() {
                             {bookingDetail.status === "pending"
                               ? "In Progress"
                               : bookingDetail.status === "completed"
-                                ? "Done"
+                                ? "Completed"
                                 : bookingDetail.status === "confirmed"
                                   ? "Confirmed"
                                   : bookingDetail.status === "cancelled" &&

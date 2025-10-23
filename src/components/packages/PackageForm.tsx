@@ -202,7 +202,8 @@ const PackageForm = ({
         updatePackageForm.getValues("name").trim() ===
           selectedPackage?.name.trim() &&
         updatePackageForm.getValues("price").trim() ===
-          selectedPackage.price.trim()
+          selectedPackage.price.trim() &&
+        updatePackageForm.getValues("image") === undefined
       )
         return;
 
@@ -248,7 +249,7 @@ const PackageForm = ({
         if (!modalOpen) {
           addPackageForm.reset();
           setPreviewImage(null);
-          setPackageFormAction("addPackage");
+          // setPackageFormAction("addPackage");
         }
       }}
     >
@@ -256,7 +257,10 @@ const PackageForm = ({
         className="cursor-pointer"
         asChild
       >
-        <Button className="bg-custom-green w-full cursor-pointer rounded-full px-[50px] font-semibold transition-all duration-500 ease-in-out hover:-translate-y-0.5 hover:bg-[#169B4E] hover:shadow-lg">
+        <Button
+          onClick={() => setPackageFormAction("addPackage")}
+          className="bg-custom-green w-full cursor-pointer rounded-full px-[50px] font-semibold transition-all duration-500 ease-in-out hover:-translate-y-0.5 hover:bg-[#169B4E] hover:shadow-lg"
+        >
           <span>
             <Plus />
           </span>
