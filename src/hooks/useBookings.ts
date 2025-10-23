@@ -20,7 +20,7 @@ const useBookings = () => {
     gcTime: 1000 * 60 * 10,
   });
 
-  const bookings: IBookings[] | [] = allBookingsData?.data.data.data || [];
+  const bookings: IBookings[] | [] = allBookingsData?.data?.data?.data || [];
   console.log("Bookings are: ", bookings);
 
   const fetchBookingsErrorMessage: string = isFetchBookingsError

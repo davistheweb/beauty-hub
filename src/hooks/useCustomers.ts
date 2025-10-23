@@ -60,8 +60,8 @@ const useCustomerDetailsByID = (customerId?: string) => {
   });
 
   const customerDetails: ICustomerDetails | null =
-    !isFetchCustomerDetailsError && customerDetailsData?.data.data
-      ? customerDetailsData?.data.data
+    !isFetchCustomerDetailsError && customerDetailsData?.data?.data
+      ? customerDetailsData?.data?.data
       : null;
 
   const fetchCustomerDetailsErrorMessage: string = isFetchCustomerDetailsError

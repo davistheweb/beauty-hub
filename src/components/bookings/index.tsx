@@ -90,7 +90,7 @@ export default function Bookings() {
         </div>
         {/* Customers Display Table  */}
         <div
-          className={`table-parent-scrollbar py-2 ${isAllBookingsDataLoading ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
+          className={`table-parent-scrollbar py-2 ${isAllBookingsDataLoading || !bookings.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
         >
           <table
             className="h-full w-full overflow-x-auto bg-white"

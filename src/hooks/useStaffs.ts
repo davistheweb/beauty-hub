@@ -16,7 +16,7 @@ const useStaff = () => {
     gcTime: 1000 * 60 * 10,
   });
 
-  const staffs: IStaff[] | [] = data?.data.data.data || [];
+  const staffs: IStaff[] | [] = data?.data?.data?.data || [];
 
   console.log(staffs);
 

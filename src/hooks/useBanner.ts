@@ -17,7 +17,7 @@ export default function useBanner() {
 
   console.log(data);
 
-  const banners = data?.data.data.data || [];
+  const banners = data?.data?.data?.data || [];
 
   const deleteBanner = useMutation({
     mutationFn: deleteBannerService,
