@@ -22,10 +22,14 @@ export default function usePackages() {
 
   const addPackage = useMutation({
     mutationFn: addPackageAndService,
+    retry: false,
+    networkMode: "always",
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["packages"] }),
   });
 
   const updatePackage = useMutation({
+    retry: false,
+    networkMode: "always",
     mutationFn: updatePackageService,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["packages"] }),
   });
