@@ -65,7 +65,9 @@ export default function Customers() {
           </div>
         </div>
         {/* Customers Display Table  */}
-        <div className="table-parent-scrollbar hidden h-full w-full overflow-x-auto p-1 md:flex">
+        <div
+          className={`table-parent-scrollbar ${isAllCustomersDataLoading ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
+        >
           <table
             className="h-full w-full overflow-x-auto bg-white"
             suppressHydrationWarning={true}
@@ -118,7 +120,7 @@ export default function Customers() {
                         className={`flex h-full place-items-center justify-center px-10 py-1`}
                       >
                         <span
-                          className={`rounded-[38.32px] bg-[#EDF5FE] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" && "text-[#004CE8]"} flex w-full items-center justify-center gap-2 py-2`}
+                          className={`rounded-[38.32px] bg-[#EDF5FE] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" && "text-[#004CE8]"} flex w-fit items-center justify-center gap-2 px-5 py-2`}
                         >
                           <span className="flex h-3 w-3 items-center justify-center">
                             <Dot

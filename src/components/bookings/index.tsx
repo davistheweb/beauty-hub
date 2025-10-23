@@ -70,7 +70,7 @@ export default function Bookings() {
         />
       )}
       {/* Bookins Table  */}
-      <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
+      <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1 py-4">
         <div className="flex h-12 w-full items-center justify-center">
           <div className="flex h-[30px] w-full items-center justify-between p-2 md:p-4">
             {/* Search  */}
@@ -89,7 +89,9 @@ export default function Bookings() {
           </div>
         </div>
         {/* Customers Display Table  */}
-        <div className="table-parent-scrollbar hidden h-full w-full overflow-x-auto p-1 md:flex">
+        <div
+          className={`table-parent-scrollbar py-2 ${isAllBookingsDataLoading ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
+        >
           <table
             className="h-full w-full overflow-x-auto bg-white"
             suppressHydrationWarning={true}
