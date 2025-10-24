@@ -49,7 +49,7 @@ API.interceptors.response.use(
           window.location.reload();
         }
       });
-      return;
+      return Promise.reject(error);
     }
 
     return Promise.reject(error);
