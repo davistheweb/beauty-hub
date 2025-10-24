@@ -11,6 +11,12 @@ export default function getErrorMessage(error: unknown): IErrorInfo {
       if (status === 404) {
         return { type: "not_found", message: error.response.data.message };
       }
+      if (status === 401) {
+        return {
+          type: "unknown",
+          message: error.response.data.message || "Something went wrong",
+        };
+      }
       return {
         type: "server",
         message:
