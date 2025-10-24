@@ -38,7 +38,7 @@ export const ViewStaffDialog = ({
         },
         onError: (err) => {
           console.log(err);
-          
+
           const error = getErrorMessage(err);
           toast.error(error.message || "Something went wrong");
           console.log(error);
