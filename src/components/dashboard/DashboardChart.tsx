@@ -1,8 +1,6 @@
 "use client";
-import dynamic from "next/dynamic";
 import { useState } from "react";
-
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import Chart from "react-apexcharts";
 
 interface IDashboardChartProps {
   labels: string[];
