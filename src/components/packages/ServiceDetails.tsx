@@ -48,6 +48,7 @@ export const ServiceDetails = ({
                 fill
                 className="rounded-lg object-cover"
                 draggable={false}
+                unoptimized
               />
             </div>
             <div className="flex flex-col gap-2">

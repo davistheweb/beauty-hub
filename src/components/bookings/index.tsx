@@ -196,7 +196,7 @@ export default function Bookings() {
           ) : isAllBookingsDataLoading ? (
             <div className="h-full w-full">
               <div className="flex w-full flex-col items-center justify-center gap-3">
-                <CardSkeleton />
+                <CardSkeleton className="h-[294px] w-full" />
               </div>
             </div>
           ) : (

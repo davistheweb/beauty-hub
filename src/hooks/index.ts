@@ -5,6 +5,7 @@ import useDate from "./useDate";
 import usePackages from "./usePackages";
 import useRatings from "./useRatings";
 import { useStaff } from "./useStaffs";
+import useStats from "./useStats";
 
 export {
   useBanner,
@@ -16,4 +17,5 @@ export {
   usePackages,
   useRatings,
   useStaff,
+  useStats,
 };

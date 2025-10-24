@@ -134,7 +134,7 @@ const bookingDetails: TBookingDetails[] = [
   },
 ];
 
-bookingDetails.length = 0;
+// bookingDetails.length = 0;
 
 const bookingTableHeaders: string[] = [...tableHeaders, "Action"];
 
