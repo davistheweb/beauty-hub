@@ -30,7 +30,8 @@ const useStaff = () => {
     mutationFn: addStaffService,
     retry: false,
     networkMode: "always",
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["staffs"] }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["staffs", "stats"] }),
   });
 
   const updateStaff = useMutation({
