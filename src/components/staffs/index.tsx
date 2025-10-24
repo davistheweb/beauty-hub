@@ -8,18 +8,37 @@ import { Button } from "@/components/ui/button";
 import SearchInput from "@/components/ui/SearchInput";
 import { staffTableHeaders } from "@/data";
 import { useStaff } from "@/hooks";
+import { IStaff } from "@/types/IStaff";
 import { ChevronDown, Dot, EllipsisVertical, Plus } from "lucide-react";
+import { useState } from "react";
 import { CardSkeleton } from "../ui/CardSkeleton";
 import { ErrorElement } from "../ui/ErrorElement";
 import { TabkeSkeleton } from "../ui/TabkeSkeleton";
+import StaffForm from "./StaffForm";
+import { ViewStaffDialog } from "./ViewStaffDialog";
 
 export default function Staffs() {
+  const [showStaffFormDialog, setShowStaffFormDialog] =
+    useState<boolean>(false);
+  const [openStaffDialog, setOpenStaffDialog] = useState<boolean>(false);
+  const [staffFormAction, setStaffFormAction] = useState<
+    "addStaff" | "updateStaff"
+  >("addStaff");
+
+  const [selectedStaff, setSelectedStaff] = useState<IStaff | null>(null);
+
   const {
     staffs,
     isStaffsLoading,
     isFetchStaffsError,
     fetchStaffsErrorMessage,
   } = useStaff();
+
+  const handleViewStaff = (staff: IStaff) => {
+    setSelectedStaff(staff);
+    setOpenStaffDialog((prev) => !prev);
+    console.log(staff.status);
+  };
 
   if (isFetchStaffsError)
     return (
@@ -35,18 +54,33 @@ export default function Staffs() {
 
   return (
     <div className="flex h-full flex-1 flex-col md:p-2">
+      {openStaffDialog && (
+        <ViewStaffDialog
+          openStaffDialog={openStaffDialog}
+          setOpenStaffDialog={setOpenStaffDialog}
+          selectedStaff={selectedStaff}
+          setSelectedStaff={setSelectedStaff}
+          handleUpdateStaffDetails={() => {
+            setTimeout(() => setOpenStaffDialog((prev) => !prev), 1000);
+            setSelectedStaff(selectedStaff);
+            setStaffFormAction("updateStaff");
+            setShowStaffFormDialog((prev) => !prev);
+          }}
+        />
+      )}
       <div className="flex flex-col gap-3 lg:flex-row lg:justify-between">
         <h1 className="inline-block text-2xl font-bold">Admin Staff</h1>
-        {staffs.length > 0 && (
-          <div className="px-4 lg:px-0">
-            <Button className="bg-custom-green w-full cursor-pointer rounded-full px-[50px] font-semibold transition-all duration-500 ease-in-out hover:-translate-y-0.5 hover:bg-[#169B4E] hover:shadow-lg">
-              <span>
-                <Plus />
-              </span>
-              Add Staff
-            </Button>
-          </div>
-        )}
+        <div className="px-4 lg:px-0">
+          <StaffForm
+            staffs={staffs}
+            showStaffFormDialog={showStaffFormDialog}
+            setShowStaffFormDialog={setShowStaffFormDialog}
+            selectedStaff={selectedStaff}
+            setSelectedStaff={setSelectedStaff}
+            staffFormAction={staffFormAction}
+            setStaffFormAction={setStaffFormAction}
+          />
+        </div>
       </div>
       <div className="mt-3 flex w-full flex-col gap-3 p-2">
         {/* Staff Table  */}
@@ -94,7 +128,13 @@ export default function Staffs() {
                   subtitle="Add a Staff and see the list here."
                   colSpan={staffTableHeaders.length}
                 >
-                  <Button className="bg-custom-green cursor-pointer rounded-full hover:bg-[#169B4E]">
+                  <Button
+                    className="bg-custom-green cursor-pointer rounded-full hover:bg-[#169B4E]"
+                    onClick={() => {
+                      setStaffFormAction("addStaff");
+                      setShowStaffFormDialog((prev) => !prev);
+                    }}
+                  >
                     {" "}
                     <span>
                       <Plus />
@@ -140,7 +180,10 @@ export default function Staffs() {
                           </span>
                         </td>
                         <td className="">
-                          <span className="flex cursor-pointer items-center justify-center rounded-xs text-center text-[14px] font-medium">
+                          <span
+                            onClick={() => handleViewStaff(staff)}
+                            className="flex cursor-pointer items-center justify-center rounded-xs text-center text-[14px] font-medium"
+                          >
                             <EllipsisVertical className="text-[#737375] hover:bg-[#EDF5FE]" />
                           </span>
                         </td>
@@ -219,7 +262,10 @@ export default function Staffs() {
                           </span>
                         </div>
                         <div className="flex justify-end pr-4">
-                          <button className="text-custom-green text-[14px] font-medium">
+                          <button
+                            onClick={() => handleViewStaff(staff)}
+                            className="text-custom-green text-[14px] font-medium"
+                          >
                             Action
                           </button>
                         </div>

@@ -43,7 +43,7 @@ export interface IStaff {
   location: string | null;
   referral_id: string | null;
   referral_by: string | null;
-  status: "active" | "inactive" | string;
+  status: "active" | "inactive" | "suspended";
   allow_push: string;
   terms: string;
   expo_token: string | null;

@@ -1,10 +1,16 @@
-import { fetchStaffs } from "@/services/staffService";
+import { suspendService, unSuspendService } from "@/services/controlService";
+import {
+  addStaffService,
+  fetchStaffs,
+  updateStaffService,
+} from "@/services/staffService";
 import { IErrorInfo } from "@/types/Error";
-import { IStaff } from "@/types/Istaff";
+import { IStaff } from "@/types/IStaff";
 import getErrorMessage from "@/utils/getErrorMessage";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const useStaff = () => {
+  const queryClient = useQueryClient();
   const {
     data,
     isLoading: isStaffsLoading,
@@ -20,6 +26,34 @@ const useStaff = () => {
     gcTime: 1000 * 60 * 10,
   });
 
+  const addStaff = useMutation({
+    mutationFn: addStaffService,
+    retry: false,
+    networkMode: "always",
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["staffs"] }),
+  });
+
+  const updateStaff = useMutation({
+    mutationFn: updateStaffService,
+    retry: false,
+    networkMode: "always",
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["staffs"] }),
+  });
+
+  const suspendedStaff = useMutation({
+    mutationFn: suspendService,
+    retry: false,
+    networkMode: "always",
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["staffs"] }),
+  });
+
+  const unsuspendStaff = useMutation({
+    mutationFn: unSuspendService,
+    retry: false,
+    networkMode: "always",
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["staffs"] }),
+  });
+
   const staffs: IStaff[] | [] = data?.data?.data?.data || [];
 
   console.log(staffs);
@@ -30,6 +64,10 @@ const useStaff = () => {
 
   return {
     staffs,
+    addStaff,
+    suspendedStaff,
+    unsuspendStaff,
+    updateStaff,
     isStaffsLoading,
     isFetchStaffsError,
     fetchStaffsErrorMessage,

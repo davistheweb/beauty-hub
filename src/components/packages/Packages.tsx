@@ -28,8 +28,8 @@ const Package = () => {
     usePackages();
 
   const handleViewServices = (packageItem: IPackage) => {
-    setOpenServiceDetailsModal((prev) => !prev);
     setSelectedPackage(packageItem);
+    setOpenServiceDetailsModal((prev) => !prev);
   };
 
   if (isError)
@@ -45,6 +45,20 @@ const Package = () => {
 
   return (
     <div className="flex h-full w-full flex-1 flex-col md:p-2">
+      {openServiceDetailsModal && (
+        <ServiceDetails
+          openServiceDetailsModal={openServiceDetailsModal}
+          setOpenServiceDetailsModal={setOpenServiceDetailsModal}
+          selectedPackage={selectedPackage}
+          setSelectedPackage={setSelectedPackage}
+          handleUpdatePackage={() => {
+            setTimeout(() => setOpenServiceDetailsModal((prev) => !prev), 900);
+            setSelectedPackage(selectedPackage);
+            setShowPackageFormModal((prev) => !prev);
+            setPackageFormAction("updatePackage");
+          }}
+        />
+      )}
       <div className="flex flex-col gap-3 lg:flex-row lg:justify-between">
         <h1 className="inline-block text-2xl font-bold">Package Management</h1>
         <div className="px-4 lg:px-0">
@@ -74,7 +88,7 @@ const Package = () => {
             <div className="flex h-full w-full items-center justify-center">
               <div className="w-[506px]">
                 <NoDataFoundElement
-                  title="No Services Yet!"
+                  title="No Packages Yet!"
                   subtitle="You haven’t added any services yet. Start by creating your first service so users can discover what your barbershop offers. Adding services helps customers book appointments and explore your platform with ease."
                 />
               </div>
@@ -99,9 +113,11 @@ const Package = () => {
                     status={packageItem.status}
                     handleViewServices={() => handleViewServices(packageItem)}
                     handleUpdatePackage={() => {
-                      if (packageItem) setSelectedPackage(packageItem);
-                      setShowPackageFormModal((prev) => !prev);
-                      setPackageFormAction("updatePackage");
+                      if (packageItem) {
+                        setSelectedPackage(packageItem);
+                        setShowPackageFormModal((prev) => !prev);
+                        setPackageFormAction("updatePackage");
+                      }
                     }}
                   />
                 ))
@@ -109,23 +125,6 @@ const Package = () => {
             </div>
           )}
         </>
-        {openServiceDetailsModal && (
-          <ServiceDetails
-            openServiceDetailsModal={openServiceDetailsModal}
-            setOpenServiceDetailsModal={setOpenServiceDetailsModal}
-            selectedPackage={selectedPackage}
-            setSelectedPackage={setSelectedPackage}
-            handleUpdatePackage={() => {
-              setTimeout(
-                () => setOpenServiceDetailsModal((prev) => !prev),
-                900,
-              );
-              setSelectedPackage(selectedPackage);
-              setShowPackageFormModal((prev) => !prev);
-              setPackageFormAction("updatePackage");
-            }}
-          />
-        )}
       </div>
     </div>
   );

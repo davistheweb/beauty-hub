@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 import { useBookingDetailsByID } from "@/hooks";
 import { IErrorInfo } from "@/types/Error";
+import getErrorMessage from "@/utils/getErrorMessage";
 import {
   BookingStatusFormValues,
   bookingStatusSchema,
@@ -93,7 +94,8 @@ export const BookingDetailsDialog = ({
           }, 1000);
         },
         onError: (err) => {
-          toast.error(err.message);
+          const error = getErrorMessage(err);
+          toast.error(error.message);
         },
       },
     );

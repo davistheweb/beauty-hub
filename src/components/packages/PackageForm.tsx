@@ -1,6 +1,7 @@
 "use client";
 import { usePackages } from "@/hooks";
 import { IPackage } from "@/types/IPackages";
+import getErrorMessage from "@/utils/getErrorMessage";
 import {
   addPackageFormSchema,
   addPackageFormValues,
@@ -193,7 +194,8 @@ const PackageForm = ({
           }, 1000);
         },
         onError: (err) => {
-          toast.error(err.message);
+          const error = getErrorMessage(err);
+          toast.error(error.message);
           console.log(err);
         },
       });
@@ -234,7 +236,8 @@ const PackageForm = ({
         },
 
         onError: (err) => {
-          toast.error(err.message);
+          const errMsg = getErrorMessage(err);
+          toast.error(errMsg.message);
           console.log(err);
         },
       });
@@ -249,6 +252,7 @@ const PackageForm = ({
         if (!modalOpen) {
           addPackageForm.reset();
           setPreviewImage(null);
+
           // setPackageFormAction("addPackage");
         }
       }}
@@ -299,7 +303,7 @@ const PackageForm = ({
                     <Input
                       {...field}
                       placeholder="Package Name"
-                      className={`${packageFormAction === "addPackage" ? "h-8" : packageFormAction === "updatePackage" && "h-12"} selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
+                      className={`${packageFormAction === "addPackage" ? "h-8" : packageFormAction === "updatePackage" && "h-12"} focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
                       type="text"
                       name="name"
                     />
@@ -322,7 +326,7 @@ const PackageForm = ({
                     <Input
                       {...field}
                       placeholder="Price (eg: 20000)"
-                      className={`${packageFormAction === "addPackage" ? "h-8" : packageFormAction === "updatePackage" && "h-12"} selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
+                      className={`${packageFormAction === "addPackage" ? "h-8" : packageFormAction === "updatePackage" && "h-12"} focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
                       name="price"
                       type="text"
                     />
@@ -377,7 +381,7 @@ const PackageForm = ({
                             <Input
                               {...field}
                               placeholder="Service name"
-                              className={`${packageFormAction === "addPackage" ? "h-8" : packageFormAction === "updatePackage" && "h-12"} selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
+                              className={`${packageFormAction === "addPackage" ? "h-8" : packageFormAction === "updatePackage" && "h-12"} focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
                               name="services.0.name"
                               type="text"
                             />
