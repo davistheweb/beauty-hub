@@ -14,7 +14,7 @@ export default function getErrorMessage(error: unknown): IErrorInfo {
       if (status === 401) {
         return {
           type: "unknown",
-          message: error.response.data.message || "Something went wrong",
+          message: "Your Session is expired, Please login again, redirecting.....",
         };
       }
       return {

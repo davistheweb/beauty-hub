@@ -11,7 +11,7 @@ const storeAccessBearerToken = async (bearer_token: string) => {
   userCookie.set({
     name: "beauty_atk", //beauty_access_token
     value: bearer_token,
-    // httpOnly: true,
+    httpOnly: true,
     // secure: true,
     // sameSite: "strict",
     // path: "/",
@@ -21,6 +21,7 @@ const storeAccessBearerToken = async (bearer_token: string) => {
 
 const getAccessToken = async () => {
   const token: string | undefined = (await cookies()).get("beauty_atk")?.value;
+  console.log("token from get access token",token);
 
   return token;
 };

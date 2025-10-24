@@ -37,8 +37,10 @@ export const ViewStaffDialog = ({
           }, 1200);
         },
         onError: (err) => {
+          console.log(err);
+          
           const error = getErrorMessage(err);
-          toast.error(error.message);
+          toast.error(error.message || "Something went wrong");
           console.log(error);
         },
       });
@@ -53,7 +55,7 @@ export const ViewStaffDialog = ({
         },
         onError: (err) => {
           const error = getErrorMessage(err);
-          toast.error(error.message);
+          toast.error(error.message || "Something went wrong");
           console.log(error);
         },
       });
@@ -77,7 +79,7 @@ export const ViewStaffDialog = ({
           </DialogTitle>
         </DialogHeader>
 
-        <div className="relative flex flex-col gap-3 overflow-hidden">
+        <div className="relative flex h-full flex-col gap-3 overflow-hidden">
           <div className="space-y-1">
             <h1 className="font-semibold text-[#070500]">
               Stylist Information
@@ -165,7 +167,7 @@ export const ViewStaffDialog = ({
             </div>
           </div>
           {/* Action Buttons  */}
-          <div className="relative flex flex-col justify-between gap-5 lg:flex-row lg:gap-2">
+          <div className="relative flex h-full flex-col items-center justify-between gap-5 py-2 align-middle lg:flex-row lg:gap-2">
             <Button
               onClick={handleUpdateStaffDetails}
               className="text-custom-green h-[50px] w-full cursor-pointer rounded-full border border-[#1AB65C] bg-[#F9FFFB] text-sm font-semibold hover:bg-[#f1faf4] lg:w-[200px]"
