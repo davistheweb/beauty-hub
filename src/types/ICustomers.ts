@@ -14,7 +14,7 @@ interface ICustomer {
   location: string | null;
   referral_id: string | null;
   referral_by: string;
-  status: "active" | "inactive" | "archived";
+  status: "active" | "inactive" | "archived" | "suspended";
   allow_push: string;
   terms: string;
   expo_token: string | null;

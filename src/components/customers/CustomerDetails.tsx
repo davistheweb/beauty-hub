@@ -1,10 +1,13 @@
 "use client";
 
 import { useCustomerDetailsByID } from "@/hooks";
+import getErrorMessage from "@/utils/getErrorMessage";
 import { Dot, Mail } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
 import { PhoneIcon } from "../icons";
 import { NoDataFoundElement } from "../no-data";
+import { Button } from "../ui/button";
 import { ErrorElement } from "../ui/ErrorElement";
 import CustomerLoadingSkeletion from "./CustomerLoadingSkeletion";
 
@@ -12,10 +15,44 @@ export const CustomerDetails = ({ customerId }: { customerId: string }) => {
   //   const [copyStatus, setCopyStatus] = useState<"copy" | "copied">("copy");
   const {
     customerDetails,
+    suspendedCustomer,
+    unsuspendCustomer,
     customerDetailsDataIsLoading,
     isFetchCustomerDetailsError,
     fetchCustomerDetailsErrorMessage,
   } = useCustomerDetailsByID(customerId ?? undefined);
+
+  const handleSuspendAndUnsuspendCustomer = () => {
+    if (
+      customerDetails?.status === "active" ||
+      customerDetails?.status === "inactive" ||
+      customerDetails?.status === "archived"
+    ) {
+      suspendedCustomer.mutate(String(customerDetails.id), {
+        onSuccess: (data) => {
+          toast.success(data.message);
+        },
+        onError: (err) => {
+          console.log(err);
+
+          const error = getErrorMessage(err);
+          toast.error(error.message || "Something went wrong");
+          console.log(error);
+        },
+      });
+    } else if (customerDetails?.status === "suspended") {
+      unsuspendCustomer.mutate(String(customerDetails.id), {
+        onSuccess: (data) => {
+          toast.success(data.message);
+        },
+        onError: (err) => {
+          const error = getErrorMessage(err);
+          toast.error(error.message || "Something went wrong");
+          console.log(error);
+        },
+      });
+    }
+  };
 
   //   const handleCopyToClipboard = async (text: string) => {
   //     try {
@@ -35,17 +72,6 @@ export const CustomerDetails = ({ customerId }: { customerId: string }) => {
       </div>
     );
   }
-
-  // if (isFetchCustomerDetailsError) {
-  //   return (
-  //     <div className="mt-3 flex h-[598px] w-full flex-col overflow-hidden rounded-md bg-white p-2">
-  //       <NoDataFoundElement
-  //         title="Something went wrong"
-  //         subtitle={fetchCustomerDetailsErrorMessage as string}
-  //       />
-  //     </div>
-  //   );
-  // }
 
   return (
     <div className="mt-3 flex w-full flex-col gap-3 p-2">
@@ -82,25 +108,39 @@ export const CustomerDetails = ({ customerId }: { customerId: string }) => {
                         {customerDetails?.name}
                       </span>
                     </span>
-                    <span
-                      className={`rounded-[38.32px] bg-[#EDF5FE] select-none ${customerDetails?.status === "active" ? "text-[#00C247]" : customerDetails?.status === "inactive" ? "text-[#004CE8]" : customerDetails?.status === "archived" && "text-[#333]"} flex h-[25px] w-[110px] items-center justify-center gap-2 px-2`}
-                    >
-                      <span className="flex h-3 w-3 items-center justify-center">
-                        <Dot
-                          size={40}
-                          className="shrink-0"
-                        />
-                      </span>
+                    <div className="flex gap-3">
+                      <span
+                        className={`rounded-[38.32px] bg-[#EDF5FE] select-none ${customerDetails?.status === "active" ? "text-[#00C247]" : customerDetails?.status === "inactive" ? "text-[#004CE8]" : customerDetails?.status === "archived" ? "text-[#333]" : customerDetails.status === "suspended" && "text-[#FF3333]"} flex h-[25px] w-[110px] items-center justify-center gap-2 px-2`}
+                      >
+                        <span className="flex h-3 w-3 items-center justify-center">
+                          <Dot
+                            size={40}
+                            className="shrink-0"
+                          />
+                        </span>
 
-                      <span className="w-fit text-center text-[12px]">
-                        {customerDetails?.status === "active"
-                          ? "Active"
-                          : customerDetails?.status === "inactive"
-                            ? "InActive"
-                            : customerDetails?.status === "archived" &&
-                              "Archived"}
+                        <span className="w-fit text-center text-[12px] capitalize">
+                          {customerDetails.status}
+                        </span>
                       </span>
-                    </span>
+                      <Button
+                        onClick={handleSuspendAndUnsuspendCustomer}
+                        className={`h-[25px] cursor-pointer rounded-full capitalize ${customerDetails?.status === "suspended" ? "bg-custom-green hover:bg-[#1fc966]" : customerDetails?.status === "archived" ? "bg-[#FF3333] hover:bg-red-400" : customerDetails?.status === "inactive" ? "bg-[#FF3333] hover:bg-red-400" : customerDetails?.status === "active" && "bg-[#FF3333] hover:bg-red-400"} w-[110px] font-semibold`}
+                        disabled={
+                          suspendedCustomer.isPending ||
+                          unsuspendCustomer.isPending
+                        }
+                      >
+                        {customerDetails?.status === "suspended"
+                          ? "Unsuspend"
+                          : customerDetails?.status === "active"
+                            ? "Suspend"
+                            : customerDetails?.status === "inactive"
+                              ? "Suspend"
+                              : customerDetails?.status === "archived" &&
+                                "Suspend"}
+                      </Button>
+                    </div>
                   </div>
                   <div className="flex w-full flex-col justify-between gap-1 border-t border-[#E4E4E4] p-3 md:flex-row md:gap-2">
                     <span className="flex items-center gap-2">

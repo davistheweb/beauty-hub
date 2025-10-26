@@ -1,3 +1,4 @@
+import { suspendService, unSuspendService } from "@/services/controlService";
 import {
   fetchCustomerDetails,
   fetchCustomers,
@@ -5,7 +6,7 @@ import {
 import { IErrorInfo } from "@/types/Error";
 import { ICustomer, ICustomerDetails } from "@/types/ICustomers";
 import getErrorMessage from "@/utils/getErrorMessage";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const useCustomers = () => {
   const {
@@ -41,7 +42,7 @@ const useCustomers = () => {
 };
 
 const useCustomerDetailsByID = (customerId?: string) => {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const {
     data: customerDetailsData,
@@ -58,6 +59,30 @@ const useCustomerDetailsByID = (customerId?: string) => {
     refetchOnReconnect: true,
   });
 
+  const suspendedCustomer = useMutation({
+    mutationFn: suspendService,
+    retry: false,
+    networkMode: "always",
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["customers"] });
+      queryClient.invalidateQueries({
+        queryKey: ["customerDetailsData", variables],
+      });
+    },
+  });
+
+  const unsuspendCustomer = useMutation({
+    mutationFn: unSuspendService,
+    retry: false,
+    networkMode: "always",
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["customers"] });
+      queryClient.invalidateQueries({
+        queryKey: ["customerDetailsData", variables],
+      });
+    },
+  });
+
   const customerDetails: ICustomerDetails | null =
     !isFetchCustomerDetailsError && customerDetailsData?.data?.data
       ? customerDetailsData?.data?.data
@@ -69,6 +94,8 @@ const useCustomerDetailsByID = (customerId?: string) => {
 
   return {
     customerDetails,
+    suspendedCustomer,
+    unsuspendCustomer,
     customerDetailsDataIsLoading,
     isFetchCustomerDetailsError,
     fetchCustomerDetailsErrorMessage,

@@ -121,7 +121,7 @@ export default function Customers() {
                         className={`flex h-full place-items-center justify-center px-10 py-1`}
                       >
                         <span
-                          className={`rounded-[38.32px] bg-[#EDF5FE] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" && "text-[#004CE8]"} flex w-fit items-center justify-center gap-2 px-5 py-2`}
+                          className={`rounded-[38.32px] bg-[#EDF5FE] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" ? "text-[#004CE8]" : customer.status === "suspended" && "text-[#FF3333]"} flex w-fit items-center justify-center gap-2 px-5 py-2`}
                         >
                           <span className="flex h-3 w-3 items-center justify-center">
                             <Dot
@@ -214,7 +214,7 @@ export default function Customers() {
                         <span className="flex items-center justify-between">
                           <h1 className="text-[18px] font-medium">Status</h1>
                           <span
-                            className={`rounded-[42.58px] bg-[#EDF5FE] pt-[4.73px] pr-[9.46px] pb-[4.73px] pl-[9.46px] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" && "text-[#004CE8]"} flex items-center justify-center gap-2 px-2 text-[14px]`}
+                            className={`rounded-[42.58px] bg-[#EDF5FE] pt-[4.73px] pr-[9.46px] pb-[4.73px] pl-[9.46px] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" ? "text-[#004CE8]" : customer.status === "suspended" && "text-[#FF3333]"} flex items-center justify-center gap-2 px-2 text-[14px]`}
                           >
                             <span className="flex h-3 w-3 items-center justify-center">
                               <Dot
