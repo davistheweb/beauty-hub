@@ -4,7 +4,7 @@ const SearchInput = ({
   value,
   onChange,
 }: {
-  value: string;
+  value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => (
   <div className="relative flex w-full items-center justify-start p-1">

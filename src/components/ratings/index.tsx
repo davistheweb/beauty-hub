@@ -44,7 +44,7 @@ export default function Ratings() {
         toast.error(error.message);
       },
     });
-  }, [debouncedValue]);
+  }, [debouncedValue, searchItem]);
 
   useEffect(() => {
     if (search.trim().length === 0) setSearchData([]);
