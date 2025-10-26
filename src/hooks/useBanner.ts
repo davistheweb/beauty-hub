@@ -34,6 +34,8 @@ export default function useBanner() {
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
   const deleteBanner = useMutation({
+    retry: false,
+    networkMode: "always",
     mutationFn: deleteBannerService,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["banners"] });
@@ -41,6 +43,8 @@ export default function useBanner() {
   });
 
   const addBanner = useMutation({
+    retry: false,
+    networkMode: "always",
     mutationFn: addBannerService,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["banners"] });
@@ -48,6 +52,8 @@ export default function useBanner() {
   });
 
   const updateBanner = useMutation({
+    retry: false,
+    networkMode: "always",
     mutationFn: updateBannerService,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["banners"] });

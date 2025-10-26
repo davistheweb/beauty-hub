@@ -1,8 +1,8 @@
-import { fetchRatningsService } from "@/services/ratingsService";
+import { fetchRatingsService } from "@/services/ratingsService";
 import { IErrorInfo } from "@/types/Error";
 import { IRating } from "@/types/IRatings";
 import getErrorMessage from "@/utils/getErrorMessage";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export default function useRatings() {
   const {
@@ -11,13 +11,17 @@ export default function useRatings() {
     error,
     isError: isFetchRatingsError,
   } = useQuery({
-    queryFn: fetchRatningsService,
     queryKey: ["ratings"],
+    queryFn: () => fetchRatingsService(),
     retry: false,
     networkMode: "always",
     refetchOnReconnect: true,
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 5,
+  });
+
+  const searchItem = useMutation({
+    mutationFn:fetchRatingsService
   });
 
   const ratingsResponse = data?.data?.data?.data || [];
@@ -41,5 +45,11 @@ export default function useRatings() {
     ? getErrorMessage(error)
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
-  return { ratings, isLoading, isFetchRatingsError, fetchRatingsErrMessage };
+  return {
+    ratings,
+    isLoading,
+    searchItem,
+    isFetchRatingsError,
+    fetchRatingsErrMessage,
+  };
 }

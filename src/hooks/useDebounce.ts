@@ -1,29 +1,16 @@
-// export function debounce(func, wait, immediate) {
-//   var timeout;
-//   return function () {
-//     var context = this,
-//       args = arguments;
-//     var callNow = immediate && !timeout;
-//     clearTimeout(timeout);
-//     timeout = setTimeout(function () {
-//       timeout = null;
-//       if (!immediate) {
-//         func.apply(context, args);
-//       }
-//     }, wait);
-//     if (callNow) func.apply(context, args);
-//   };
-// }
+import { useEffect, useState } from "react";
 
-// export function throttle(func, delay) {
-//   let lastExecuted = 0;
+export default function useDebounce<T>(value: T, delay: number = 600) {
+  const [debouncedValue, setDebouncedValue] = useState<T>();
 
-//   return function (...args) {
-//     const now = Date.now();
+  useEffect(() => {
+    if (!value) return;
 
-//     if (now - lastExecuted >= delay) {
-//       func.apply(this, args);
-//       lastExecuted = now;
-//     }
-//   };
-// }
+    const timeout = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => clearTimeout(timeout);
+  }, [value, delay]);
+  return debouncedValue;
+}

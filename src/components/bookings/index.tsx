@@ -139,7 +139,7 @@ export default function Bookings() {
                         {bookingDetail.booking_date}
                       </td>
                       <td
-                        className={`flex items-center justify-center px-10 py-1`}
+                        className={`flex h-full items-center justify-center px-10 py-1`}
                       >
                         <span
                           className={`rounded-[38.32px] bg-[#EDF5FE] select-none ${bookingDetail.status === "pending" ? "text-[#004CE8]" : bookingDetail.status === "completed" ? "text-[#00C247]" : bookingDetail.status === "confirmed" ? "text-[#333]" : bookingDetail.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] items-center justify-center gap-2 px-2`}

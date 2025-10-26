@@ -128,7 +128,7 @@ export default function Dashboard() {
                               {bookingDetail.booking_date}
                             </td>
                             <td
-                              className={`flex items-center justify-center px-1 py-1 text-center`}
+                              className={`flex items-center h-full justify-center px-1 py-2 text-center`}
                             >
                               <span
                                 className={`rounded-[38.32px] bg-[#EDF5FE] select-none ${bookingDetail.status === "pending" ? "text-[#004CE8]" : bookingDetail.status === "completed" ? "text-[#00C247]" : bookingDetail.status === "confirmed" ? "text-[#333]" : bookingDetail.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] items-center justify-center gap-2 px-2`}

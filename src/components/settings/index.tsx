@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import BannerSettings from "./BannerSettings";
 import ProfileSettings from "./ProfileSettings";
 import SecuritySettings from "./SecuritySettings";
+import clsx from "clsx";
 
 export default function Settings() {
   const [currentSettingsTab, setCurrentSettingsTab] =
@@ -74,15 +75,18 @@ export default function Settings() {
           Banner Settings
         </Button>
       </div>
-      {currentSettingsTab === "profile-tab" ? (
+      <div
+        className={clsx(
+          "[&>*]:hidden",
+          currentSettingsTab === "profile-tab" && "[&>*:nth-child(1)]:block",
+          currentSettingsTab === "security-tab" && "[&>*:nth-child(2)]:block",
+          currentSettingsTab === "banner-tab" && "[&>*:nth-child(3)]:block",
+        )}
+      >
         <ProfileSettings setComponentIsUploading={setComponentIsUploading} />
-      ) : currentSettingsTab === "security-tab" ? (
         <SecuritySettings setComponentIsUploading={setComponentIsUploading} />
-      ) : (
-        currentSettingsTab === "banner-tab" && (
-          <BannerSettings setComponentIsUploading={setComponentIsUploading} />
-        )
-      )}
+        <BannerSettings setComponentIsUploading={setComponentIsUploading} />
+      </div>
     </div>
   );
 }

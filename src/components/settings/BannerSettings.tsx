@@ -1,6 +1,7 @@
 "use client";
 import { useBanner } from "@/hooks";
 import { IBanner } from "@/types/IBanner";
+import getErrorMessage from "@/utils/getErrorMessage";
 import {
   addBannerFormSchema,
   addBannerFormValues,
@@ -147,6 +148,8 @@ export default function BannerSettings({
           setPreviewImage(null);
         },
         onError: (err) => {
+          const error = getErrorMessage(err)
+          toast.error(error.message)
           setComponentIsUploading(false);
           console.log(err);
         },
@@ -189,6 +192,8 @@ export default function BannerSettings({
           }, 1200);
         },
         onError: (err) => {
+           const error = getErrorMessage(err);
+           toast.error(error.message);
           setComponentIsUploading(false);
           console.log(err);
         },
@@ -329,7 +334,7 @@ export default function BannerSettings({
                       <Textarea
                         {...field}
                         placeholder="Message"
-                        className="h-[130px] resize-none selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]"
+                        className="scrollbar-thin h-[90px] resize-none selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]"
                         name="subtitle"
                         disabled={addBanner.isPending || updateBanner.isPending}
                       />
@@ -403,7 +408,10 @@ export default function BannerSettings({
                         setComponentIsUploading(false);
                       },
                       onError: (err) => {
+                        const error = getErrorMessage(err);
+                        toast.error(error.message);
                         setComponentIsUploading(false);
+
                         console.log(err);
                       },
                     });

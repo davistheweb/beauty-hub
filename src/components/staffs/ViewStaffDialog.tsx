@@ -138,8 +138,8 @@ export const ViewStaffDialog = ({
                     <span>{selectedStaff?.email}</span>
                   </span>
                 </div>
-                <div className="flex w-full px-4 py-5">
-                  <div className="flex w-full border-t border-[#E4E4E4] py-5">
+                <div className="flex w-full px-4 py-2">
+                  <div className="flex w-full border-t border-[#E4E4E4] py-2">
                     <span className="flex gap-16">
                       <span className="flex flex-col">
                         <span className="text-xs text-[#727272]">
@@ -152,14 +152,14 @@ export const ViewStaffDialog = ({
                             .join("-")}
                         </span>
                       </span>
-                      <span className="flex flex-col">
+                      {/* <span className="flex flex-col">
                         <span className="text-xs text-[#727272]">
                           No of booking
                         </span>
                         <span className="font-medium text-[#070500]">
                           number
                         </span>
-                      </span>
+                      </span> */}
                     </span>
                   </div>
                 </div>

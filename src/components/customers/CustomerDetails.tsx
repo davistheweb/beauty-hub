@@ -185,15 +185,14 @@ export const CustomerDetails = ({ customerId }: { customerId: string }) => {
                                 {booking.package.name}
                               </span>
                             </span>
-                            <span className="flex flex-col">
+                            {/* <span className="flex flex-col">
                               <span className="text-xs text-[#727272]">
                                 Barber
                               </span>
                               <span className="font-medium text-[#070500]">
-                                {/* {booking.package.description} */}
                                 Barber
                               </span>
-                            </span>
+                            </span> */}
                           </span>
                           <span className="flex gap-16">
                             <span className="flex flex-col">
