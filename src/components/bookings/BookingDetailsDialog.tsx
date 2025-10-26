@@ -140,7 +140,7 @@ export const BookingDetailsDialog = ({
         }
       }}
     >
-      <DialogContent className="">
+      <DialogContent className={`${detailsIsLoading ? "" : "max-w-fit"}`}>
         <DialogHeader>
           <DialogTitle className="text-custom-green text-[16px] font-bold lg:text-2xl">
             Booking Details
