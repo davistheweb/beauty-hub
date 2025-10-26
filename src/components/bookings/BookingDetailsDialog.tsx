@@ -87,10 +87,10 @@ export const BookingDetailsDialog = ({
       {
         onSuccess: (data) => {
           toast.success(data.message);
-          setSelectedBookingId(null);
-          setSelectedBookingDetails(null);
           setTimeout(() => {
             setOpenDialog(false);
+            setSelectedBookingId(null);
+            setSelectedBookingDetails(null);
           }, 1000);
         },
         onError: (err) => {
