@@ -2,7 +2,11 @@ import z from "zod";
 
 const baseBannerSchema = z.object({
   title: z.string().trim().nonempty({ message: "Banner Title is required" }),
-  subtitle: z.string().trim().nonempty({ message: "Subtitle is required" }).max(100, {error: "Subtitle cannot be greater than 100 characters"}),
+  subtitle: z
+    .string()
+    .trim()
+    .nonempty({ message: "Subtitle is required" })
+    .max(100, { error: "Subtitle cannot be greater than 100 characters" }),
 });
 
 export const addBannerFormSchema = baseBannerSchema.extend({

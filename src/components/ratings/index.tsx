@@ -18,8 +18,9 @@ export default function Ratings() {
   const [searchData, setSearchData] = useState<IRating[] | []>([]);
   const {
     ratings,
-    searchItem,
+    searchRating,
     isLoading,
+    deleteRating,
     isFetchRatingsError,
     fetchRatingsErrMessage,
   } = useRatings();
@@ -31,7 +32,7 @@ export default function Ratings() {
 
     setSearchData([]);
 
-    searchItem.mutate(debouncedValue, {
+    searchRating.mutate(debouncedValue, {
       onSuccess: (data) => {
         console.log(data.data.data.data);
         setSearchData(data.data.data.data);
@@ -44,11 +45,27 @@ export default function Ratings() {
         toast.error(error.message);
       },
     });
-  }, [debouncedValue, searchItem]);
+  }, [debouncedValue, searchRating]);
 
   useEffect(() => {
     if (search.trim().length === 0) setSearchData([]);
   }, [search]);
+
+  const handleDeleteRating = (id: number) => {
+    const toastId = toast.loading("Deleting review");
+
+    deleteRating.mutate(id, {
+      onSuccess: (data) => {
+        toast.dismiss(toastId);
+        toast.success(data.message);
+      },
+      onError: (err) => {
+        toast.dismiss(toastId);
+        const error = getErrorMessage(err);
+        toast.error(error.message);
+      },
+    });
+  };
 
   const allRatings =
     searchData.length > 0 && search.length > 0 ? searchData : ratings;
@@ -141,6 +158,7 @@ export default function Ratings() {
                   // title={ratingsInfo?.user.}
                   comment={ratingsInfo.comment}
                   key={i}
+                  deleteRating={() => handleDeleteRating(ratingsInfo.id)}
                 />
               ))}
             </div>

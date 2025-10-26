@@ -1,13 +1,13 @@
 "use client";
 
 import { TCurrentSettingTab } from "@/types";
+import clsx from "clsx";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import BannerSettings from "./BannerSettings";
 import ProfileSettings from "./ProfileSettings";
 import SecuritySettings from "./SecuritySettings";
-import clsx from "clsx";
 
 export default function Settings() {
   const [currentSettingsTab, setCurrentSettingsTab] =

@@ -148,8 +148,8 @@ export default function BannerSettings({
           setPreviewImage(null);
         },
         onError: (err) => {
-          const error = getErrorMessage(err)
-          toast.error(error.message)
+          const error = getErrorMessage(err);
+          toast.error(error.message);
           setComponentIsUploading(false);
           console.log(err);
         },
@@ -192,8 +192,8 @@ export default function BannerSettings({
           }, 1200);
         },
         onError: (err) => {
-           const error = getErrorMessage(err);
-           toast.error(error.message);
+          const error = getErrorMessage(err);
+          toast.error(error.message);
           setComponentIsUploading(false);
           console.log(err);
         },

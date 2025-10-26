@@ -1,10 +1,14 @@
-import { fetchRatingsService } from "@/services/ratingsService";
+import {
+  deleteRatingsService,
+  fetchRatingsService,
+} from "@/services/ratingsService";
 import { IErrorInfo } from "@/types/Error";
 import { IRating } from "@/types/IRatings";
 import getErrorMessage from "@/utils/getErrorMessage";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function useRatings() {
+  const queryClient = useQueryClient();
   const {
     data,
     isLoading,
@@ -20,8 +24,15 @@ export default function useRatings() {
     gcTime: 1000 * 60 * 5,
   });
 
-  const searchItem = useMutation({
-    mutationFn:fetchRatingsService
+  const searchRating = useMutation({
+    mutationFn: fetchRatingsService,
+  });
+
+  const deleteRating = useMutation({
+    retry: false,
+    networkMode: "always",
+    mutationFn: deleteRatingsService,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["ratings"] }),
   });
 
   const ratingsResponse = data?.data?.data?.data || [];
@@ -48,8 +59,9 @@ export default function useRatings() {
   return {
     ratings,
     isLoading,
-    searchItem,
+    searchRating,
     isFetchRatingsError,
     fetchRatingsErrMessage,
+    deleteRating,
   };
 }
