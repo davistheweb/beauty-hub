@@ -173,10 +173,10 @@ export default function Customers() {
                 ) : (
                   customers.map((customer, _i) => (
                     <div
-                      className="flex h-[294px] w-full flex-col gap-2 border border-[#E2E5E9] p-2"
+                      className="flex h-[314px] w-full flex-col gap-2 border border-[#E2E5E9] p-2"
                       key={_i}
                     >
-                      <div className="flex h-[250px] w-full flex-col gap-5 p-4">
+                      <div className="flex h-[250px] w-full flex-col gap-3 p-4">
                         <span className="flex items-center justify-between">
                           <h1 className="text-[18px] font-medium">Customer</h1>
                           <p className="text-[14px] font-medium text-[#5C5C5C]">
@@ -231,7 +231,7 @@ export default function Customers() {
                       <div className="flex justify-end pr-4">
                         <Link
                           href={`/customers/${customer.id}`}
-                          className="text-custom-green text-[14px] font-medium"
+                          className="text-custom-green cursor-pointer rounded-full border border-[#1AB65C] bg-[#F9FFFB] px-2 py-1 text-sm font-semibold hover:bg-[#f1faf4]"
                         >
                           View Details
                         </Link>

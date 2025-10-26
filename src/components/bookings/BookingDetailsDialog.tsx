@@ -140,7 +140,7 @@ export const BookingDetailsDialog = ({
         }
       }}
     >
-      <DialogContent className="max-w-fit">
+      <DialogContent className="">
         <DialogHeader>
           <DialogTitle className="text-custom-green text-[16px] font-bold lg:text-2xl">
             Booking Details

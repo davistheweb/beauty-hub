@@ -259,9 +259,9 @@ export default function Bookings() {
                         </span>
                       </span>
                     </div>
-                    <div className="flex justify-end pr-4">
+                    <div className="flex justify-end pr-4 pb-2">
                       <button
-                        className="text-custom-green text-[14px] font-medium"
+                        className="text-custom-green cursor-pointer rounded-full border border-[#1AB65C] bg-[#F9FFFB] px-2 py-1 text-sm font-semibold hover:bg-[#f1faf4]"
                         onClick={() =>
                           handleViewBookingDetails(bookingDetail.id)
                         }

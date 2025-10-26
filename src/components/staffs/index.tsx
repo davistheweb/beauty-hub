@@ -215,7 +215,7 @@ export default function Staffs() {
                   ) : (
                     staffs.map((staff, _i) => (
                       <div
-                        className="flex h-[294px] w-full flex-col gap-2 border border-[#E2E5E9] p-2"
+                        className="flex h-[274px] w-full flex-col gap-1 border border-[#E2E5E9] p-2"
                         key={_i}
                       >
                         <div className="flex h-[250px] w-full flex-col gap-5 p-4">
@@ -261,10 +261,10 @@ export default function Staffs() {
                             </span>
                           </span>
                         </div>
-                        <div className="flex justify-end pr-4">
+                        <div className="flex justify-end pr-4 pb-1">
                           <button
                             onClick={() => handleViewStaff(staff)}
-                            className="text-custom-green text-[14px] font-medium"
+                            className="text-custom-green cursor-pointer rounded-full border border-[#1AB65C] bg-[#F9FFFB] px-2 py-1 text-sm font-semibold hover:bg-[#f1faf4]"
                           >
                             Action
                           </button>
