@@ -45,14 +45,15 @@ export default function Ratings() {
         toast.error(error.message);
       },
     });
-  }, [debouncedValue, searchRating]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedValue]);
 
   useEffect(() => {
     if (search.trim().length === 0) setSearchData([]);
   }, [search]);
 
   const handleDeleteRating = (id: number) => {
-    const toastId = toast.loading("Deleting review");
+    const toastId = toast.loading("Deleting review....");
 
     deleteRating.mutate(id, {
       onSuccess: (data) => {
