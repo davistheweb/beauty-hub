@@ -85,10 +85,10 @@ export default function Ratings() {
   return (
     <div className="mt-3 flex w-full flex-col gap-3 p-2">
       {/* Ratings */}
-      <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
+      <div className="flex w-full flex-col rounded-md bg-white p-1 py-5">
         <div className="flex h-12 w-full items-center justify-center">
           {allRatings.length > 0 && (
-            <div className="flex h-[30px] w-full flex-col items-center justify-between p-2 md:flex-row md:p-4">
+            <div className="flex w-full flex-col gap-2 p-2 md:flex-row md:items-center md:justify-between md:gap-0 md:p-4">
               {/* Search  */}
               <SearchInput
                 value={search}
@@ -124,7 +124,7 @@ export default function Ratings() {
         </div>
         {/* Ratings Display */}
         <div
-          className={`scrollbar-thin ${isLoading ? "" : "h-full"} w-full p-1 lg:overflow-y-auto`}
+          className={`scrollbar-thin ${isLoading ? "" : "h-full"} w-full p-1 py-3 lg:overflow-y-auto`}
         >
           {!isLoading && !allRatings.length ? (
             <div className="h-full w-full items-center justify-center">
