@@ -12,11 +12,26 @@ import {
 import { usePackages } from "@/hooks";
 import { IPackage } from "@/types/IPackages";
 import getErrorMessage from "@/utils/getErrorMessage";
+import {
+  addServiceToPackageFormSchema,
+  addServiceToPackageFormValues,
+} from "@/utils/validators/ServiceAndPackageFormSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { CustomTrashIcon, MarkGreenIcon } from "../icons";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { Input } from "../ui/input";
 
 interface IServiceDetailsProps {
   openServiceDetailsModal: boolean;
@@ -32,9 +47,40 @@ export const ServiceDetails = ({
   setSelectedPackage,
   handleUpdatePackage,
 }: IServiceDetailsProps) => {
-  const { deletePackageService } = usePackages();
+  const { addServiceToPackage, deletePackageService } = usePackages();
+
+  const form = useForm<addServiceToPackageFormValues>({
+    resolver: zodResolver(addServiceToPackageFormSchema),
+    defaultValues: {
+      name: "",
+    },
+  });
+
+  const handleAddSerivce = async (data: addServiceToPackageFormValues) => {
+    await addServiceToPackage.mutate(
+      { package_id: selectedPackage?.id as number, name: data.name },
+      {
+        onSuccess: (data) => {
+          toast.success(data.message);
+          form.reset();
+          setTimeout(() => {
+            setOpenServiceDetailsModal((prev) => !prev);
+            setSelectedPackage(null);
+          }, 1000);
+        },
+        onError: (err) => {
+          const error = getErrorMessage(err);
+          toast.error(error.message);
+        },
+      },
+    );
+  };
 
   const handleDeleteService = (id: number) => {
+    if (deletePackageService.isPending) {
+      toast.error("wait..");
+      return;
+    }
     const toastID = toast.loading("Deleting Service.....");
 
     deletePackageService.mutate(id, {
@@ -158,16 +204,60 @@ export const ServiceDetails = ({
               ))}
             </ul>
           </div>
+          <div>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(handleAddSerivce)}
+                className="space-y-2 p-1"
+              >
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Service Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Service Name"
+                          className={`h-12 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
+                          type="text"
+                          name="name"
+                          disabled={addServiceToPackage.isPending}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-xs" />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="flex w-full items-center justify-center">
+                  <Button
+                    type="submit"
+                    className={`bg-custom-green cursor-pointer rounded-full hover:bg-[#1fc966] ${addServiceToPackage.isPending ? "w-5" : "w-full"} transition-all duration-500 ease-in-out`}
+                    disabled={addServiceToPackage.isPending}
+                  >
+                    {addServiceToPackage.isPending ? (
+                      <div className="flex items-center justify-center">
+                        <div className="bg-custom-green w-fit rounded-full p-2">
+                          <div className="h-5 w-5 animate-spin rounded-full border-3 border-gray-200 border-t-[#1AB65C]" />
+                        </div>
+                      </div>
+                    ) : (
+                      "Add Service"
+                    )}
+                  </Button>
+                </div>
+              </form>
+            </Form>
+          </div>
           {/* Action Buttons  */}
-          <div className="relative flex flex-col justify-between gap-5 lg:flex-row lg:gap-2">
+          <div className="relative flex">
             <Button
               onClick={handleUpdatePackage}
-              className="text-custom-green h-[50px] w-full cursor-pointer rounded-full border border-[#1AB65C] bg-[#F9FFFB] text-sm font-semibold hover:bg-[#f1faf4] lg:w-[200px]"
+              className="text-custom-green h-[40px] w-full cursor-pointer rounded-full border border-[#1AB65C] bg-[#F9FFFB] text-sm font-semibold hover:bg-[#f1faf4]"
             >
               Update Package
-            </Button>
-            <Button className="h-[50px] w-full cursor-pointer rounded-full bg-[#FF3333] font-semibold hover:bg-red-400 lg:w-[200px]">
-              Delete
             </Button>
           </div>
         </div>

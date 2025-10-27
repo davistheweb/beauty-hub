@@ -1,5 +1,6 @@
 import {
   addPackageAndService,
+  addSerive,
   deleteService,
   fetchAllPackagesAndServices,
   updatePackageService,
@@ -35,6 +36,13 @@ export default function usePackages() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["packages"] }),
   });
 
+  const addServiceToPackage = useMutation({
+    retry: false,
+    networkMode: "always",
+    mutationFn: addSerive,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["packages"] }),
+  });
+
   const deletePackageService = useMutation({
     retry: false,
     networkMode: "always",
@@ -52,6 +60,7 @@ export default function usePackages() {
     packages,
     isLoading,
     addPackage,
+    addServiceToPackage,
     updatePackage,
     deletePackageService,
     isError,
