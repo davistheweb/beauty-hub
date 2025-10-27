@@ -11,7 +11,7 @@ import { ChevronDown, Dot, EllipsisVertical, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CardSkeleton } from "../ui/CardSkeleton";
 import { ErrorElement } from "../ui/ErrorElement";
-import { TabkeSkeleton } from "../ui/TabkeSkeleton";
+import { TableSkeleton } from "../ui/TableSkeleton";
 import { BookingDetailsDialog } from "./BookingDetailsDialog";
 
 export default function Bookings() {
@@ -92,7 +92,7 @@ export default function Bookings() {
             </div>
           </div>
         </div>
-        {/* Customers Display Table  */}
+        {/* Bookings Display Table  */}
         <div
           className={`table-parent-scrollbar py-2 ${isAllBookingsDataLoading || !bookings.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
         >
@@ -105,7 +105,7 @@ export default function Bookings() {
                 {bookingTableHeaders.map((header, _i) => (
                   <th
                     key={_i}
-                    className={`${header === "Action" ? "w-[50px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-center text-[14px] font-medium tracking-wide`}
+                    className={`${header === "Action" ? "w-[50px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-start text-[14px] font-medium tracking-wide`}
                   >
                     {header}
                   </th>
@@ -122,25 +122,23 @@ export default function Bookings() {
             ) : (
               <tbody className="w-full divide-y divide-gray-100">
                 {isAllBookingsDataLoading ? (
-                  <TabkeSkeleton length={bookingTableHeaders.length} />
+                  <TableSkeleton length={bookingTableHeaders.length} />
                 ) : (
                   bookings.map((bookingDetail, index) => (
                     <tr
                       key={index}
                       className="h-[48px] w-full hover:bg-gray-50"
                     >
-                      <td className="px-8 py-2 text-center text-[14px] font-normal">
+                      <td className="px-4 py-2 text-[14px] font-normal">
                         {bookingDetail.user.name}
                       </td>
-                      <td className="px-4 py-2 text-center text-[14px] text-[#727272]">
+                      <td className="px-4 py-2 text-[14px] text-[#727272]">
                         {bookingDetail.package.name}
                       </td>
-                      <td className="px-4 py-2 text-center text-[13px] font-normal text-[#727272]">
+                      <td className="px-4 py-2 text-[13px] font-normal text-[#727272]">
                         {bookingDetail.booking_date}
                       </td>
-                      <td
-                        className={`flex h-full items-center justify-center px-10 py-1`}
-                      >
+                      <td className={`flex h-full items-center py-1`}>
                         <span
                           className={`rounded-[38.32px] bg-[#EDF5FE] select-none ${bookingDetail.status === "pending" ? "text-[#004CE8]" : bookingDetail.status === "completed" ? "text-[#00C247]" : bookingDetail.status === "confirmed" ? "text-[#333]" : bookingDetail.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] items-center justify-center gap-2 px-2`}
                         >

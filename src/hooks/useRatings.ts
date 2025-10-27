@@ -20,11 +20,13 @@ export default function useRatings() {
     retry: false,
     networkMode: "always",
     refetchOnReconnect: true,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 5,
+    staleTime: 120_000,
+    // gcTime: 1000 * 60 * 5,
   });
 
   const searchRating = useMutation({
+    retry: false,
+    networkMode: "always",
     mutationFn: fetchRatingsService,
   });
 

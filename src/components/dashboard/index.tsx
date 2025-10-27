@@ -97,7 +97,7 @@ export default function Dashboard() {
                         {tableHeaders.map((header, _i) => (
                           <th
                             key={_i}
-                            className={`${header === "Status" ? "w-[150px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-center text-[14px] font-medium tracking-wide`}
+                            className={`${header === "Status" ? "w-[150px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-start text-[14px] font-medium tracking-wide`}
                           >
                             {header}
                           </th>
@@ -118,17 +118,17 @@ export default function Dashboard() {
                             key={index}
                             className="h-[48px] w-full hover:bg-gray-50"
                           >
-                            <td className="px-4 py-2 text-center text-[14px] font-normal">
+                            <td className="px-4 py-2 text-[14px] font-normal">
                               {bookingDetail.user.name}
                             </td>
-                            <td className="px-4 py-2 text-center text-[14px] text-[#727272]">
+                            <td className="px-4 py-2 text-[14px] text-[#727272]">
                               {bookingDetail.package.name}
                             </td>
-                            <td className="px-4 py-2 text-center text-[13px] font-normal text-[#727272]">
+                            <td className="px-4 py-2 text-[13px] font-normal text-[#727272]">
                               {bookingDetail.booking_date}
                             </td>
                             <td
-                              className={`flex h-full items-center justify-center px-1 py-2 text-center`}
+                              className={`flex h-full justify-start px-1 py-2`}
                             >
                               <span
                                 className={`rounded-[38.32px] bg-[#EDF5FE] select-none ${bookingDetail.status === "pending" ? "text-[#004CE8]" : bookingDetail.status === "completed" ? "text-[#00C247]" : bookingDetail.status === "confirmed" ? "text-[#333]" : bookingDetail.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] items-center justify-center gap-2 px-2`}

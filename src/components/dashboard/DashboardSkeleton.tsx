@@ -1,6 +1,6 @@
 import { tableHeaders } from "@/data";
 import { CardSkeleton } from "../ui/CardSkeleton";
-import { TabkeSkeleton } from "../ui/TabkeSkeleton";
+import { TableSkeleton } from "../ui/TableSkeleton";
 
 export default function DashboardSkeleton() {
   return (
@@ -60,7 +60,7 @@ export default function DashboardSkeleton() {
               </thead>
 
               <tbody className="w-full divide-y divide-gray-100">
-                <TabkeSkeleton length={tableHeaders.length} />
+                <TableSkeleton length={tableHeaders.length} />
               </tbody>
             </table>
           </div>

@@ -13,7 +13,7 @@ import { ChevronDown, Dot, EllipsisVertical, Plus } from "lucide-react";
 import { useState } from "react";
 import { CardSkeleton } from "../ui/CardSkeleton";
 import { ErrorElement } from "../ui/ErrorElement";
-import { TabkeSkeleton } from "../ui/TabkeSkeleton";
+import { TableSkeleton } from "../ui/TableSkeleton";
 import StaffForm from "./StaffForm";
 import { ViewStaffDialog } from "./ViewStaffDialog";
 
@@ -115,7 +115,7 @@ export default function Staffs() {
                   {staffTableHeaders.map((header, _i) => (
                     <th
                       key={_i}
-                      className={`${header === "Action" ? "w-[50px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-center text-[14px] font-medium tracking-wide`}
+                      className={`${header === "Action" ? "w-[50px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-start text-[14px] font-medium tracking-wide`}
                     >
                       {header}
                     </th>
@@ -145,28 +145,28 @@ export default function Staffs() {
               ) : (
                 <tbody className="w-full divide-y divide-gray-100">
                   {isStaffsLoading ? (
-                    <TabkeSkeleton length={staffTableHeaders.length} />
+                    <TableSkeleton length={staffTableHeaders.length} />
                   ) : (
                     staffs.map((staff, index) => (
                       <tr
                         key={index}
                         className="h-[48px] w-full hover:bg-gray-50"
                       >
-                        <td className="px-8 py-2 text-center text-[14px] font-normal">
+                        <td className="px-4 py-2 text-[14px] font-normal">
                           {staff.name}
                         </td>
 
-                        <td className="px-4 py-2 text-center text-[14px] text-[#727272]">
+                        <td className="px-4 py-2 text-[14px] text-[#727272]">
                           {new Date(staff.created_at)
                             .toLocaleDateString()
                             .split("/")
                             .join("-")}
                         </td>
                         <td
-                          className={`flex h-full place-items-center justify-center px-10 py-1`}
+                          className={`flex h-full place-items-center justify-start py-1`}
                         >
                           <span
-                            className={`rounded-[38.32px] bg-[#EDF5FE] ${staff.status === "active" ? "text-[#00C247]" : staff.status === "inactive" ? "text-[#004CE8]" : staff.status === "suspended" && "text-[#FF3333]"} flex w-fit items-center justify-center gap-2 px-5 py-2`}
+                            className={`rounded-[38.32px] bg-[#EDF5FE] ${staff.status === "active" ? "text-[#00C247]" : staff.status === "inactive" ? "text-[#004CE8]" : staff.status === "suspended" && "text-[#FF3333]"} flex w-fit items-center justify-start gap-2 px-5 py-2`}
                           >
                             <span className="flex h-3 w-3 items-center justify-center">
                               <Dot
@@ -179,13 +179,13 @@ export default function Staffs() {
                             </span>
                           </span>
                         </td>
-                        <td className="">
-                          <span
-                            onClick={() => handleViewStaff(staff)}
-                            className="flex cursor-pointer items-center justify-center rounded-xs text-center text-[14px] font-medium"
-                          >
-                            <EllipsisVertical className="text-[#737375] hover:bg-[#EDF5FE]" />
-                          </span>
+                        <td className="px-4 py-2">
+                          <div className="flex items-center">
+                            <EllipsisVertical
+                              onClick={() => handleViewStaff(staff)}
+                              className="cursor-pointer text-[#737375] hover:bg-[#EDF5FE]"
+                            />
+                          </div>
                         </td>
                       </tr>
                     ))

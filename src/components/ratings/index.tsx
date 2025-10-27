@@ -127,7 +127,7 @@ export default function Ratings() {
         </div>
         {/* Ratings Display */}
         <div
-          className={`scrollbar-thin ${isLoading ? "" : "h-full"} w-full p-1 py-3 lg:overflow-y-auto`}
+          className={`scrollbar-thin ${isLoading ? "" : "h-full py-3"} w-full p-1 lg:overflow-y-auto`}
         >
           {!isLoading && !allRatings.length ? (
             <div className="h-full w-full items-center justify-center">
@@ -137,14 +137,14 @@ export default function Ratings() {
               />
             </div>
           ) : isLoading ? (
-            <div className="flex w-full flex-col gap-8">
+            <div className="flex w-full flex-col gap-4">
               <CardSkeleton
                 length={8}
                 className="h-[150px] w-full"
               />
             </div>
           ) : (
-            <div className="mt-4 flex w-full flex-col gap-8">
+            <div className="mt-4 flex w-full flex-col gap-4">
               {/* Ratings Card */}
               {allRatings.map((ratingsInfo, i) => (
                 <RatingsCard

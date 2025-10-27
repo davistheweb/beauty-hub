@@ -12,7 +12,7 @@ const storeAccessBearerToken = async (bearer_token: string) => {
     name: "beauty_atk", //beauty_access_token
     value: bearer_token,
     httpOnly: true,
-    secure: true,
+    // secure: true,
     // sameSite: "strict",
     path: "/",
     maxAge: 7 * 24 * 60 * 60,

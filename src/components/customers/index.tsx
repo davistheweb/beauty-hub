@@ -12,7 +12,7 @@ import { ChevronDown, Dot, Eye } from "lucide-react";
 import Link from "next/link";
 import { CardSkeleton } from "../ui/CardSkeleton";
 import { ErrorElement } from "../ui/ErrorElement";
-import { TabkeSkeleton } from "../ui/TabkeSkeleton";
+import { TableSkeleton } from "../ui/TableSkeleton";
 
 export default function Customers() {
   const {
@@ -78,7 +78,7 @@ export default function Customers() {
                 {customersTableHeaders.map((header, _i) => (
                   <th
                     key={_i}
-                    className={`${header === "Action" ? "w-[50px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-center text-[14px] font-medium tracking-wide`}
+                    className={`${header === "Action" ? "w-[50px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-start text-[14px] font-medium tracking-wide`}
                   >
                     {header}
                   </th>
@@ -94,23 +94,23 @@ export default function Customers() {
             ) : (
               <tbody className="w-full divide-y divide-gray-100">
                 {isAllCustomersDataLoading ? (
-                  <TabkeSkeleton length={customersTableHeaders.length} />
+                  <TableSkeleton length={customersTableHeaders.length} />
                 ) : (
                   customers.map((customer, index) => (
                     <tr
                       key={index}
                       className="h-[48px] w-full hover:bg-gray-50"
                     >
-                      <td className="px-8 py-2 text-center text-[14px] font-normal">
+                      <td className="px-8 py-2 text-[14px] font-normal">
                         {customer.name}
                       </td>
-                      <td className="px-4 py-2 text-center text-[14px] text-[#727272]">
+                      <td className="px-4 py-2 text-[14px] text-[#727272]">
                         {customer.email}
                       </td>
-                      <td className="px-4 py-2 text-center text-[14px] font-normal text-[#727272]">
+                      <td className="px-4 py-2 text-[14px] font-normal text-[#727272]">
                         {customer.phone || "no-number"}
                       </td>
-                      <td className="px-4 py-2 text-center text-[14px] font-normal text-[#727272]">
+                      <td className="px-4 py-2 text-[14px] font-normal text-[#727272]">
                         {new Date(customer.created_at)
                           .toLocaleDateString()
                           .split("/")
@@ -118,7 +118,7 @@ export default function Customers() {
                       </td>
 
                       <td
-                        className={`flex h-full place-items-center justify-center px-10 py-1`}
+                        className={`flex h-full place-items-center justify-start py-1`}
                       >
                         <span
                           className={`rounded-[38.32px] bg-[#EDF5FE] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" ? "text-[#004CE8]" : customer.status === "suspended" && "text-[#FF3333]"} flex w-fit items-center justify-center gap-2 px-5 py-2`}

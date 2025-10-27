@@ -222,7 +222,7 @@ export default function BannerSettings({
           if (!diaLogOpen) {
             form.reset();
             setPreviewImage(null);
-            setBannerAction("addBanner");
+            setTimeout(() => setBannerAction("addBanner"), 600);
           }
         }}
       >
@@ -233,10 +233,7 @@ export default function BannerSettings({
           >
             <div className="flex w-full items-center justify-center lg:justify-end">
               {" "}
-              <Button
-                className="bg-custom-green w-full cursor-pointer rounded-full px-[50px] font-semibold transition-all duration-500 ease-in-out hover:-translate-y-0.5 hover:bg-[#169B4E] hover:shadow-lg lg:w-fit"
-                suppressHydrationWarning
-              >
+              <Button className="bg-custom-green w-full cursor-pointer rounded-full px-[50px] font-semibold transition-all duration-500 ease-in-out hover:-translate-y-0.5 hover:bg-[#169B4E] hover:shadow-lg lg:w-fit">
                 <span>
                   <Plus />
                 </span>
