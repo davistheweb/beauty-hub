@@ -27,8 +27,11 @@ export default function Ratings() {
   const debouncedValue = useDebounce(search, 600);
 
   useEffect(() => {
-    if (!debouncedValue?.trim()) return;
     const toastId = toast.loading("Searching ratings...");
+    if (!debouncedValue?.trim()) {
+      toast.dismiss(toastId);
+      return;
+    }
 
     setSearchData([]);
 
@@ -85,7 +88,7 @@ export default function Ratings() {
   return (
     <div className="mt-3 flex w-full flex-col gap-3 p-2">
       {/* Ratings */}
-      <div className="flex w-full flex-col rounded-md bg-white p-1 py-5">
+      <div className="flex w-full flex-col rounded-md bg-white p-1 py-5 md:py-1 lg:h-[598px]">
         <div className="flex h-12 w-full items-center justify-center">
           {allRatings.length > 0 && (
             <div className="flex w-full flex-col gap-2 p-2 md:flex-row md:items-center md:justify-between md:gap-0 md:p-4">
@@ -134,7 +137,7 @@ export default function Ratings() {
               />
             </div>
           ) : isLoading ? (
-            <div className="mt-4 flex w-full flex-col gap-8">
+            <div className="flex w-full flex-col gap-8">
               <CardSkeleton
                 length={8}
                 className="h-[150px] w-full"
