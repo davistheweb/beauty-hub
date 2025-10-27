@@ -101,7 +101,7 @@ export default function Customers() {
                       key={index}
                       className="h-[48px] w-full hover:bg-gray-50"
                     >
-                      <td className="px-8 py-2 text-[14px] font-normal">
+                      <td className="px-4 py-2 text-[14px] font-normal">
                         {customer.name}
                       </td>
                       <td className="px-4 py-2 text-[14px] text-[#727272]">
