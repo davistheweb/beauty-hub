@@ -88,7 +88,7 @@ export default function Ratings() {
       <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
         <div className="flex h-12 w-full items-center justify-center">
           {allRatings.length > 0 && (
-            <div className="flex h-[30px] w-full items-center justify-between p-2 md:p-4">
+            <div className="flex h-[30px] w-full flex-col items-center justify-between p-2 md:flex-row md:p-4">
               {/* Search  */}
               <SearchInput
                 value={search}
