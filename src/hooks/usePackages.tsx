@@ -1,5 +1,6 @@
 import {
   addPackageAndService,
+  deleteService,
   fetchAllPackagesAndServices,
   updatePackageService,
 } from "@/services/package-and-services";
@@ -34,6 +35,13 @@ export default function usePackages() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["packages"] }),
   });
 
+  const deletePackageService = useMutation({
+    retry: false,
+    networkMode: "always",
+    mutationFn: deleteService,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["packages"] }),
+  });
+
   const packages = (!isError && data?.data?.data) || [];
 
   const fetchPackagesErrorMessage = isError
@@ -45,6 +53,7 @@ export default function usePackages() {
     isLoading,
     addPackage,
     updatePackage,
+    deletePackageService,
     isError,
     fetchPackagesErrorMessage,
   };

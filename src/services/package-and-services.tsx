@@ -20,8 +20,12 @@ const updatePackageService = async (data: FormData) =>
     }),
   );
 
+const deleteService = async (id: number) =>
+  getApiResponse(await API.post("/admin/package/delete_service", { id }));
+
 export {
   addPackageAndService,
+  deleteService,
   fetchAllPackagesAndServices,
   updatePackageService,
 };

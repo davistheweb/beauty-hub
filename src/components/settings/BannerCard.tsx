@@ -1,3 +1,14 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Dot } from "lucide-react";
 import Image from "next/image";
 import { CustomTrashIcon } from "../icons";
@@ -42,15 +53,38 @@ const BannerCard = ({
           </span>
           <p className="text-[14px] font-normal text-[#5C5A55]">{message}</p>
         </span>
-        <span
-          className="cursor-pointer"
-          onClick={handleDeleteBanner}
-        >
-          <CustomTrashIcon
-            color="#FF3333"
-            size={15}
-          />
-        </span>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <span className="cursor-pointer">
+              <CustomTrashIcon
+                color="#FF3333"
+                size={15}
+              />
+            </span>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Are you sure you want to delete this banner
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete the
+                review from the server
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="cursor-pointer">
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleDeleteBanner}
+                className="cursor-pointer bg-red-500 hover:bg-red-600"
+              >
+                Continue
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
       <div className="flex h-full w-full items-center justify-between px-4">
         <span

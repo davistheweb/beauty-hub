@@ -201,6 +201,26 @@ export default function BannerSettings({
     }
   };
 
+  const handleDeleteBanner = (id: number) => {
+    setComponentIsUploading(true);
+    const toastID = toast.loading("Deleting banner....");
+    deleteBanner.mutate(id, {
+      onSuccess: (data) => {
+        toast.dismiss(toastID);
+        toast.success(data.message);
+        setComponentIsUploading(false);
+      },
+      onError: (err) => {
+        const error = getErrorMessage(err);
+        toast.dismiss(toastID);
+        toast.error(error.message);
+        setComponentIsUploading(false);
+
+        console.log(err);
+      },
+    });
+  };
+
   if (isFetchBannerError)
     return (
       <div className="mt-5 flex h-[500px] w-full flex-col rounded-md bg-white p-1 px-1 pb-1 lg:px-8">
@@ -397,22 +417,7 @@ export default function BannerSettings({
                   title={data.title}
                   message={data.subtitle}
                   status={data.status}
-                  handleDeleteBanner={() => {
-                    setComponentIsUploading(true);
-                    deleteBanner.mutate(data.id, {
-                      onSuccess: (data) => {
-                        toast.success(data.message);
-                        setComponentIsUploading(false);
-                      },
-                      onError: (err) => {
-                        const error = getErrorMessage(err);
-                        toast.error(error.message);
-                        setComponentIsUploading(false);
-
-                        console.log(err);
-                      },
-                    });
-                  }}
+                  handleDeleteBanner={() => handleDeleteBanner(data.id)}
                   handleUpdateBanner={() => {
                     setBannerAction("updateBanner");
                     setOpenDialog((prev) => !prev);
