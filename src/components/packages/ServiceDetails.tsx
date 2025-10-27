@@ -122,8 +122,8 @@ export const ServiceDetails = ({
             <h1 className="font-semibold text-[#070500]">
               Customer Information
             </h1>
-            <div className="flex h-[180px] flex-col justify-start rounded-[4px] border border-[#E4E4E4] p-2 px-5 lg:h-[150px] lg:flex-row lg:items-center lg:justify-center lg:gap-10 lg:px-0">
-              <div className="relative h-[170px] w-[200px] overflow-hidden rounded-[10px] border border-[#E4E4E4] lg:h-[100px]">
+            <div className="flex h-[165px] flex-col justify-start rounded-[4px] border border-[#E4E4E4] p-2 px-5 lg:h-[150px] lg:flex-row lg:items-center lg:justify-center lg:gap-10 lg:px-0">
+              <div className="relative h-[160px] w-[200px] overflow-hidden rounded-[10px] border border-[#E4E4E4] lg:h-[100px]">
                 <Image
                   src={
                     selectedPackage?.image ||
@@ -136,7 +136,7 @@ export const ServiceDetails = ({
                   unoptimized
                 />
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1">
                 <h1 className="text-[14px] font-semibold text-[#070500] md:text-xl">
                   {selectedPackage?.name}
                 </h1>
@@ -149,7 +149,7 @@ export const ServiceDetails = ({
 
           <div className="space-y-1">
             <h1 className="font-semibold text-[#070500]">All Serives</h1>
-            <ul className="scrollbar-thin flex h-fit max-h-[100px] flex-col gap-1 overflow-y-auto border border-[#E4E4E4] p-3 lg:max-h-[110px]">
+            <ul className="scrollbar-thin flex h-fit max-h-[90px] flex-col gap-1 overflow-y-auto border border-[#E4E4E4] p-3 lg:max-h-[110px]">
               {selectedPackage?.services.map((service, _i) => (
                 <li
                   key={_i}
@@ -204,7 +204,7 @@ export const ServiceDetails = ({
               ))}
             </ul>
           </div>
-          <div>
+      
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(handleAddSerivce)}
@@ -215,12 +215,12 @@ export const ServiceDetails = ({
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Service Name</FormLabel>
+                      {/* <FormLabel>Service Name</FormLabel> */}
                       <FormControl>
                         <Input
                           {...field}
                           placeholder="Service Name"
-                          className={`h-12 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
+                          className={`h-10 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
                           type="text"
                           name="name"
                           disabled={addServiceToPackage.isPending}
@@ -250,7 +250,7 @@ export const ServiceDetails = ({
                 </div>
               </form>
             </Form>
-          </div>
+         
           {/* Action Buttons  */}
           <div className="relative flex">
             <Button
