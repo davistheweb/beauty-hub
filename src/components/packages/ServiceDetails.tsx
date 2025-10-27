@@ -17,6 +17,7 @@ import {
   addServiceToPackageFormValues,
 } from "@/utils/validators/ServiceAndPackageFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus } from "lucide-react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -28,7 +29,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
@@ -179,8 +179,8 @@ export const ServiceDetails = ({
                     <AlertDialogContent>
                       <AlertDialogHeader>
                         <AlertDialogTitle>
-                          Are you sure you want to delete the service "
-                          {service.name}"
+                          Are you sure you want to delete the service &quot;
+                          {service.name}&quot;
                         </AlertDialogTitle>
                         <AlertDialogDescription>
                           This action cannot be undone. This will permanently
@@ -204,33 +204,33 @@ export const ServiceDetails = ({
               ))}
             </ul>
           </div>
-      
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(handleAddSerivce)}
-                className="space-y-2 p-1"
-              >
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      {/* <FormLabel>Service Name</FormLabel> */}
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="Service Name"
-                          className={`h-10 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
-                          type="text"
-                          name="name"
-                          disabled={addServiceToPackage.isPending}
-                        />
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
 
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleAddSerivce)}
+              className="space-y-2 p-1"
+            >
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    {/* <FormLabel>Service Name</FormLabel> */}
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Service Name"
+                        className={`h-10 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
+                        type="text"
+                        name="name"
+                        disabled={addServiceToPackage.isPending}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
+                )}
+              />
+              {/* 
                 <div className="flex w-full items-center justify-center">
                   <Button
                     type="submit"
@@ -247,10 +247,18 @@ export const ServiceDetails = ({
                       "Add Service"
                     )}
                   </Button>
-                </div>
-              </form>
-            </Form>
-         
+                </div> */}
+              <button
+                type="submit"
+                className="text-custom-green flex cursor-pointer items-center gap-1 text-[14px] disabled:text-gray-500"
+                disabled={addServiceToPackage.isPending}
+              >
+                <Plus size={15} />
+                Add Serive
+              </button>
+            </form>
+          </Form>
+
           {/* Action Buttons  */}
           <div className="relative flex">
             <Button
