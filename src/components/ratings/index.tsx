@@ -27,11 +27,10 @@ export default function Ratings() {
   const debouncedValue = useDebounce(search, 600);
 
   useEffect(() => {
-    const toastId = toast.loading("Searching ratings...");
     if (!debouncedValue?.trim()) {
-      toast.dismiss(toastId);
       return;
     }
+    const toastId = toast.loading("Searching ratings...");
 
     setSearchData([]);
 
