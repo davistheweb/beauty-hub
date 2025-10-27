@@ -149,7 +149,7 @@ export const ServiceDetails = ({
 
           <div className="space-y-1">
             <h1 className="font-semibold text-[#070500]">All Serives</h1>
-            <ul className="scrollbar-thin flex h-fit max-h-[100px] flex-col gap-1 overflow-y-auto border border-[#E4E4E4] p-3 lg:max-h-[150px]">
+            <ul className="scrollbar-thin flex h-fit max-h-[100px] flex-col gap-1 overflow-y-auto border border-[#E4E4E4] p-3 lg:max-h-[110px]">
               {selectedPackage?.services.map((service, _i) => (
                 <li
                   key={_i}
