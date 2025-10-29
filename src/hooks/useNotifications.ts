@@ -8,6 +8,9 @@ export default function useNotifications() {
   const { data, isLoading, error, isError } = useQuery({
     queryFn: getNotificationsService,
     queryKey: ["notifications"],
+    retry: false,
+    networkMode: "always",
+    refetchOnReconnect: true,
   });
 
   const notifications = data?.data?.data?.notifications || [];

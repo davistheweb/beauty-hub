@@ -3,9 +3,11 @@ import { isToday, isYesterday, parseISO } from "date-fns";
 export const getDateGroup = (dateString: string) => {
   const date = parseISO(dateString.replace(" ", "T"));
 
-  if (isToday(date)) return "Today";
-  if (isYesterday(date)) return "Yesterday";
-  return "Other days";
+  return isToday(date)
+    ? "Today"
+    : isYesterday(date)
+      ? "Yesterday"
+      : "Other days";
 };
 
 // export const getDateGroup = (dateString: string) => {
