@@ -2,6 +2,7 @@
 
 import { Toaster } from "sonner";
 import Navbar from "../navbar";
+import Notifications from "../Notifications";
 import Sidebar from "../Sidebar";
 function AppLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -11,6 +12,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
           richColors
           position="top-right"
         />
+        <Notifications />
         <Sidebar />
         <div className="relative flex h-full w-full flex-col overflow-x-hidden pt-4">
           <Navbar />

@@ -1,42 +1,19 @@
-interface NotificationUser {
-  id: number;
-  name: string;
-  avatar?: string | null;
-}
-
-interface NotificationData {
-  type: string;
-  user: NotificationUser;
-  data_id: number;
-  message: string;
-  my_user_id: number;
-}
-
-interface Notification {
+interface INotification {
   id: string;
   type: string;
   read_at: string | null;
   created_at: string;
-  data: NotificationData;
+  data: string;
 }
 
 interface NotificationResponse {
   status: boolean;
   message: string;
   data: {
-    notifications: {
-      id: string;
-      type: string;
-      read_at: string | null;
-      created_at: string;
-      data: string; // JSON string
-    }[];
+    data: {
+      notifications: INotification[];
+    };
   };
 }
 
-export type {
-  Notification,
-  NotificationData,
-  NotificationResponse,
-  NotificationUser,
-};
+export type { INotification, NotificationResponse };

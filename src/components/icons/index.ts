@@ -1,7 +1,8 @@
 import CaretDownIcon from "./CaretDownIcon";
 import CopyIcon from "./CopyIcon";
-import { CustomBellICon } from "./CustomBellICon";
+import CustomBellICon from "./CustomBellICon";
 import { CustomGrayBookICon, CustomGreenBookICon } from "./CustomBookICon";
+import CustomDot from "./CustomDot";
 import { CustomLogoutIcon } from "./CustomLogoutIcon";
 import CustomTrashIcon from "./CustomTrashIcon";
 import CustomUploadIcon from "./CustomUploadIcon";
@@ -18,6 +19,7 @@ export {
   CaretDownIcon,
   CopyIcon,
   CustomBellICon,
+  CustomDot,
   CustomGrayBookICon,
   CustomGreenBookICon,
   CustomLogoutIcon,
