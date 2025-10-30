@@ -38,11 +38,10 @@ const useCustomers = (page: number) => {
 
   useEffect(() => {
     if (
-      allCustomersData?.data.data.current_page ===
+      allCustomersData?.data.data.current_page !==
       allCustomersData?.data.data.last_page
     )
-      return;
-    queryClient.prefetchQuery(customersQueryOptions(page + 1));
+      queryClient.prefetchQuery(customersQueryOptions(page + 1));
   }, [
     page,
     queryClient,

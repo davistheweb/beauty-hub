@@ -39,11 +39,10 @@ const useBookings = (page: number) => {
 
   useEffect(() => {
     if (
-      allBookingsData?.data.data.current_page ===
+      allBookingsData?.data.data.current_page !==
       allBookingsData?.data.data.last_page
     )
-      return;
-    queryClient.prefetchQuery(bookingsQueryOptions(page + 1));
+      queryClient.prefetchQuery(bookingsQueryOptions(page + 1));
   }, [
     page,
     queryClient,

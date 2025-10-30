@@ -40,11 +40,10 @@ const useStaff = (page: number = 1) => {
 
   useEffect(() => {
     if (
-      allStaffsData?.data.data.current_page ===
+      allStaffsData?.data.data.current_page !==
       allStaffsData?.data.data.last_page
     )
-      return;
-    queryClient.prefetchQuery(staffQueryOptions(page + 1));
+      queryClient.prefetchQuery(staffQueryOptions(page + 1));
   }, [
     page,
     queryClient,

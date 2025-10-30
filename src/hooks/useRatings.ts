@@ -38,11 +38,10 @@ export default function useRatings(page: number) {
 
   useEffect(() => {
     if (
-      allRatingsData?.data.data.current_page ===
+      allRatingsData?.data.data.current_page !==
       allRatingsData?.data.data.last_page
     )
-      return;
-    queryClient.prefetchQuery(ratingsQueryOptions(page + 1));
+      queryClient.prefetchQuery(ratingsQueryOptions(page + 1));
   }, [
     page,
     queryClient,

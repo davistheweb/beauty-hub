@@ -21,7 +21,7 @@ const AppPagination = ({
 }: IAppPaginationProps) => {
   return (
     <div className="flex w-[900px] flex-col rounded-md">
-      <div className="flex h-full w-[500px] flex-col-reverse gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="flex h-full flex-col-reverse gap-4 md:flex-row md:items-center md:gap-10">
         <div className="flex h-[35px] w-[140px] items-center justify-center gap-2">
           <span className="text-[12px] text-[#5C5A55]">Show</span>
           <div className="relative inline-block">
@@ -46,7 +46,7 @@ const AppPagination = ({
           </div>
           <span className="text-[12px] text-[#5C5A55]">Row</span>
         </div>
-        <div className="flex h-[35px] w-[300px] gap-2">
+        <div className="flex h-[35px] gap-2">
           <Pagination
             total={totalPaginationPage}
             value={paginationValue}
