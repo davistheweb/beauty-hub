@@ -12,7 +12,7 @@ export default function useBanner() {
   const queryClient = useQueryClient();
   const {
     data,
-    isLoading,
+    isPending: isLoading, //I am making use of isPending because isLoading is legacy but not yet deprecated
     error,
     isError: isFetchBannerError,
   } = useQuery({

@@ -12,7 +12,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 export default function usePackages() {
   const queryClient = useQueryClient();
 
-  const { data, isLoading, error, isError } = useQuery({
+  const {
+    data,
+    isPending: isLoading, //I am making use of isPending because isLoading is legacy but not yet deprecated
+    error,
+    isError,
+  } = useQuery({
     queryKey: ["packages"],
     queryFn: fetchAllPackagesAndServices,
     retry: false,

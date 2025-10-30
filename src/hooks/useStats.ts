@@ -5,7 +5,12 @@ import getErrorMessage from "@/utils/getErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useStats() {
-  const { data, isLoading, error, isError } = useQuery({
+  const {
+    data,
+    isPending: isLoading, //I am making use of isPending because isLoading is legacy but not yet deprecated
+    error,
+    isError,
+  } = useQuery({
     queryKey: ["stats"],
     queryFn: fetchDashboardStats,
     retry: 2,
