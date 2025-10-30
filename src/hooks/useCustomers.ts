@@ -19,8 +19,8 @@ const useCustomers = () => {
     queryKey: ["customers"],
     retry: false,
     networkMode: "always",
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
+    staleTime: 60_000,
+    gcTime: 1000 * 60 * 5,
   });
 
   console.log(error?.message);
@@ -53,7 +53,8 @@ const useCustomerDetailsByID = (customerId?: string) => {
     queryKey: ["customerDetailsData", customerId],
     queryFn: () => fetchCustomerDetails(customerId!),
     enabled: !!customerId,
-    staleTime: 1000 * 60 * 2,
+    staleTime: 60_000,
+    gcTime: 1000 * 60 * 5,
     retry: false,
     networkMode: "always",
     refetchOnReconnect: true,

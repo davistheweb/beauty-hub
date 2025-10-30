@@ -5,10 +5,10 @@ import SearchInput from "@/components/ui/SearchInput";
 import { useDebounce, useRatings } from "@/hooks";
 import { IRating } from "@/types/IRatings";
 import getErrorMessage from "@/utils/getErrorMessage";
-import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { NoDataFoundElement } from "../no-data";
+import AppPagination from "../ui/AppPagination";
 import { CardSkeleton } from "../ui/CardSkeleton";
 import { ErrorElement } from "../ui/ErrorElement";
 import RatingsCard from "./RatingsCard";
@@ -16,6 +16,8 @@ import RatingsCard from "./RatingsCard";
 export default function Ratings() {
   const [search, setSearch] = useState<string>("");
   const [searchData, setSearchData] = useState<IRating[] | []>([]);
+  const [selectedRowCount, setSelectedRowCount] = useState<number>(20);
+
   const {
     ratings,
     searchRating,
@@ -145,7 +147,7 @@ export default function Ratings() {
           ) : (
             <div className="mt-4 flex w-full flex-col gap-4">
               {/* Ratings Card */}
-              {allRatings.map((ratingsInfo, i) => (
+              {allRatings.slice(0, selectedRowCount).map((ratingsInfo, i) => (
                 <RatingsCard
                   ratingDate={new Date(ratingsInfo.created_at)
                     .toLocaleDateString()
@@ -170,35 +172,10 @@ export default function Ratings() {
       </div>
       {/* Pagination  */}
       {ratings.length > 0 && (
-        <div className="hidden h-[40px] w-[900px] flex-col rounded-md md:flex">
-          <div className="flex h-full w-[500px] items-center justify-between">
-            <div className="flex h-[35px] w-[140px] items-center justify-center gap-2">
-              <span className="text-[12px] text-[#5C5A55]">Show</span>
-              <div className="relative inline-block">
-                <select
-                  name=""
-                  id=""
-                  className="scrollbar-thin h-[35px] w-[64px] cursor-pointer appearance-none rounded-sm border border-[#C2C2C2] px-3"
-                >
-                  {Array.from({ length: 12 }, (arr, i) => i).map((arr) => (
-                    <option
-                      key={` :: ${arr}`}
-                      value={arr + 1}
-                      className=""
-                    >
-                      {arr + 1}
-                    </option>
-                  ))}
-                </select>
-                <span className="pointer-events-none absolute top-1/2 right-1 -translate-y-1/2 text-gray-500">
-                  <ChevronDown />
-                </span>
-              </div>
-              <span className="text-[12px] text-[#5C5A55]">Row</span>
-            </div>
-            <div className="h-[35px] w-[300px] bg-yellow-500"></div>
-          </div>
-        </div>
+        <AppPagination
+          rowCountValue={selectedRowCount}
+          onChange={(e) => setSelectedRowCount(Number(e.target.value))}
+        />
       )}
     </div>
   );

@@ -8,13 +8,17 @@ import { Label } from "@/components/ui/label";
 import SearchInput from "@/components/ui/SearchInput";
 import { customersTableHeaders } from "@/data";
 import { useCustomers } from "@/hooks";
-import { ChevronDown, Dot, Eye } from "lucide-react";
+import { Dot, Eye } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import AppPagination from "../ui/AppPagination";
 import { CardSkeleton } from "../ui/CardSkeleton";
 import { ErrorElement } from "../ui/ErrorElement";
 import { TableSkeleton } from "../ui/TableSkeleton";
 
 export default function Customers() {
+  const [selectedRowCount, setSelectedRowCount] = useState<number>(20);
+
   const {
     customers,
     isAllCustomersDataLoading,
@@ -96,57 +100,59 @@ export default function Customers() {
                 {isAllCustomersDataLoading ? (
                   <TableSkeleton length={customersTableHeaders.length} />
                 ) : (
-                  customers.map((customer, index) => (
-                    <tr
-                      key={index}
-                      className="h-[48px] w-full hover:bg-gray-50"
-                    >
-                      <td className="px-4 py-2 text-[14px] font-normal">
-                        {customer.name}
-                      </td>
-                      <td className="px-4 py-2 text-[14px] text-[#727272]">
-                        {customer.email}
-                      </td>
-                      <td className="px-4 py-2 text-[14px] font-normal text-[#727272]">
-                        {customer.phone || "no-number"}
-                      </td>
-                      <td className="px-4 py-2 text-[14px] font-normal text-[#727272]">
-                        {new Date(customer.created_at)
-                          .toLocaleDateString()
-                          .split("/")
-                          .join("-")}
-                      </td>
-
-                      <td
-                        className={`flex h-full place-items-center justify-start py-1`}
+                  customers
+                    .slice(0, selectedRowCount)
+                    .map((customer, index) => (
+                      <tr
+                        key={index}
+                        className="h-[48px] w-full hover:bg-gray-50"
                       >
-                        <span
-                          className={`rounded-[38.32px] bg-[#EDF5FE] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" ? "text-[#004CE8]" : customer.status === "suspended" && "text-[#FF3333]"} flex w-fit items-center justify-center gap-2 px-5 py-2`}
+                        <td className="px-4 py-2 text-[14px] font-normal">
+                          {customer.name}
+                        </td>
+                        <td className="px-4 py-2 text-[14px] text-[#727272]">
+                          {customer.email}
+                        </td>
+                        <td className="px-4 py-2 text-[14px] font-normal text-[#727272]">
+                          {customer.phone || "no-number"}
+                        </td>
+                        <td className="px-4 py-2 text-[14px] font-normal text-[#727272]">
+                          {new Date(customer.created_at)
+                            .toLocaleDateString()
+                            .split("/")
+                            .join("-")}
+                        </td>
+
+                        <td
+                          className={`flex h-full place-items-center justify-start py-1`}
                         >
-                          <span className="flex h-3 w-3 items-center justify-center">
-                            <Dot
-                              size={40}
-                              className="shrink-0"
+                          <span
+                            className={`rounded-[38.32px] bg-[#EDF5FE] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" ? "text-[#004CE8]" : customer.status === "suspended" && "text-[#FF3333]"} flex w-fit items-center justify-center gap-2 px-5 py-2`}
+                          >
+                            <span className="flex h-3 w-3 items-center justify-center">
+                              <Dot
+                                size={40}
+                                className="shrink-0"
+                              />
+                            </span>
+                            <span className="w-fit text-center text-[12px] capitalize">
+                              {customer.status}
+                            </span>
+                          </span>
+                        </td>
+                        <td className="">
+                          <Link
+                            href={`/customers/${customer.id}`}
+                            className="flex cursor-pointer items-center justify-center rounded-xs text-center text-[14px] font-medium"
+                          >
+                            <Eye
+                              size={18}
+                              className="text-[#737375] hover:bg-[#EDF5FE]"
                             />
-                          </span>
-                          <span className="w-fit text-center text-[12px] capitalize">
-                            {customer.status}
-                          </span>
-                        </span>
-                      </td>
-                      <td className="">
-                        <Link
-                          href={`/customers/${customer.id}`}
-                          className="flex cursor-pointer items-center justify-center rounded-xs text-center text-[14px] font-medium"
-                        >
-                          <Eye
-                            size={18}
-                            className="text-[#737375] hover:bg-[#EDF5FE]"
-                          />
-                        </Link>
-                      </td>
-                    </tr>
-                  ))
+                          </Link>
+                        </td>
+                      </tr>
+                    ))
                 )}
               </tbody>
             )}
@@ -171,7 +177,7 @@ export default function Customers() {
                 {isAllCustomersDataLoading ? (
                   <CardSkeleton className="flex h-[294px] w-full flex-col gap-2 border border-[#E2E5E9] p-2" />
                 ) : (
-                  customers.map((customer, _i) => (
+                  customers.slice(0, selectedRowCount).map((customer, _i) => (
                     <div
                       className="flex h-[314px] w-full flex-col gap-2 border border-[#E2E5E9] p-2"
                       key={_i}
@@ -246,35 +252,10 @@ export default function Customers() {
       </div>
       {/* Pagination  */}
       {customers.length > 0 && (
-        <div className="hidden h-[40px] w-[900px] flex-col rounded-md md:flex">
-          <div className="flex h-full w-[500px] items-center justify-between">
-            <div className="flex h-[35px] w-[140px] items-center justify-center gap-2">
-              <span className="text-[12px] text-[#5C5A55]">Show</span>
-              <div className="relative inline-block">
-                <select
-                  name=""
-                  id=""
-                  className="scrollbar-thin h-[35px] w-[64px] cursor-pointer appearance-none rounded-sm border border-[#C2C2C2] px-3"
-                >
-                  {Array.from({ length: 12 }, (arr, i) => i).map((arr) => (
-                    <option
-                      key={` :: ${arr}`}
-                      value={arr + 1}
-                      className=""
-                    >
-                      {arr + 1}
-                    </option>
-                  ))}
-                </select>
-                <span className="pointer-events-none absolute top-1/2 right-1 -translate-y-1/2 text-gray-500">
-                  <ChevronDown />
-                </span>
-              </div>
-              <span className="text-[12px] text-[#5C5A55]">Row</span>
-            </div>
-            <div className="h-[35px] w-[300px] bg-yellow-500"></div>
-          </div>
-        </div>
+        <AppPagination
+          rowCountValue={selectedRowCount}
+          onChange={(e) => setSelectedRowCount(Number(e.target.value))}
+        />
       )}
     </div>
   );

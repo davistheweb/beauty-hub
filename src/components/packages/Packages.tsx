@@ -1,6 +1,5 @@
 "use client";
 
-import SearchInput from "@/components/ui/SearchInput";
 import { usePackages } from "@/hooks";
 import { IPackage } from "@/types/IPackages";
 import { useState } from "react";
@@ -75,13 +74,13 @@ const Package = () => {
 
       {/* Packages Layout  */}
 
-      <div className="mt-5 flex w-full flex-col rounded-md bg-white p-1 md:h-[800px]">
-        <div className="flex h-12 w-full items-center justify-center">
+      <div className="mt-5 flex w-full flex-col rounded-md bg-white px-1 md:h-[800px]">
+        {/* <div className="flex h-12 w-full items-center justify-center">
           <div className="flex h-[30px] w-full items-center p-2 md:p-1">
-            {/* Search  */}
+            
             <SearchInput />
           </div>
-        </div>
+        </div> */}
 
         <>
           {!isLoading && !packages.length ? (

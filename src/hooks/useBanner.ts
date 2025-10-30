@@ -21,8 +21,8 @@ export default function useBanner() {
     retry: false,
     networkMode: "always",
     refetchOnReconnect: true,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
+    staleTime: 60_000,
+    gcTime: 1000 * 60 * 5,
   });
 
   console.log(data);

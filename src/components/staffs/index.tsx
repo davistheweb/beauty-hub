@@ -5,12 +5,12 @@ import {
   NoDataFoundTableMobileComponent,
 } from "@/components/no-data";
 import { Button } from "@/components/ui/button";
-import SearchInput from "@/components/ui/SearchInput";
 import { staffTableHeaders } from "@/data";
 import { useStaff } from "@/hooks";
 import { IStaff } from "@/types/IStaff";
-import { ChevronDown, Dot, EllipsisVertical, Plus } from "lucide-react";
+import { Dot, EllipsisVertical, Plus } from "lucide-react";
 import { useState } from "react";
+import AppPagination from "../ui/AppPagination";
 import { CardSkeleton } from "../ui/CardSkeleton";
 import { ErrorElement } from "../ui/ErrorElement";
 import { TableSkeleton } from "../ui/TableSkeleton";
@@ -26,6 +26,7 @@ export default function Staffs() {
   >("addStaff");
 
   const [selectedStaff, setSelectedStaff] = useState<IStaff | null>(null);
+  const [selectedRowCount, setSelectedRowCount] = useState<number>(20);
 
   const {
     staffs,
@@ -85,11 +86,11 @@ export default function Staffs() {
       <div className="mt-3 flex w-full flex-col gap-3 p-2">
         {/* Staff Table  */}
         <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
-          <div className="flex h-12 w-full items-center justify-center">
+          {/* <div className="flex h-12 w-full items-center justify-center">
             <div className="flex h-[30px] w-full items-center justify-between p-2 md:p-4">
-              {/* Search  */}
+            
               <SearchInput />
-              {/* <div className="flex gap-0 md:gap-2">
+              <div className="flex gap-0 md:gap-2">
                   <button className="text-custom-green cursor-pointer rounded-xs bg-[#F9FFFB] p-1 pr-1 pl-1 text-center text-[12px] font-medium md:text-[14px] lg:pr-2 lg:pl-2">
                     Day
                   </button>
@@ -99,9 +100,9 @@ export default function Staffs() {
                   <button className="cursor-pointer rounded-xs p-1 pr-1 pl-1 text-[12px] font-medium text-[#898A8C] duration-300 hover:bg-[#F9FFFB] hover:text-[#1AB65C] md:text-[14px] lg:pr-2 lg:pl-2">
                     Year
                   </button>
-                </div> */}
+                </div>
             </div>
-          </div>
+          </div> */}
           {/* Staff Display Table  */}
           <div
             className={`table-parent-scrollbar ${isStaffsLoading || !staffs.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
@@ -147,7 +148,7 @@ export default function Staffs() {
                   {isStaffsLoading ? (
                     <TableSkeleton length={staffTableHeaders.length} />
                   ) : (
-                    staffs.map((staff, index) => (
+                    staffs.slice(0, selectedRowCount).map((staff, index) => (
                       <tr
                         key={index}
                         className="h-[48px] w-full hover:bg-gray-50"
@@ -213,7 +214,7 @@ export default function Staffs() {
                   {isStaffsLoading ? (
                     <CardSkeleton className="flex h-[294px] w-full flex-col gap-2 border border-[#E2E5E9] p-2" />
                   ) : (
-                    staffs.map((staff, _i) => (
+                    staffs.slice(0, selectedRowCount).map((staff, _i) => (
                       <div
                         className="flex h-[274px] w-full flex-col gap-1 border border-[#E2E5E9] p-2"
                         key={_i}
@@ -279,35 +280,10 @@ export default function Staffs() {
         </div>
         {/* Pagination  */}
         {staffs.length > 0 && (
-          <div className="hidden h-[40px] w-[900px] flex-col rounded-md md:flex">
-            <div className="flex h-full w-[500px] items-center justify-between">
-              <div className="flex h-[35px] w-[140px] items-center justify-center gap-2">
-                <span className="text-[12px] text-[#5C5A55]">Show</span>
-                <div className="relative inline-block">
-                  <select
-                    name=""
-                    id=""
-                    className="scrollbar-thin h-[35px] w-[64px] cursor-pointer appearance-none rounded-sm border border-[#C2C2C2] px-3"
-                  >
-                    {Array.from({ length: 12 }, (arr, i) => i).map((arr) => (
-                      <option
-                        key={` :: ${arr}`}
-                        value={arr + 1}
-                        className=""
-                      >
-                        {arr + 1}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="pointer-events-none absolute top-1/2 right-1 -translate-y-1/2 text-gray-500">
-                    <ChevronDown />
-                  </span>
-                </div>
-                <span className="text-[12px] text-[#5C5A55]">Row</span>
-              </div>
-              <div className="h-[35px] w-[300px] bg-yellow-500"></div>
-            </div>
-          </div>
+          <AppPagination
+            rowCountValue={selectedRowCount}
+            onChange={(e) => setSelectedRowCount(Number(e.target.value))}
+          />
         )}
       </div>
     </div>

@@ -20,8 +20,8 @@ const useBookings = () => {
     retry: false,
     networkMode: "always",
     refetchOnReconnect: true,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
+    staleTime: 60_000,
+    gcTime: 1000 * 60 * 5,
   });
 
   const bookings: IBookings[] | [] = allBookingsData?.data?.data?.data || [];
@@ -52,7 +52,8 @@ const useBookingDetailsByID = (bookingId?: number) => {
     retry: false,
     networkMode: "always",
     enabled: !!bookingId,
-    staleTime: 1000 * 60 * 2,
+    staleTime: 60_000,
+    gcTime: 1000 * 60 * 5,
   });
 
   console.log(error?.message);
