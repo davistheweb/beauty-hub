@@ -24,6 +24,8 @@ export default function Bookings() {
 
   const [selectedRowCount, setSelectedRowCount] = useState<number>(20);
 
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
   const {
     bookingDetails,
     bookingDetailsDataIsLoading,
@@ -32,11 +34,13 @@ export default function Bookings() {
   } = useBookingDetailsByID(selectedBookingId ?? undefined);
 
   const {
+    allBookingsData,
     bookings,
-    isAllBookingsDataLoading,
+    isAllBookingsDataPending,
+    isAllBookingsDataFetching,
     isFetchBookingsError,
     fetchBookingsErrorMessage,
-  } = useBookings();
+  } = useBookings(currentPage);
 
   useEffect(() => {
     if (bookingDetails) {
@@ -49,6 +53,8 @@ export default function Bookings() {
     setSelectedBookingDetails(null);
     setOpenDialog(true);
   };
+
+  console.log(allBookingsData?.data.data.last_page);
 
   if (isFetchBookingsError)
     return (
@@ -96,7 +102,7 @@ export default function Bookings() {
         </div> */}
         {/* Bookings Display Table  */}
         <div
-          className={`table-parent-scrollbar py-1 ${isAllBookingsDataLoading || !bookings.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
+          className={`table-parent-scrollbar py-1 ${isAllBookingsDataPending || !bookings.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
         >
           <table
             className="h-full w-full overflow-x-auto bg-white"
@@ -114,7 +120,7 @@ export default function Bookings() {
                 ))}
               </tr>
             </thead>
-            {!isAllBookingsDataLoading && !bookings.length ? (
+            {!isAllBookingsDataPending && !bookings.length ? (
               <NoDataFoundTableDesktopComponent
                 title="No Information Yet!"
                 subtitle="Once your users start booking an appointment, all informations will be
@@ -123,7 +129,7 @@ export default function Bookings() {
               />
             ) : (
               <tbody className="w-full divide-y divide-gray-100">
-                {isAllBookingsDataLoading ? (
+                {isAllBookingsDataPending ? (
                   <TableSkeleton length={bookingTableHeaders.length} />
                 ) : (
                   bookings
@@ -189,13 +195,13 @@ export default function Bookings() {
         </div>
         {/* Customers Display Card  */}
         <div className="scrollbar-thin flex h-full w-full items-center justify-center overflow-y-auto md:hidden">
-          {!isAllBookingsDataLoading && !bookings.length ? (
+          {!isAllBookingsDataPending && !bookings.length ? (
             <NoDataFoundTableMobileComponent
               title="No Information Yet!"
               subtitle="Once your users start booking an appointment, all informations will be
         displayed here"
             />
-          ) : isAllBookingsDataLoading ? (
+          ) : isAllBookingsDataPending ? (
             <div className="h-full w-full">
               <div className="flex w-full flex-col items-center justify-center gap-3">
                 <CardSkeleton className="h-[294px] w-full" />
@@ -290,6 +296,10 @@ export default function Bookings() {
         <AppPagination
           rowCountValue={selectedRowCount}
           onChange={(e) => setSelectedRowCount(Number(e.target.value))}
+          totalPaginationPage={Number(allBookingsData?.data.data.last_page)}
+          paginationValue={Number(allBookingsData?.data.data.current_page)}
+          onPaginationChange={setCurrentPage}
+          isDataFetching={isAllBookingsDataFetching}
         />
       )}
     </div>

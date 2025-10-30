@@ -5,8 +5,8 @@ import {
 import { API } from "./axios";
 import { getApiResponse } from "./helpers";
 
-const fetchCustomers = async (): Promise<ICustomersResponse> =>
-  getApiResponse(await API.post("/admin/user/fetch_all_users"));
+const fetchCustomers = async (page: number = 1): Promise<ICustomersResponse> =>
+  getApiResponse(await API.post(`/admin/user/fetch_all_users?page=${page}`));
 
 const fetchCustomerDetails = async (
   id: string,

@@ -19,12 +19,16 @@ import { TableSkeleton } from "../ui/TableSkeleton";
 export default function Customers() {
   const [selectedRowCount, setSelectedRowCount] = useState<number>(20);
 
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
   const {
+    allCustomersData,
     customers,
-    isAllCustomersDataLoading,
+    isAllCustomersDataPending,
+    isAllCustomersDataFetching,
     isFetchCustomersError,
     fetchCustomersErrorMessage,
-  } = useCustomers();
+  } = useCustomers(currentPage);
 
   if (isFetchCustomersError)
     return (
@@ -71,7 +75,7 @@ export default function Customers() {
         </div>
         {/* Customers Display Table  */}
         <div
-          className={`table-parent-scrollbar ${isAllCustomersDataLoading || !customers.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
+          className={`table-parent-scrollbar ${isAllCustomersDataPending || !customers.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
         >
           <table
             className="h-full w-full overflow-x-auto bg-white"
@@ -89,7 +93,7 @@ export default function Customers() {
                 ))}
               </tr>
             </thead>
-            {!isAllCustomersDataLoading && !customers.length ? (
+            {!isAllCustomersDataPending && !customers.length ? (
               <NoDataFoundTableDesktopComponent
                 title="No Customer Yet!"
                 subtitle="All customer details will be displayed here once they begin signing up and making bookings."
@@ -97,7 +101,7 @@ export default function Customers() {
               />
             ) : (
               <tbody className="w-full divide-y divide-gray-100">
-                {isAllCustomersDataLoading ? (
+                {isAllCustomersDataPending ? (
                   <TableSkeleton length={customersTableHeaders.length} />
                 ) : (
                   customers
@@ -160,7 +164,7 @@ export default function Customers() {
         </div>
         {/* Customers Display Card  */}
         <div className="scrollbar-thin flex h-full w-full items-center justify-center overflow-y-auto md:hidden">
-          {!isAllCustomersDataLoading && !customers.length ? (
+          {!isAllCustomersDataPending && !customers.length ? (
             <NoDataFoundTableMobileComponent
               title="No Customer Yet!"
               subtitle="All customer details will be displayed here once they begin signing up and making bookings."
@@ -174,7 +178,7 @@ export default function Customers() {
               </div>
               <div className="flex w-full flex-col gap-3">
                 {/* Customer Cards  */}
-                {isAllCustomersDataLoading ? (
+                {isAllCustomersDataPending ? (
                   <CardSkeleton className="flex h-[294px] w-full flex-col gap-2 border border-[#E2E5E9] p-2" />
                 ) : (
                   customers.slice(0, selectedRowCount).map((customer, _i) => (
@@ -255,6 +259,10 @@ export default function Customers() {
         <AppPagination
           rowCountValue={selectedRowCount}
           onChange={(e) => setSelectedRowCount(Number(e.target.value))}
+          totalPaginationPage={Number(allCustomersData?.data.data.last_page)}
+          paginationValue={Number(allCustomersData?.data.data.current_page)}
+          onPaginationChange={setCurrentPage}
+          isDataFetching={isAllCustomersDataFetching}
         />
       )}
     </div>

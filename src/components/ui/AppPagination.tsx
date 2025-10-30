@@ -1,12 +1,24 @@
+import { Pagination } from "@mantine/core";
 import { ChevronDown } from "lucide-react";
 import React from "react";
 
 interface IAppPaginationProps {
   rowCountValue: number;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  totalPaginationPage: number;
+  paginationValue: number;
+  onPaginationChange: React.Dispatch<React.SetStateAction<number>>;
+  isDataFetching: boolean;
 }
 
-const AppPagination = ({ rowCountValue, onChange }: IAppPaginationProps) => {
+const AppPagination = ({
+  rowCountValue,
+  onChange,
+  totalPaginationPage,
+  paginationValue,
+  onPaginationChange,
+  isDataFetching,
+}: IAppPaginationProps) => {
   return (
     <div className="flex w-[900px] flex-col rounded-md">
       <div className="flex h-full w-[500px] flex-col-reverse gap-4 md:flex-row md:items-center md:justify-between">
@@ -34,7 +46,22 @@ const AppPagination = ({ rowCountValue, onChange }: IAppPaginationProps) => {
           </div>
           <span className="text-[12px] text-[#5C5A55]">Row</span>
         </div>
-        <div className="h-[35px] w-[300px] bg-yellow-500"></div>
+        <div className="flex h-[35px] w-[300px] gap-2">
+          <Pagination
+            total={totalPaginationPage}
+            value={paginationValue}
+            onChange={onPaginationChange}
+            color="beautyGreen"
+            disabled={isDataFetching}
+          />
+          {isDataFetching && (
+            <div className="flex items-center gap-2">
+              <div className="relative h-5 w-5">
+                <div className="absolute h-full w-full animate-spin rounded-full border-[2px] border-gray-200 border-t-[#1AB65C]" />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

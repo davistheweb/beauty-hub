@@ -27,13 +27,16 @@ export default function Staffs() {
 
   const [selectedStaff, setSelectedStaff] = useState<IStaff | null>(null);
   const [selectedRowCount, setSelectedRowCount] = useState<number>(20);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const {
+    allStaffsData,
     staffs,
-    isStaffsLoading,
+    isStaffsDataPending,
+    isAllStaffDataFetching,
     isFetchStaffsError,
     fetchStaffsErrorMessage,
-  } = useStaff();
+  } = useStaff(currentPage);
 
   const handleViewStaff = (staff: IStaff) => {
     setSelectedStaff(staff);
@@ -105,7 +108,7 @@ export default function Staffs() {
           </div> */}
           {/* Staff Display Table  */}
           <div
-            className={`table-parent-scrollbar ${isStaffsLoading || !staffs.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
+            className={`table-parent-scrollbar ${isStaffsDataPending || !staffs.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
           >
             <table
               className="h-full w-full overflow-x-auto bg-white"
@@ -123,7 +126,7 @@ export default function Staffs() {
                   ))}
                 </tr>
               </thead>
-              {!isStaffsLoading && !staffs.length ? (
+              {!isStaffsDataPending && !staffs.length ? (
                 <NoDataFoundTableDesktopComponent
                   title="No Admin staffs Yet!"
                   subtitle="Add a Staff and see the list here."
@@ -145,7 +148,7 @@ export default function Staffs() {
                 </NoDataFoundTableDesktopComponent>
               ) : (
                 <tbody className="w-full divide-y divide-gray-100">
-                  {isStaffsLoading ? (
+                  {isStaffsDataPending ? (
                     <TableSkeleton length={staffTableHeaders.length} />
                   ) : (
                     staffs.slice(0, selectedRowCount).map((staff, index) => (
@@ -197,7 +200,7 @@ export default function Staffs() {
           </div>
           {/* Staff Display Card  */}
           <div className="scrollbar-thin flex h-full w-full items-center justify-center overflow-y-auto md:hidden">
-            {!isStaffsLoading && !staffs.length ? (
+            {!isStaffsDataPending && !staffs.length ? (
               <NoDataFoundTableMobileComponent
                 title="No Admin staffs Yet!"
                 subtitle="Add a Staff and see the list here."
@@ -211,7 +214,7 @@ export default function Staffs() {
                 </div>
                 <div className="flex w-full flex-col gap-3">
                   {/* Staff Cards  */}
-                  {isStaffsLoading ? (
+                  {isStaffsDataPending ? (
                     <CardSkeleton className="flex h-[294px] w-full flex-col gap-2 border border-[#E2E5E9] p-2" />
                   ) : (
                     staffs.slice(0, selectedRowCount).map((staff, _i) => (
@@ -283,6 +286,10 @@ export default function Staffs() {
           <AppPagination
             rowCountValue={selectedRowCount}
             onChange={(e) => setSelectedRowCount(Number(e.target.value))}
+            totalPaginationPage={Number(allStaffsData?.data.data.last_page)}
+            paginationValue={Number(allStaffsData?.data.data.current_page)}
+            onPaginationChange={setCurrentPage}
+            isDataFetching={isAllStaffDataFetching}
           />
         )}
       </div>

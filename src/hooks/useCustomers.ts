@@ -6,27 +6,54 @@ import {
 import { IErrorInfo } from "@/types/Error";
 import { ICustomer, ICustomerDetails } from "@/types/ICustomers";
 import getErrorMessage from "@/utils/getErrorMessage";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  queryOptions,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { useEffect } from "react";
 
-const useCustomers = () => {
+const useCustomers = (page: number) => {
+  const queryClient = useQueryClient();
+
+  const customersQueryOptions = (pageNumber: number) =>
+    queryOptions({
+      queryFn: () => fetchCustomers(pageNumber),
+      queryKey: ["customers", pageNumber],
+      placeholderData: (prevData) => prevData,
+      retry: false,
+      networkMode: "always",
+      staleTime: 60_000,
+      gcTime: 1000 * 60 * 5,
+    });
+
   const {
-    data,
-    isLoading: isAllCustomersDataLoading,
+    data: allCustomersData,
+    isPending: isAllCustomersDataPending,
+    isFetching: isAllCustomersDataFetching,
     error,
     isError: isFetchCustomersError,
-  } = useQuery({
-    queryFn: fetchCustomers,
-    queryKey: ["customers"],
-    retry: false,
-    networkMode: "always",
-    staleTime: 60_000,
-    gcTime: 1000 * 60 * 5,
-  });
+  } = useQuery(customersQueryOptions(page));
+
+  useEffect(() => {
+    if (
+      allCustomersData?.data.data.current_page ===
+      allCustomersData?.data.data.last_page
+    )
+      return;
+    queryClient.prefetchQuery(customersQueryOptions(page + 1));
+  }, [
+    page,
+    queryClient,
+    allCustomersData?.data.data.current_page,
+    allCustomersData?.data.data.last_page,
+  ]);
 
   console.log(error?.message);
 
   const customers: ICustomer[] | [] = !isFetchCustomersError
-    ? data?.data?.data?.data || []
+    ? allCustomersData?.data?.data?.data || []
     : [];
 
   const fetchCustomersErrorMessage = isFetchCustomersError
@@ -34,8 +61,10 @@ const useCustomers = () => {
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
   return {
+    allCustomersData,
     customers,
-    isAllCustomersDataLoading,
+    isAllCustomersDataPending,
+    isAllCustomersDataFetching,
     isFetchCustomersError,
     fetchCustomersErrorMessage,
   };

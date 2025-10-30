@@ -17,15 +17,18 @@ export default function Ratings() {
   const [search, setSearch] = useState<string>("");
   const [searchData, setSearchData] = useState<IRating[] | []>([]);
   const [selectedRowCount, setSelectedRowCount] = useState<number>(20);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const {
+    allRatingsData,
     ratings,
     searchRating,
-    isLoading,
+    isRatingsDataPending,
+    isRatingsDataFetching,
     deleteRating,
     isFetchRatingsError,
     fetchRatingsErrMessage,
-  } = useRatings();
+  } = useRatings(currentPage);
   const debouncedValue = useDebounce(search, 600);
 
   useEffect(() => {
@@ -36,19 +39,22 @@ export default function Ratings() {
 
     setSearchData([]);
 
-    searchRating.mutate(debouncedValue, {
-      onSuccess: (data) => {
-        console.log(data.data.data.data);
-        setSearchData(data.data.data.data);
-        toast.dismiss(toastId);
+    searchRating.mutate(
+      { search: debouncedValue },
+      {
+        onSuccess: (data) => {
+          console.log(data.data.data.data);
+          setSearchData(data.data.data.data);
+          toast.dismiss(toastId);
+        },
+        onError: (err) => {
+          toast.dismiss(toastId);
+          setSearchData([]);
+          const error = getErrorMessage(err);
+          toast.error(error.message);
+        },
       },
-      onError: (err) => {
-        toast.dismiss(toastId);
-        setSearchData([]);
-        const error = getErrorMessage(err);
-        toast.error(error.message);
-      },
-    });
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedValue]);
 
@@ -128,16 +134,16 @@ export default function Ratings() {
         </div>
         {/* Ratings Display */}
         <div
-          className={`scrollbar-thin ${isLoading ? "" : "h-full py-3"} w-full p-1 lg:overflow-y-auto`}
+          className={`scrollbar-thin ${isRatingsDataPending ? "" : "h-full py-3"} w-full p-1 lg:overflow-y-auto`}
         >
-          {!isLoading && !allRatings.length ? (
+          {!isRatingsDataPending && !allRatings.length ? (
             <div className="h-full w-full items-center justify-center">
               <NoDataFoundElement
                 title="No customer ratings Yet!"
                 subtitle="When a customer dropped ratings on the app, all reviews and ratings will show here."
               />
             </div>
-          ) : isLoading ? (
+          ) : isRatingsDataPending ? (
             <div className="flex w-full flex-col gap-4">
               <CardSkeleton
                 length={8}
@@ -175,6 +181,10 @@ export default function Ratings() {
         <AppPagination
           rowCountValue={selectedRowCount}
           onChange={(e) => setSelectedRowCount(Number(e.target.value))}
+          totalPaginationPage={Number(allRatingsData?.data.data.last_page)}
+          paginationValue={Number(allRatingsData?.data.data.current_page)}
+          onPaginationChange={setCurrentPage}
+          isDataFetching={isRatingsDataFetching}
         />
       )}
     </div>

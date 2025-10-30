@@ -2,8 +2,8 @@ import { IStaffResponse } from "@/types/IStaff";
 import { API } from "./axios";
 import { getApiResponse } from "./helpers";
 
-const fetchStaffs = async (): Promise<IStaffResponse> =>
-  getApiResponse(await API.post("/admin/staff/fetch_all_staff"));
+const fetchStaffs = async (page: number = 1): Promise<IStaffResponse> =>
+  getApiResponse(await API.post(`/admin/staff/fetch_all_staff?page=${page}`));
 
 const addStaffService = async ({
   name,
