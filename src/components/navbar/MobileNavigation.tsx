@@ -4,6 +4,7 @@ import { AppDispatch, RootState } from "@/store";
 import { setOpenNotifications } from "@/store/utils/notificationStateSlice";
 import { Menu } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomBellICon, CustomDot } from "../icons";
@@ -22,6 +23,9 @@ export default function MobileNavigation() {
   );
 
   const { hasNotification } = useNotifications();
+
+  const router = useRouter();
+
   const handleOpenNotification = () => {
     dispatch(setOpenNotifications(!isNotificationsOpen));
   };
@@ -62,6 +66,7 @@ export default function MobileNavigation() {
             height={27}
             className="object-cover"
             unoptimized
+            onClick={() => router.push("/settings")}
           />
         </div>
         <button onClick={() => setIsOpen((prev) => !prev)}>
