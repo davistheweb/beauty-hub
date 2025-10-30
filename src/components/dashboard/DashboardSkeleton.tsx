@@ -25,7 +25,7 @@ export default function DashboardSkeleton() {
       <div className="mt-3 flex w-full flex-col justify-center gap-3 p-2 lg:flex-row">
         {/* Customers Display*/}
         <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
-          <div className="flex h-12 w-full items-center justify-center">
+          {/* <div className="flex h-12 w-full items-center justify-center">
             <div className="flex h-[30px] w-full items-center justify-end p-4">
               <div className="flex gap-2">
                 <button className="text-custom-green cursor-pointer rounded-xs bg-[#F9FFFB] p-1 pr-2 pl-2 text-center text-[14px] font-medium">
@@ -39,7 +39,7 @@ export default function DashboardSkeleton() {
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* Dashboard Display Table Skeleton  */}
           <div className="table-parent-scrollbar hidden h-full w-full overflow-x-auto p-1 md:flex">
             <table
