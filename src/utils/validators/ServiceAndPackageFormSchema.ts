@@ -32,6 +32,10 @@ const updatePackageFormSchema = basePackageFormSchema.extend({
     ),
 });
 
+const addServiceToPackageFormSchema = z.object({
+  name: z.string().nonempty({ error: "Serive Name is required" }),
+});
+
 type PackageFormValues = {
   name: string;
   price: string;
@@ -43,10 +47,19 @@ type addPackageFormValues = z.infer<typeof addPackageFormSchema>;
 
 type updatePackageFormValues = z.infer<typeof updatePackageFormSchema>;
 
-export { addPackageFormSchema, updatePackageFormSchema };
+type addServiceToPackageFormValues = z.infer<
+  typeof addServiceToPackageFormSchema
+>;
+
+export {
+  addPackageFormSchema,
+  addServiceToPackageFormSchema,
+  updatePackageFormSchema,
+};
 
 export type {
   PackageFormValues,
   addPackageFormValues,
+  addServiceToPackageFormValues,
   updatePackageFormValues,
 };

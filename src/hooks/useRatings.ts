@@ -1,26 +1,68 @@
-import { fetchRatningsService } from "@/services/ratingsService";
+import {
+  deleteRatingsService,
+  fetchRatingsService,
+} from "@/services/ratingsService";
 import { IErrorInfo } from "@/types/Error";
 import { IRating } from "@/types/IRatings";
 import getErrorMessage from "@/utils/getErrorMessage";
-import { useQuery } from "@tanstack/react-query";
+import {
+  queryOptions,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { useEffect } from "react";
 
-export default function useRatings() {
+export default function useRatings(page: number) {
+  const queryClient = useQueryClient();
+
+  const ratingsQueryOptions = (pageNumber: number) =>
+    queryOptions({
+      queryFn: () => fetchRatingsService({ page: pageNumber }),
+      queryKey: ["ratings", pageNumber],
+      placeholderData: (prevData) => prevData,
+      retry: false,
+      networkMode: "always",
+      refetchOnReconnect: true,
+      staleTime: 120_000,
+      // gcTime: 1000 * 60 * 5,
+    });
+
   const {
-    data,
-    isLoading,
+    data: allRatingsData,
+    isPending: isRatingsDataPending,
+    isFetching: isRatingsDataFetching,
     error,
     isError: isFetchRatingsError,
-  } = useQuery({
-    queryFn: fetchRatningsService,
-    queryKey: ["ratings"],
+  } = useQuery(ratingsQueryOptions(page));
+
+  useEffect(() => {
+    if (
+      allRatingsData?.data.data.current_page !==
+      allRatingsData?.data.data.last_page
+    )
+      queryClient.prefetchQuery(ratingsQueryOptions(page + 1));
+  }, [
+    page,
+    queryClient,
+    allRatingsData?.data.data.current_page,
+    allRatingsData?.data.data.last_page,
+  ]);
+
+  const searchRating = useMutation({
     retry: false,
     networkMode: "always",
-    refetchOnReconnect: true,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 5,
+    mutationFn: fetchRatingsService,
   });
 
-  const ratingsResponse = data?.data?.data?.data || [];
+  const deleteRating = useMutation({
+    retry: false,
+    networkMode: "always",
+    mutationFn: deleteRatingsService,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["ratings"] }),
+  });
+
+  const ratingsResponse = allRatingsData?.data?.data?.data || [];
 
   const ratings: IRating[] | [] = ratingsResponse?.map((rating) => ({
     id: rating.id,
@@ -41,5 +83,14 @@ export default function useRatings() {
     ? getErrorMessage(error)
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
-  return { ratings, isLoading, isFetchRatingsError, fetchRatingsErrMessage };
+  return {
+    allRatingsData,
+    ratings,
+    isRatingsDataPending,
+    isRatingsDataFetching,
+    searchRating,
+    isFetchRatingsError,
+    fetchRatingsErrMessage,
+    deleteRating,
+  };
 }

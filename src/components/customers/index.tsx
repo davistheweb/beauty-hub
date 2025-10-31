@@ -8,19 +8,27 @@ import { Label } from "@/components/ui/label";
 import SearchInput from "@/components/ui/SearchInput";
 import { customersTableHeaders } from "@/data";
 import { useCustomers } from "@/hooks";
-import { ChevronDown, Dot, Eye } from "lucide-react";
+import { Dot, Eye } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import AppPagination from "../ui/AppPagination";
 import { CardSkeleton } from "../ui/CardSkeleton";
 import { ErrorElement } from "../ui/ErrorElement";
-import { TabkeSkeleton } from "../ui/TabkeSkeleton";
+import { TableSkeleton } from "../ui/TableSkeleton";
 
 export default function Customers() {
+  const [selectedRowCount, setSelectedRowCount] = useState<number>(20);
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
   const {
+    allCustomersData,
     customers,
-    isAllCustomersDataLoading,
+    isAllCustomersDataPending,
+    isAllCustomersDataFetching,
     isFetchCustomersError,
     fetchCustomersErrorMessage,
-  } = useCustomers();
+  } = useCustomers(currentPage);
 
   if (isFetchCustomersError)
     return (
@@ -67,7 +75,7 @@ export default function Customers() {
         </div>
         {/* Customers Display Table  */}
         <div
-          className={`table-parent-scrollbar ${isAllCustomersDataLoading || !customers.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
+          className={`table-parent-scrollbar ${isAllCustomersDataPending || !customers.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
         >
           <table
             className="h-full w-full overflow-x-auto bg-white"
@@ -78,14 +86,14 @@ export default function Customers() {
                 {customersTableHeaders.map((header, _i) => (
                   <th
                     key={_i}
-                    className={`${header === "Action" ? "w-[50px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-center text-[14px] font-medium tracking-wide`}
+                    className={`${header === "Action" ? "w-[50px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-start text-[14px] font-medium tracking-wide`}
                   >
                     {header}
                   </th>
                 ))}
               </tr>
             </thead>
-            {!isAllCustomersDataLoading && !customers.length ? (
+            {!isAllCustomersDataPending && !customers.length ? (
               <NoDataFoundTableDesktopComponent
                 title="No Customer Yet!"
                 subtitle="All customer details will be displayed here once they begin signing up and making bookings."
@@ -93,60 +101,62 @@ export default function Customers() {
               />
             ) : (
               <tbody className="w-full divide-y divide-gray-100">
-                {isAllCustomersDataLoading ? (
-                  <TabkeSkeleton length={customersTableHeaders.length} />
+                {isAllCustomersDataPending ? (
+                  <TableSkeleton length={customersTableHeaders.length} />
                 ) : (
-                  customers.map((customer, index) => (
-                    <tr
-                      key={index}
-                      className="h-[48px] w-full hover:bg-gray-50"
-                    >
-                      <td className="px-8 py-2 text-center text-[14px] font-normal">
-                        {customer.name}
-                      </td>
-                      <td className="px-4 py-2 text-center text-[14px] text-[#727272]">
-                        {customer.email}
-                      </td>
-                      <td className="px-4 py-2 text-center text-[14px] font-normal text-[#727272]">
-                        {customer.phone || "no-number"}
-                      </td>
-                      <td className="px-4 py-2 text-center text-[14px] font-normal text-[#727272]">
-                        {new Date(customer.created_at)
-                          .toLocaleDateString()
-                          .split("/")
-                          .join("-")}
-                      </td>
-
-                      <td
-                        className={`flex h-full place-items-center justify-center px-10 py-1`}
+                  customers
+                    .slice(0, selectedRowCount)
+                    .map((customer, index) => (
+                      <tr
+                        key={index}
+                        className="h-[48px] w-full hover:bg-gray-50"
                       >
-                        <span
-                          className={`rounded-[38.32px] bg-[#EDF5FE] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" && "text-[#004CE8]"} flex w-fit items-center justify-center gap-2 px-5 py-2`}
+                        <td className="px-4 py-2 text-[14px] font-normal">
+                          {customer.name}
+                        </td>
+                        <td className="px-4 py-2 text-[14px] text-[#727272]">
+                          {customer.email}
+                        </td>
+                        <td className="px-4 py-2 text-[14px] font-normal text-[#727272]">
+                          {customer.phone || "no-number"}
+                        </td>
+                        <td className="px-4 py-2 text-[14px] font-normal text-[#727272]">
+                          {new Date(customer.created_at)
+                            .toLocaleDateString()
+                            .split("/")
+                            .join("-")}
+                        </td>
+
+                        <td
+                          className={`flex h-full place-items-center justify-start py-1`}
                         >
-                          <span className="flex h-3 w-3 items-center justify-center">
-                            <Dot
-                              size={40}
-                              className="shrink-0"
+                          <span
+                            className={`rounded-[38.32px] bg-[#EDF5FE] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" ? "text-[#004CE8]" : customer.status === "suspended" && "text-[#FF3333]"} flex w-fit items-center justify-center gap-2 px-5 py-2`}
+                          >
+                            <span className="flex h-3 w-3 items-center justify-center">
+                              <Dot
+                                size={40}
+                                className="shrink-0"
+                              />
+                            </span>
+                            <span className="w-fit text-center text-[12px] capitalize">
+                              {customer.status}
+                            </span>
+                          </span>
+                        </td>
+                        <td className="">
+                          <Link
+                            href={`/customers/${customer.id}`}
+                            className="flex cursor-pointer items-center justify-center rounded-xs text-center text-[14px] font-medium"
+                          >
+                            <Eye
+                              size={18}
+                              className="text-[#737375] hover:bg-[#EDF5FE]"
                             />
-                          </span>
-                          <span className="w-fit text-center text-[12px] capitalize">
-                            {customer.status}
-                          </span>
-                        </span>
-                      </td>
-                      <td className="">
-                        <Link
-                          href={`/customers/${customer.id}`}
-                          className="flex cursor-pointer items-center justify-center rounded-xs text-center text-[14px] font-medium"
-                        >
-                          <Eye
-                            size={18}
-                            className="text-[#737375] hover:bg-[#EDF5FE]"
-                          />
-                        </Link>
-                      </td>
-                    </tr>
-                  ))
+                          </Link>
+                        </td>
+                      </tr>
+                    ))
                 )}
               </tbody>
             )}
@@ -154,7 +164,7 @@ export default function Customers() {
         </div>
         {/* Customers Display Card  */}
         <div className="scrollbar-thin flex h-full w-full items-center justify-center overflow-y-auto md:hidden">
-          {!isAllCustomersDataLoading && !customers.length ? (
+          {!isAllCustomersDataPending && !customers.length ? (
             <NoDataFoundTableMobileComponent
               title="No Customer Yet!"
               subtitle="All customer details will be displayed here once they begin signing up and making bookings."
@@ -168,15 +178,15 @@ export default function Customers() {
               </div>
               <div className="flex w-full flex-col gap-3">
                 {/* Customer Cards  */}
-                {isAllCustomersDataLoading ? (
+                {isAllCustomersDataPending ? (
                   <CardSkeleton className="flex h-[294px] w-full flex-col gap-2 border border-[#E2E5E9] p-2" />
                 ) : (
-                  customers.map((customer, _i) => (
+                  customers.slice(0, selectedRowCount).map((customer, _i) => (
                     <div
-                      className="flex h-[294px] w-full flex-col gap-2 border border-[#E2E5E9] p-2"
+                      className="flex h-[314px] w-full flex-col gap-2 border border-[#E2E5E9] p-2"
                       key={_i}
                     >
-                      <div className="flex h-[250px] w-full flex-col gap-5 p-4">
+                      <div className="flex h-[250px] w-full flex-col gap-3 p-4">
                         <span className="flex items-center justify-between">
                           <h1 className="text-[18px] font-medium">Customer</h1>
                           <p className="text-[14px] font-medium text-[#5C5C5C]">
@@ -214,7 +224,7 @@ export default function Customers() {
                         <span className="flex items-center justify-between">
                           <h1 className="text-[18px] font-medium">Status</h1>
                           <span
-                            className={`rounded-[42.58px] bg-[#EDF5FE] pt-[4.73px] pr-[9.46px] pb-[4.73px] pl-[9.46px] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" && "text-[#004CE8]"} flex items-center justify-center gap-2 px-2 text-[14px]`}
+                            className={`rounded-[42.58px] bg-[#EDF5FE] pt-[4.73px] pr-[9.46px] pb-[4.73px] pl-[9.46px] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" ? "text-[#004CE8]" : customer.status === "suspended" && "text-[#FF3333]"} flex items-center justify-center gap-2 px-2 text-[14px]`}
                           >
                             <span className="flex h-3 w-3 items-center justify-center">
                               <Dot
@@ -231,7 +241,7 @@ export default function Customers() {
                       <div className="flex justify-end pr-4">
                         <Link
                           href={`/customers/${customer.id}`}
-                          className="text-custom-green text-[14px] font-medium"
+                          className="text-custom-green cursor-pointer rounded-full border border-[#1AB65C] bg-[#F9FFFB] px-2 py-1 text-sm font-semibold hover:bg-[#f1faf4]"
                         >
                           View Details
                         </Link>
@@ -246,35 +256,14 @@ export default function Customers() {
       </div>
       {/* Pagination  */}
       {customers.length > 0 && (
-        <div className="hidden h-[40px] w-[900px] flex-col rounded-md md:flex">
-          <div className="flex h-full w-[500px] items-center justify-between">
-            <div className="flex h-[35px] w-[140px] items-center justify-center gap-2">
-              <span className="text-[12px] text-[#5C5A55]">Show</span>
-              <div className="relative inline-block">
-                <select
-                  name=""
-                  id=""
-                  className="scrollbar-thin h-[35px] w-[64px] cursor-pointer appearance-none rounded-sm border border-[#C2C2C2] px-3"
-                >
-                  {Array.from({ length: 12 }, (arr, i) => i).map((arr) => (
-                    <option
-                      key={` :: ${arr}`}
-                      value={arr + 1}
-                      className=""
-                    >
-                      {arr + 1}
-                    </option>
-                  ))}
-                </select>
-                <span className="pointer-events-none absolute top-1/2 right-1 -translate-y-1/2 text-gray-500">
-                  <ChevronDown />
-                </span>
-              </div>
-              <span className="text-[12px] text-[#5C5A55]">Row</span>
-            </div>
-            <div className="h-[35px] w-[300px] bg-yellow-500"></div>
-          </div>
-        </div>
+        <AppPagination
+          rowCountValue={selectedRowCount}
+          onChange={(e) => setSelectedRowCount(Number(e.target.value))}
+          totalPaginationPage={Number(allCustomersData?.data.data.last_page)}
+          paginationValue={Number(allCustomersData?.data.data.current_page)}
+          onPaginationChange={setCurrentPage}
+          isDataFetching={isAllCustomersDataFetching}
+        />
       )}
     </div>
   );

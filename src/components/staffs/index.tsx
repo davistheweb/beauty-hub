@@ -5,21 +5,44 @@ import {
   NoDataFoundTableMobileComponent,
 } from "@/components/no-data";
 import { Button } from "@/components/ui/button";
-import SearchInput from "@/components/ui/SearchInput";
 import { staffTableHeaders } from "@/data";
 import { useStaff } from "@/hooks";
-import { ChevronDown, Dot, EllipsisVertical, Plus } from "lucide-react";
+import { IStaff } from "@/types/IStaff";
+import { Dot, EllipsisVertical, Plus } from "lucide-react";
+import { useState } from "react";
+import AppPagination from "../ui/AppPagination";
 import { CardSkeleton } from "../ui/CardSkeleton";
 import { ErrorElement } from "../ui/ErrorElement";
-import { TabkeSkeleton } from "../ui/TabkeSkeleton";
+import { TableSkeleton } from "../ui/TableSkeleton";
+import StaffForm from "./StaffForm";
+import { ViewStaffDialog } from "./ViewStaffDialog";
 
 export default function Staffs() {
+  const [showStaffFormDialog, setShowStaffFormDialog] =
+    useState<boolean>(false);
+  const [openStaffDialog, setOpenStaffDialog] = useState<boolean>(false);
+  const [staffFormAction, setStaffFormAction] = useState<
+    "addStaff" | "updateStaff"
+  >("addStaff");
+
+  const [selectedStaff, setSelectedStaff] = useState<IStaff | null>(null);
+  const [selectedRowCount, setSelectedRowCount] = useState<number>(20);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
   const {
+    allStaffsData,
     staffs,
-    isStaffsLoading,
+    isStaffsDataPending,
+    isAllStaffDataFetching,
     isFetchStaffsError,
     fetchStaffsErrorMessage,
-  } = useStaff();
+  } = useStaff(currentPage);
+
+  const handleViewStaff = (staff: IStaff) => {
+    setSelectedStaff(staff);
+    setOpenStaffDialog((prev) => !prev);
+    console.log(staff.status);
+  };
 
   if (isFetchStaffsError)
     return (
@@ -35,27 +58,42 @@ export default function Staffs() {
 
   return (
     <div className="flex h-full flex-1 flex-col md:p-2">
+      {openStaffDialog && (
+        <ViewStaffDialog
+          openStaffDialog={openStaffDialog}
+          setOpenStaffDialog={setOpenStaffDialog}
+          selectedStaff={selectedStaff}
+          setSelectedStaff={setSelectedStaff}
+          handleUpdateStaffDetails={() => {
+            setTimeout(() => setOpenStaffDialog((prev) => !prev), 1000);
+            setSelectedStaff(selectedStaff);
+            setStaffFormAction("updateStaff");
+            setShowStaffFormDialog((prev) => !prev);
+          }}
+        />
+      )}
       <div className="flex flex-col gap-3 lg:flex-row lg:justify-between">
         <h1 className="inline-block text-2xl font-bold">Admin Staff</h1>
-        {staffs.length > 0 && (
-          <div className="px-4 lg:px-0">
-            <Button className="bg-custom-green w-full cursor-pointer rounded-full px-[50px] font-semibold transition-all duration-500 ease-in-out hover:-translate-y-0.5 hover:bg-[#169B4E] hover:shadow-lg">
-              <span>
-                <Plus />
-              </span>
-              Add Staff
-            </Button>
-          </div>
-        )}
+        <div className="px-4 lg:px-0">
+          <StaffForm
+            staffs={staffs}
+            showStaffFormDialog={showStaffFormDialog}
+            setShowStaffFormDialog={setShowStaffFormDialog}
+            selectedStaff={selectedStaff}
+            setSelectedStaff={setSelectedStaff}
+            staffFormAction={staffFormAction}
+            setStaffFormAction={setStaffFormAction}
+          />
+        </div>
       </div>
       <div className="mt-3 flex w-full flex-col gap-3 p-2">
         {/* Staff Table  */}
         <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
-          <div className="flex h-12 w-full items-center justify-center">
+          {/* <div className="flex h-12 w-full items-center justify-center">
             <div className="flex h-[30px] w-full items-center justify-between p-2 md:p-4">
-              {/* Search  */}
+            
               <SearchInput />
-              {/* <div className="flex gap-0 md:gap-2">
+              <div className="flex gap-0 md:gap-2">
                   <button className="text-custom-green cursor-pointer rounded-xs bg-[#F9FFFB] p-1 pr-1 pl-1 text-center text-[12px] font-medium md:text-[14px] lg:pr-2 lg:pl-2">
                     Day
                   </button>
@@ -65,12 +103,12 @@ export default function Staffs() {
                   <button className="cursor-pointer rounded-xs p-1 pr-1 pl-1 text-[12px] font-medium text-[#898A8C] duration-300 hover:bg-[#F9FFFB] hover:text-[#1AB65C] md:text-[14px] lg:pr-2 lg:pl-2">
                     Year
                   </button>
-                </div> */}
+                </div>
             </div>
-          </div>
+          </div> */}
           {/* Staff Display Table  */}
           <div
-            className={`table-parent-scrollbar ${isStaffsLoading || !staffs.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
+            className={`table-parent-scrollbar ${isStaffsDataPending || !staffs.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
           >
             <table
               className="h-full w-full overflow-x-auto bg-white"
@@ -81,20 +119,26 @@ export default function Staffs() {
                   {staffTableHeaders.map((header, _i) => (
                     <th
                       key={_i}
-                      className={`${header === "Action" ? "w-[50px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-center text-[14px] font-medium tracking-wide`}
+                      className={`${header === "Action" ? "w-[50px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-start text-[14px] font-medium tracking-wide`}
                     >
                       {header}
                     </th>
                   ))}
                 </tr>
               </thead>
-              {!isStaffsLoading && !staffs.length ? (
+              {!isStaffsDataPending && !staffs.length ? (
                 <NoDataFoundTableDesktopComponent
                   title="No Admin staffs Yet!"
                   subtitle="Add a Staff and see the list here."
                   colSpan={staffTableHeaders.length}
                 >
-                  <Button className="bg-custom-green cursor-pointer rounded-full hover:bg-[#169B4E]">
+                  <Button
+                    className="bg-custom-green cursor-pointer rounded-full hover:bg-[#169B4E]"
+                    onClick={() => {
+                      setStaffFormAction("addStaff");
+                      setShowStaffFormDialog((prev) => !prev);
+                    }}
+                  >
                     {" "}
                     <span>
                       <Plus />
@@ -104,29 +148,29 @@ export default function Staffs() {
                 </NoDataFoundTableDesktopComponent>
               ) : (
                 <tbody className="w-full divide-y divide-gray-100">
-                  {isStaffsLoading ? (
-                    <TabkeSkeleton length={staffTableHeaders.length} />
+                  {isStaffsDataPending ? (
+                    <TableSkeleton length={staffTableHeaders.length} />
                   ) : (
-                    staffs.map((staff, index) => (
+                    staffs.slice(0, selectedRowCount).map((staff, index) => (
                       <tr
                         key={index}
                         className="h-[48px] w-full hover:bg-gray-50"
                       >
-                        <td className="px-8 py-2 text-center text-[14px] font-normal">
+                        <td className="px-4 py-2 text-[14px] font-normal">
                           {staff.name}
                         </td>
 
-                        <td className="px-4 py-2 text-center text-[14px] text-[#727272]">
+                        <td className="px-4 py-2 text-[14px] text-[#727272]">
                           {new Date(staff.created_at)
                             .toLocaleDateString()
                             .split("/")
                             .join("-")}
                         </td>
                         <td
-                          className={`flex h-full place-items-center justify-center px-10 py-1`}
+                          className={`flex h-full place-items-center justify-start py-1`}
                         >
                           <span
-                            className={`rounded-[38.32px] bg-[#EDF5FE] ${staff.status === "active" ? "text-[#00C247]" : staff.status === "inactive" ? "text-[#004CE8]" : staff.status === "suspended" && "text-[#FF3333]"} flex w-fit items-center justify-center gap-2 px-5 py-2`}
+                            className={`rounded-[38.32px] bg-[#EDF5FE] ${staff.status === "active" ? "text-[#00C247]" : staff.status === "inactive" ? "text-[#004CE8]" : staff.status === "suspended" && "text-[#FF3333]"} flex w-fit items-center justify-start gap-2 px-5 py-2`}
                           >
                             <span className="flex h-3 w-3 items-center justify-center">
                               <Dot
@@ -139,10 +183,13 @@ export default function Staffs() {
                             </span>
                           </span>
                         </td>
-                        <td className="">
-                          <span className="flex cursor-pointer items-center justify-center rounded-xs text-center text-[14px] font-medium">
-                            <EllipsisVertical className="text-[#737375] hover:bg-[#EDF5FE]" />
-                          </span>
+                        <td className="px-4 py-2">
+                          <div className="flex items-center">
+                            <EllipsisVertical
+                              onClick={() => handleViewStaff(staff)}
+                              className="cursor-pointer text-[#737375] hover:bg-[#EDF5FE]"
+                            />
+                          </div>
                         </td>
                       </tr>
                     ))
@@ -153,7 +200,7 @@ export default function Staffs() {
           </div>
           {/* Staff Display Card  */}
           <div className="scrollbar-thin flex h-full w-full items-center justify-center overflow-y-auto md:hidden">
-            {!isStaffsLoading && !staffs.length ? (
+            {!isStaffsDataPending && !staffs.length ? (
               <NoDataFoundTableMobileComponent
                 title="No Admin staffs Yet!"
                 subtitle="Add a Staff and see the list here."
@@ -167,12 +214,12 @@ export default function Staffs() {
                 </div>
                 <div className="flex w-full flex-col gap-3">
                   {/* Staff Cards  */}
-                  {isStaffsLoading ? (
+                  {isStaffsDataPending ? (
                     <CardSkeleton className="flex h-[294px] w-full flex-col gap-2 border border-[#E2E5E9] p-2" />
                   ) : (
-                    staffs.map((staff, _i) => (
+                    staffs.slice(0, selectedRowCount).map((staff, _i) => (
                       <div
-                        className="flex h-[294px] w-full flex-col gap-2 border border-[#E2E5E9] p-2"
+                        className="flex h-[274px] w-full flex-col gap-1 border border-[#E2E5E9] p-2"
                         key={_i}
                       >
                         <div className="flex h-[250px] w-full flex-col gap-5 p-4">
@@ -218,8 +265,11 @@ export default function Staffs() {
                             </span>
                           </span>
                         </div>
-                        <div className="flex justify-end pr-4">
-                          <button className="text-custom-green text-[14px] font-medium">
+                        <div className="flex justify-end pr-4 pb-1">
+                          <button
+                            onClick={() => handleViewStaff(staff)}
+                            className="text-custom-green cursor-pointer rounded-full border border-[#1AB65C] bg-[#F9FFFB] px-2 py-1 text-sm font-semibold hover:bg-[#f1faf4]"
+                          >
                             Action
                           </button>
                         </div>
@@ -233,35 +283,14 @@ export default function Staffs() {
         </div>
         {/* Pagination  */}
         {staffs.length > 0 && (
-          <div className="hidden h-[40px] w-[900px] flex-col rounded-md md:flex">
-            <div className="flex h-full w-[500px] items-center justify-between">
-              <div className="flex h-[35px] w-[140px] items-center justify-center gap-2">
-                <span className="text-[12px] text-[#5C5A55]">Show</span>
-                <div className="relative inline-block">
-                  <select
-                    name=""
-                    id=""
-                    className="scrollbar-thin h-[35px] w-[64px] cursor-pointer appearance-none rounded-sm border border-[#C2C2C2] px-3"
-                  >
-                    {Array.from({ length: 12 }, (arr, i) => i).map((arr) => (
-                      <option
-                        key={` :: ${arr}`}
-                        value={arr + 1}
-                        className=""
-                      >
-                        {arr + 1}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="pointer-events-none absolute top-1/2 right-1 -translate-y-1/2 text-gray-500">
-                    <ChevronDown />
-                  </span>
-                </div>
-                <span className="text-[12px] text-[#5C5A55]">Row</span>
-              </div>
-              <div className="h-[35px] w-[300px] bg-yellow-500"></div>
-            </div>
-          </div>
+          <AppPagination
+            rowCountValue={selectedRowCount}
+            onChange={(e) => setSelectedRowCount(Number(e.target.value))}
+            totalPaginationPage={Number(allStaffsData?.data.data.last_page)}
+            paginationValue={Number(allStaffsData?.data.data.current_page)}
+            onPaginationChange={setCurrentPage}
+            isDataFetching={isAllStaffDataFetching}
+          />
         )}
       </div>
     </div>

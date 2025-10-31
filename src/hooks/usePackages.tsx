@@ -1,5 +1,7 @@
 import {
   addPackageAndService,
+  addSerive,
+  deleteService,
   fetchAllPackagesAndServices,
   updatePackageService,
 } from "@/services/package-and-services";
@@ -10,7 +12,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 export default function usePackages() {
   const queryClient = useQueryClient();
 
-  const { data, isLoading, error, isError } = useQuery({
+  const {
+    data,
+    isPending: isLoading, //I am making use of isPending because isLoading is legacy but not yet deprecated
+    error,
+    isError,
+  } = useQuery({
     queryKey: ["packages"],
     queryFn: fetchAllPackagesAndServices,
     retry: false,
@@ -34,6 +41,20 @@ export default function usePackages() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["packages"] }),
   });
 
+  const addServiceToPackage = useMutation({
+    retry: false,
+    networkMode: "always",
+    mutationFn: addSerive,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["packages"] }),
+  });
+
+  const deletePackageService = useMutation({
+    retry: false,
+    networkMode: "always",
+    mutationFn: deleteService,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["packages"] }),
+  });
+
   const packages = (!isError && data?.data?.data) || [];
 
   const fetchPackagesErrorMessage = isError
@@ -44,7 +65,9 @@ export default function usePackages() {
     packages,
     isLoading,
     addPackage,
+    addServiceToPackage,
     updatePackage,
+    deletePackageService,
     isError,
     fetchPackagesErrorMessage,
   };

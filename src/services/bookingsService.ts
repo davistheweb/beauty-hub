@@ -1,9 +1,11 @@
 import { IBookingsResponse } from "@/types/IBookings";
-import { API } from "./axios";
+import { API } from "./API";
 import { getApiResponse } from "./helpers";
 
-const fetchAllBookings = async (): Promise<IBookingsResponse> =>
-  getApiResponse(await API.post("/admin/booking/fetch_all_booking"));
+const fetchAllBookings = async (page: number = 1): Promise<IBookingsResponse> =>
+  getApiResponse(
+    await API.post(`/admin/booking/fetch_all_booking?page=${page}`),
+  );
 
 const fetchBookingDetails = async (id: number) =>
   getApiResponse(

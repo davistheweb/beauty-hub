@@ -148,6 +148,27 @@
 .sidebar-hover :hover {
   @apply text-[#1AB65C];
 }
+
+[data-radix-dialog-content] {
+  -webkit-overflow-scrolling: touch;
+}
+
+[data-radix-dialog-content] {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+[data-radix-dialog-content] {
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+
 /* input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;

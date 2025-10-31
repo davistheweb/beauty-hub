@@ -1,5 +1,5 @@
 import { IFetchBannerResponse } from "@/types/IBanner";
-import { API } from "./axios";
+import { API } from "./API";
 import { getApiResponse } from "./helpers";
 import { multipartConfig } from "./httpConfig";
 

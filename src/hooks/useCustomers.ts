@@ -1,3 +1,4 @@
+import { suspendService, unSuspendService } from "@/services/controlService";
 import {
   fetchCustomerDetails,
   fetchCustomers,
@@ -5,27 +6,53 @@ import {
 import { IErrorInfo } from "@/types/Error";
 import { ICustomer, ICustomerDetails } from "@/types/ICustomers";
 import getErrorMessage from "@/utils/getErrorMessage";
-import { useQuery } from "@tanstack/react-query";
+import {
+  queryOptions,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { useEffect } from "react";
 
-const useCustomers = () => {
+const useCustomers = (page: number) => {
+  const queryClient = useQueryClient();
+
+  const customersQueryOptions = (pageNumber: number) =>
+    queryOptions({
+      queryFn: () => fetchCustomers(pageNumber),
+      queryKey: ["customers", pageNumber],
+      placeholderData: (prevData) => prevData,
+      retry: false,
+      networkMode: "always",
+      staleTime: 60_000,
+      gcTime: 1000 * 60 * 5,
+    });
+
   const {
-    data,
-    isLoading: isAllCustomersDataLoading,
+    data: allCustomersData,
+    isPending: isAllCustomersDataPending,
+    isFetching: isAllCustomersDataFetching,
     error,
     isError: isFetchCustomersError,
-  } = useQuery({
-    queryFn: fetchCustomers,
-    queryKey: ["customers"],
-    retry: false,
-    networkMode: "always",
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
-  });
+  } = useQuery(customersQueryOptions(page));
+
+  useEffect(() => {
+    if (
+      allCustomersData?.data.data.current_page !==
+      allCustomersData?.data.data.last_page
+    )
+      queryClient.prefetchQuery(customersQueryOptions(page + 1));
+  }, [
+    page,
+    queryClient,
+    allCustomersData?.data.data.current_page,
+    allCustomersData?.data.data.last_page,
+  ]);
 
   console.log(error?.message);
 
   const customers: ICustomer[] | [] = !isFetchCustomersError
-    ? data?.data?.data?.data || []
+    ? allCustomersData?.data?.data?.data || []
     : [];
 
   const fetchCustomersErrorMessage = isFetchCustomersError
@@ -33,15 +60,17 @@ const useCustomers = () => {
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
   return {
+    allCustomersData,
     customers,
-    isAllCustomersDataLoading,
+    isAllCustomersDataPending,
+    isAllCustomersDataFetching,
     isFetchCustomersError,
     fetchCustomersErrorMessage,
   };
 };
 
 const useCustomerDetailsByID = (customerId?: string) => {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const {
     data: customerDetailsData,
@@ -52,10 +81,35 @@ const useCustomerDetailsByID = (customerId?: string) => {
     queryKey: ["customerDetailsData", customerId],
     queryFn: () => fetchCustomerDetails(customerId!),
     enabled: !!customerId,
-    staleTime: 1000 * 60 * 2,
+    staleTime: 60_000,
+    gcTime: 1000 * 60 * 5,
     retry: false,
     networkMode: "always",
     refetchOnReconnect: true,
+  });
+
+  const suspendedCustomer = useMutation({
+    mutationFn: suspendService,
+    retry: false,
+    networkMode: "always",
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["customers"] });
+      queryClient.invalidateQueries({
+        queryKey: ["customerDetailsData", variables],
+      });
+    },
+  });
+
+  const unsuspendCustomer = useMutation({
+    mutationFn: unSuspendService,
+    retry: false,
+    networkMode: "always",
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["customers"] });
+      queryClient.invalidateQueries({
+        queryKey: ["customerDetailsData", variables],
+      });
+    },
   });
 
   const customerDetails: ICustomerDetails | null =
@@ -69,6 +123,8 @@ const useCustomerDetailsByID = (customerId?: string) => {
 
   return {
     customerDetails,
+    suspendedCustomer,
+    unsuspendCustomer,
     customerDetailsDataIsLoading,
     isFetchCustomerDetailsError,
     fetchCustomerDetailsErrorMessage,

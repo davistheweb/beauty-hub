@@ -1,5 +1,5 @@
 import { IPackagesResponse } from "@/types/IPackages";
-import { API } from "./axios";
+import { API } from "./API";
 import { getApiResponse } from "./helpers";
 import { multipartConfig } from "./httpConfig";
 
@@ -19,9 +19,24 @@ const updatePackageService = async (data: FormData) =>
       ...multipartConfig,
     }),
   );
+const addSerive = async ({
+  package_id,
+  name,
+}: {
+  package_id: number;
+  name: string;
+}) =>
+  getApiResponse(
+    await API.post("/admin/package/add_service", { package_id, name }),
+  );
+
+const deleteService = async (id: number) =>
+  getApiResponse(await API.post("/admin/package/delete_service", { id }));
 
 export {
   addPackageAndService,
+  addSerive,
+  deleteService,
   fetchAllPackagesAndServices,
   updatePackageService,
 };

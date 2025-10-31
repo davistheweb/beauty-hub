@@ -1,4 +1,4 @@
-import { API } from "./axios";
+import { API } from "./API";
 import { getApiResponse } from "./helpers";
 import { multipartConfig } from "./httpConfig";
 

@@ -23,7 +23,7 @@ const PackageCard = ({
   handleViewServices,
   handleUpdatePackage,
 }: IPackageCardProps) => (
-  <div className="relative flex h-[407px] w-[320px] flex-col items-center justify-between overflow-hidden rounded-md border border-[#E6E6E6] bg-white pb-2">
+  <div className="relative flex h-[407px] w-[320px] max-w-[320px] flex-col items-center justify-between overflow-hidden rounded-md border border-[#E6E6E6] bg-white pb-2">
     {status && (
       <span
         className={`absolute top-[8px] right-3 z-1 rounded-[42.58px] bg-[#EDF5FE] ${
@@ -36,16 +36,14 @@ const PackageCard = ({
             className="shrink-0"
           />
         </span>
-        <span className="text-xs font-medium">
-          {status === "active" ? "Active" : status === "inactive" && "Inactive"}
-        </span>
+        <span className="text-xs font-medium capitalize">{status}</span>
       </span>
     )}
     <div className="relative h-[243px] min-w-full overflow-hidden rounded-md">
       <Image
         src={
           imgSrc ||
-          "https:\/\/beauty.literesults.net\/storage\/images\/package\/Afro_Taper_Beard_1759941070.png"
+          "https://beauty.literesults.net/storage/images/package/Afro_Taper_Beard_1759941070.png"
         }
         alt="service image"
         fill
@@ -57,7 +55,7 @@ const PackageCard = ({
     </div>
     <div className="relative flex h-[159px] w-full flex-col justify-between gap-1 overflow-hidden px-3 py-2">
       <div className="flex w-full justify-between">
-        <span className="text-[16px] font-semibold break-words whitespace-normal">
+        <span className="text-[16px] font-semibold break-words">
           {packageType}
         </span>
         <span className="truncate text-xl font-bold">

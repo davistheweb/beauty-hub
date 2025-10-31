@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 import { useBookingDetailsByID } from "@/hooks";
 import { IErrorInfo } from "@/types/Error";
+import getErrorMessage from "@/utils/getErrorMessage";
 import {
   BookingStatusFormValues,
   bookingStatusSchema,
@@ -86,14 +87,15 @@ export const BookingDetailsDialog = ({
       {
         onSuccess: (data) => {
           toast.success(data.message);
-          setSelectedBookingId(null);
-          setSelectedBookingDetails(null);
           setTimeout(() => {
             setOpenDialog(false);
+            setSelectedBookingId(null);
+            setSelectedBookingDetails(null);
           }, 1000);
         },
         onError: (err) => {
-          toast.error(err.message);
+          const error = getErrorMessage(err);
+          toast.error(error.message);
         },
       },
     );
@@ -138,7 +140,7 @@ export const BookingDetailsDialog = ({
         }
       }}
     >
-      <DialogContent className="max-w-fit">
+      <DialogContent className={`${detailsIsLoading ? "" : "max-w-fit"}`}>
         <DialogHeader>
           <DialogTitle className="text-custom-green text-[16px] font-bold lg:text-2xl">
             Booking Details

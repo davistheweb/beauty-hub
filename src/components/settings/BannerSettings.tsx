@@ -1,6 +1,7 @@
 "use client";
 import { useBanner } from "@/hooks";
 import { IBanner } from "@/types/IBanner";
+import getErrorMessage from "@/utils/getErrorMessage";
 import {
   addBannerFormSchema,
   addBannerFormValues,
@@ -147,6 +148,8 @@ export default function BannerSettings({
           setPreviewImage(null);
         },
         onError: (err) => {
+          const error = getErrorMessage(err);
+          toast.error(error.message);
           setComponentIsUploading(false);
           console.log(err);
         },
@@ -189,11 +192,33 @@ export default function BannerSettings({
           }, 1200);
         },
         onError: (err) => {
+          const error = getErrorMessage(err);
+          toast.error(error.message);
           setComponentIsUploading(false);
           console.log(err);
         },
       });
     }
+  };
+
+  const handleDeleteBanner = (id: number) => {
+    setComponentIsUploading(true);
+    const toastID = toast.loading("Deleting banner....");
+    deleteBanner.mutate(id, {
+      onSuccess: (data) => {
+        toast.dismiss(toastID);
+        toast.success(data.message);
+        setComponentIsUploading(false);
+      },
+      onError: (err) => {
+        const error = getErrorMessage(err);
+        toast.dismiss(toastID);
+        toast.error(error.message);
+        setComponentIsUploading(false);
+
+        console.log(err);
+      },
+    });
   };
 
   if (isFetchBannerError)
@@ -217,7 +242,7 @@ export default function BannerSettings({
           if (!diaLogOpen) {
             form.reset();
             setPreviewImage(null);
-            setBannerAction("addBanner");
+            setTimeout(() => setBannerAction("addBanner"), 600);
           }
         }}
       >
@@ -228,10 +253,7 @@ export default function BannerSettings({
           >
             <div className="flex w-full items-center justify-center lg:justify-end">
               {" "}
-              <Button
-                className="bg-custom-green w-full cursor-pointer rounded-full px-[50px] font-semibold transition-all duration-500 ease-in-out hover:-translate-y-0.5 hover:bg-[#169B4E] hover:shadow-lg lg:w-fit"
-                suppressHydrationWarning
-              >
+              <Button className="bg-custom-green w-full cursor-pointer rounded-full px-[50px] font-semibold transition-all duration-500 ease-in-out hover:-translate-y-0.5 hover:bg-[#169B4E] hover:shadow-lg lg:w-fit">
                 <span>
                   <Plus />
                 </span>
@@ -329,7 +351,7 @@ export default function BannerSettings({
                       <Textarea
                         {...field}
                         placeholder="Message"
-                        className="h-[130px] resize-none selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]"
+                        className="scrollbar-thin h-[90px] resize-none selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]"
                         name="subtitle"
                         disabled={addBanner.isPending || updateBanner.isPending}
                       />
@@ -395,19 +417,7 @@ export default function BannerSettings({
                   title={data.title}
                   message={data.subtitle}
                   status={data.status}
-                  handleDeleteBanner={() => {
-                    setComponentIsUploading(true);
-                    deleteBanner.mutate(data.id, {
-                      onSuccess: (data) => {
-                        toast.success(data.message);
-                        setComponentIsUploading(false);
-                      },
-                      onError: (err) => {
-                        setComponentIsUploading(false);
-                        console.log(err);
-                      },
-                    });
-                  }}
+                  handleDeleteBanner={() => handleDeleteBanner(data.id)}
                   handleUpdateBanner={() => {
                     setBannerAction("updateBanner");
                     setOpenDialog((prev) => !prev);

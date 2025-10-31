@@ -1,3 +1,14 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Star } from "lucide-react";
 import { CustomTrashIcon } from "../icons";
 
@@ -6,28 +17,54 @@ interface RatingsCardProp {
   starsCount: number;
   abbrev: string;
   userName: string;
-  title?: string;
   comment: string;
+  deleteRating: () => void;
 }
 const RatingsCard = ({
   ratingDate,
   starsCount,
   abbrev,
   userName,
-  title = "",
   comment,
+  deleteRating,
 }: RatingsCardProp) => (
   <div className="flex h-max w-full flex-col gap-2 rounded-sm border border-[#E4E4E4] px-[10px] py-[15px]">
     <div className="flex w-full justify-between">
       <span className="text-[12px] font-medium text-[#858585]">
         {ratingDate}
       </span>
-      <span className="cursor-pointer">
-        <CustomTrashIcon
-          color="#FF3333"
-          size={15}
-        />
-      </span>
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <span className="cursor-pointer">
+            <CustomTrashIcon
+              color="#FF3333"
+              size={15}
+            />
+          </span>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Are you sure you want to delete this review?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the
+              review from the server
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="cursor-pointer">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={deleteRating}
+              className="cursor-pointer bg-red-500 hover:bg-red-600"
+            >
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
     <div className="flex gap-2">
       {Array.from({ length: starsCount }, (_, i) => i).map((i) => (
@@ -46,9 +83,6 @@ const RatingsCard = ({
       <span className="text-sm font-medium text-[#0D0C22]">{userName}</span>
     </div>
     <div className="flex flex-col gap-1">
-      {title.length > 0 && (
-        <span className="font-medium text-[#5C5A55]">{title}</span>
-      )}
       <span className="text-sm font-normal text-[#5C5A55]">{comment}</span>
     </div>
   </div>

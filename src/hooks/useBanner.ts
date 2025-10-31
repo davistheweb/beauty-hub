@@ -12,7 +12,7 @@ export default function useBanner() {
   const queryClient = useQueryClient();
   const {
     data,
-    isLoading,
+    isPending: isLoading, //I am making use of isPending because isLoading is legacy but not yet deprecated
     error,
     isError: isFetchBannerError,
   } = useQuery({
@@ -21,8 +21,8 @@ export default function useBanner() {
     retry: false,
     networkMode: "always",
     refetchOnReconnect: true,
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
+    staleTime: 60_000,
+    gcTime: 1000 * 60 * 5,
   });
 
   console.log(data);
@@ -34,6 +34,8 @@ export default function useBanner() {
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
   const deleteBanner = useMutation({
+    retry: false,
+    networkMode: "always",
     mutationFn: deleteBannerService,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["banners"] });
@@ -41,6 +43,8 @@ export default function useBanner() {
   });
 
   const addBanner = useMutation({
+    retry: false,
+    networkMode: "always",
     mutationFn: addBannerService,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["banners"] });
@@ -48,6 +52,8 @@ export default function useBanner() {
   });
 
   const updateBanner = useMutation({
+    retry: false,
+    networkMode: "always",
     mutationFn: updateBannerService,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["banners"] });
