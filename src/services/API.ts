@@ -63,7 +63,7 @@ API.interceptors.request.use(
     if (bearer_token !== undefined) {
       console.log("AccessBearerToken from apiWithAuth:", bearer_token);
 
-      config.headers.Authorization = `Bearer ${bearer_token}` as string;
+      config.headers.Authorization = `Bearer ${bearer_token}`;
     }
     return config;
   },
