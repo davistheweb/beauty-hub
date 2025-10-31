@@ -46,7 +46,7 @@ const AppPagination = ({
           </div>
           <span className="text-[12px] text-[#5C5A55]">Row</span>
         </div>
-        <div className="flex h-[35px] gap-2">
+        <div className="flex h-[35px] flex-col gap-5 md:flex-row md:gap-2">
           <Pagination
             total={totalPaginationPage}
             value={paginationValue}

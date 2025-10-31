@@ -22,6 +22,7 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
+  DialogOverlay,
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
@@ -271,7 +272,8 @@ const PackageForm = ({
           Add New Package
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogOverlay className="pointer-events-auto fixed inset-0 bg-black/50" />
+      <DialogContent className="overflow-x-hidden overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-custom-green text-[18px] font-bold lg:text-xl">
             {packageFormAction === "addPackage"
@@ -280,200 +282,203 @@ const PackageForm = ({
           </DialogTitle>
         </DialogHeader>
 
-        <Form
-          {...(packageFormAction === "addPackage"
-            ? addPackageForm
-            : updatePackageForm)}
-        >
-          <form
-            onSubmit={form.handleSubmit(handleAddORUpdatePackage)}
-            className="space-y-2 p-1"
+        <div className="mt-4 max-h-[50vh] space-y-4 overflow-y-auto pr-2">
+          {" "}
+          <Form
+            {...(packageFormAction === "addPackage"
+              ? addPackageForm
+              : updatePackageForm)}
           >
-            <FormField
-              control={
-                packageFormAction === "addPackage"
-                  ? addPackageForm.control
-                  : updatePackageForm.control
-              }
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Package Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Package Name"
-                      className={`${packageFormAction === "addPackage" ? "h-8" : packageFormAction === "updatePackage" && "h-12"} focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
-                      type="text"
-                      name="name"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={
-                packageFormAction === "addPackage"
-                  ? addPackageForm.control
-                  : updatePackageForm.control
-              }
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Price</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Price (eg: 20000)"
-                      className={`${packageFormAction === "addPackage" ? "h-8" : packageFormAction === "updatePackage" && "h-12"} focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
-                      name="price"
-                      type="text"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-            {packageFormAction === "addPackage" && (
-              <>
-                {" "}
-                <Label>Services</Label>
-                <FormField
-                  control={addPackageForm.control}
-                  name={`services`}
-                  render={({ field }) => (
-                    <FormItem className="flex-1">
-                      <div className="space-y-2">
-                        {addServices.length > 0 && (
-                          <div className="scrollbar-thin flex h-[60px] flex-col overflow-y-auto">
-                            {addServices.map((service, _i) => (
-                              <div
-                                key={_i}
-                                className="flex w-full justify-between pb-1"
-                              >
-                                <span className="flex items-center gap-1 text-[14px] font-normal text-[#5C5A55]">
-                                  <span>
-                                    <MarkGreenIcon
-                                      size={14}
-                                      color="#1AB65C"
-                                    />
-                                  </span>
-                                  {service}
-                                </span>
-                                <button
-                                  type="button"
-                                  className="cursor-pointer"
-                                  onClick={() => handleRemoveService(_i)}
+            <form
+              onSubmit={form.handleSubmit(handleAddORUpdatePackage)}
+              className="space-y-2 p-1"
+            >
+              <FormField
+                control={
+                  packageFormAction === "addPackage"
+                    ? addPackageForm.control
+                    : updatePackageForm.control
+                }
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Package Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Package Name"
+                        className={`${packageFormAction === "addPackage" ? "h-8" : packageFormAction === "updatePackage" && "h-12"} focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
+                        type="text"
+                        name="name"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={
+                  packageFormAction === "addPackage"
+                    ? addPackageForm.control
+                    : updatePackageForm.control
+                }
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Price</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Price (eg: 20000)"
+                        className={`${packageFormAction === "addPackage" ? "h-8" : packageFormAction === "updatePackage" && "h-12"} focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
+                        name="price"
+                        type="text"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
+                )}
+              />
+              {packageFormAction === "addPackage" && (
+                <>
+                  {" "}
+                  <Label>Services</Label>
+                  <FormField
+                    control={addPackageForm.control}
+                    name={`services`}
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <div className="space-y-2">
+                          {addServices.length > 0 && (
+                            <div className="scrollbar-thin flex h-[60px] flex-col overflow-y-auto">
+                              {addServices.map((service, _i) => (
+                                <div
+                                  key={_i}
+                                  className="flex w-full justify-between pb-1"
                                 >
-                                  <CustomTrashIcon
-                                    color="#FF3333"
-                                    size={15}
-                                  />
-                                </button>
-                              </div>
-                            ))}
+                                  <span className="flex items-center gap-1 text-[14px] font-normal text-[#5C5A55]">
+                                    <span>
+                                      <MarkGreenIcon
+                                        size={14}
+                                        color="#1AB65C"
+                                      />
+                                    </span>
+                                    {service}
+                                  </span>
+                                  <button
+                                    type="button"
+                                    className="cursor-pointer"
+                                    onClick={() => handleRemoveService(_i)}
+                                  >
+                                    <CustomTrashIcon
+                                      color="#FF3333"
+                                      size={15}
+                                    />
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          <FormControl>
+                            <div>
+                              <Input
+                                {...field}
+                                placeholder="Service name"
+                                className={`${packageFormAction === "addPackage" ? "h-8" : packageFormAction === "updatePackage" && "h-12"} focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
+                                name="services.0.name"
+                                type="text"
+                              />
+                              <FormMessage className="text-xs" />
+                            </div>
+                          </FormControl>
+                          <button
+                            onClick={handleAddService}
+                            type="button"
+                            className="text-custom-green flex cursor-pointer items-center gap-1 text-[14px]"
+                          >
+                            <Plus size={15} />
+                            Add Serive
+                          </button>
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                </>
+              )}
+              <FormField
+                control={
+                  packageFormAction === "addPackage"
+                    ? addPackageForm.control
+                    : updatePackageForm.control
+                }
+                name="image"
+                render={() => (
+                  <FormItem>
+                    <FormLabel className="text-[13px]">
+                      Upload Service photo
+                    </FormLabel>
+                    <FormControl>
+                      <div
+                        {...getRootProps()}
+                        className={`flex h-[90px] w-full cursor-pointer items-center justify-center rounded-xl border-[2px] border-dashed border-[#898A8C] transition-all ${
+                          isDragActive
+                            ? "border-[#1AB65C] bg-[#E9F9EF]"
+                            : "border-[#C8C8C8] bg-[#F8F8F8]"
+                        }`}
+                      >
+                        <input {...getInputProps()} />
+                        {previewImage ? (
+                          <div className="relative h-[90px] w-full overflow-hidden rounded-lg">
+                            <Image
+                              src={previewImage}
+                              alt="preview"
+                              fill
+                              className="rounded-lg object-cover"
+                            />
+                          </div>
+                        ) : isDragActive ? (
+                          <div>
+                            <span>Drop Here</span>
+                          </div>
+                        ) : (
+                          <div className="text-muted-foreground flex w-[265px] flex-col items-center justify-center gap-2 text-center text-sm">
+                            <span className="flex h-[35px] w-[35px] items-center justify-center rounded-full">
+                              <CustomUploadIcon2 size={25} />
+                            </span>
+                            <span className="text-center text-xs font-normal text-[#5C5A55]">
+                              Upload Your Photo
+                            </span>
                           </div>
                         )}
-
-                        <FormControl>
-                          <div>
-                            <Input
-                              {...field}
-                              placeholder="Service name"
-                              className={`${packageFormAction === "addPackage" ? "h-8" : packageFormAction === "updatePackage" && "h-12"} focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
-                              name="services.0.name"
-                              type="text"
-                            />
-                            <FormMessage className="text-xs" />
-                          </div>
-                        </FormControl>
-                        <button
-                          onClick={handleAddService}
-                          type="button"
-                          className="text-custom-green flex cursor-pointer items-center gap-1 text-[14px]"
-                        >
-                          <Plus size={15} />
-                          Add Serive
-                        </button>
                       </div>
-                    </FormItem>
-                  )}
-                />
-              </>
-            )}
-            <FormField
-              control={
-                packageFormAction === "addPackage"
-                  ? addPackageForm.control
-                  : updatePackageForm.control
-              }
-              name="image"
-              render={() => (
-                <FormItem>
-                  <FormLabel className="text-[13px]">
-                    Upload Service photo
-                  </FormLabel>
-                  <FormControl>
-                    <div
-                      {...getRootProps()}
-                      className={`flex h-[90px] w-full cursor-pointer items-center justify-center rounded-xl border-[2px] border-dashed border-[#898A8C] transition-all ${
-                        isDragActive
-                          ? "border-[#1AB65C] bg-[#E9F9EF]"
-                          : "border-[#C8C8C8] bg-[#F8F8F8]"
-                      }`}
-                    >
-                      <input {...getInputProps()} />
-                      {previewImage ? (
-                        <div className="relative h-[90px] w-full overflow-hidden rounded-lg">
-                          <Image
-                            src={previewImage}
-                            alt="preview"
-                            fill
-                            className="rounded-lg object-cover"
-                          />
-                        </div>
-                      ) : isDragActive ? (
-                        <div>
-                          <span>Drop Here</span>
-                        </div>
-                      ) : (
-                        <div className="text-muted-foreground flex w-[265px] flex-col items-center justify-center gap-2 text-center text-sm">
-                          <span className="flex h-[35px] w-[35px] items-center justify-center rounded-full">
-                            <CustomUploadIcon2 size={25} />
-                          </span>
-                          <span className="text-center text-xs font-normal text-[#5C5A55]">
-                            Upload Your Photo
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-            <div className="flex w-full items-center justify-center">
-              <Button
-                type="submit"
-                className={`bg-custom-green cursor-pointer rounded-full hover:bg-[#1fc966] ${addPackage.isPending || updatePackage.isPending ? "w-5" : "w-full"} transition-all duration-500 ease-in-out`}
-                disabled={addPackage.isPending}
-              >
-                {addPackage.isPending || updatePackage.isPending ? (
-                  <div className="flex items-center justify-center">
-                    <div className="bg-custom-green w-fit rounded-full p-2">
-                      <div className="h-5 w-5 animate-spin rounded-full border-3 border-gray-200 border-t-[#1AB65C]" />
-                    </div>
-                  </div>
-                ) : packageFormAction === "addPackage" ? (
-                  "Add A Package"
-                ) : (
-                  packageFormAction === "updatePackage" && "Update Package"
+                    </FormControl>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
                 )}
-              </Button>
-            </div>
-          </form>
-        </Form>
+              />
+              <div className="flex w-full items-center justify-center">
+                <Button
+                  type="submit"
+                  className={`bg-custom-green cursor-pointer rounded-full hover:bg-[#1fc966] ${addPackage.isPending || updatePackage.isPending ? "w-5" : "w-full"} transition-all duration-500 ease-in-out`}
+                  disabled={addPackage.isPending}
+                >
+                  {addPackage.isPending || updatePackage.isPending ? (
+                    <div className="flex items-center justify-center">
+                      <div className="bg-custom-green w-fit rounded-full p-2">
+                        <div className="h-5 w-5 animate-spin rounded-full border-3 border-gray-200 border-t-[#1AB65C]" />
+                      </div>
+                    </div>
+                  ) : packageFormAction === "addPackage" ? (
+                    "Add A Package"
+                  ) : (
+                    packageFormAction === "updatePackage" && "Update Package"
+                  )}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
       </DialogContent>
     </Dialog>
   );

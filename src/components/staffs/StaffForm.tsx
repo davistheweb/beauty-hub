@@ -19,6 +19,7 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
+  DialogOverlay,
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
@@ -181,7 +182,8 @@ const StaffForm = ({
           </Button>
         </DialogTrigger>
       )}
-      <DialogContent>
+      <DialogOverlay className="pointer-events-auto fixed inset-0 bg-black/50" />
+      <DialogContent className="overflow-x-hidden overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-custom-green text-[18px] font-bold lg:text-xl">
             {staffFormAction === "addStaff"
@@ -190,142 +192,146 @@ const StaffForm = ({
           </DialogTitle>
         </DialogHeader>
 
-        <Form
-          {...(staffFormAction === "addStaff" ? addStaffForm : updateStaffForm)}
-        >
-          <form
-            onSubmit={form.handleSubmit(handleAddOrUpdateStaff)}
-            className="space-y-2 p-1"
+        <div className="mt-4 max-h-[60vh] space-y-4 overflow-y-auto pr-2">
+          <Form
+            {...(staffFormAction === "addStaff"
+              ? addStaffForm
+              : updateStaffForm)}
           >
-            <FormField
-              control={
-                staffFormAction === "addStaff"
-                  ? addStaffForm.control
-                  : updateStaffForm.control
-              }
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Full Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Full Name"
-                      className={`h-12 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
-                      type="text"
-                      name="name"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={
-                staffFormAction === "addStaff"
-                  ? addStaffForm.control
-                  : updateStaffForm.control
-              }
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email Address</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Enter email address"
-                      className={`h-12 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
-                      name="email"
-                      type="text"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={
-                staffFormAction === "addStaff"
-                  ? addStaffForm.control
-                  : updateStaffForm.control
-              }
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone Number </FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Enter email address"
-                      className={`h-12 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
-                      name="phone"
-                      type="text"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-            {staffFormAction === "addStaff" && (
+            <form
+              onSubmit={form.handleSubmit(handleAddOrUpdateStaff)}
+              className="space-y-2 p-1"
+            >
               <FormField
-                name="password"
-                control={addStaffForm.control}
+                control={
+                  staffFormAction === "addStaff"
+                    ? addStaffForm.control
+                    : updateStaffForm.control
+                }
+                name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>Full Name</FormLabel>
                     <FormControl>
-                      <div className="relative">
-                        <Input
-                          {...field}
-                          placeholder="Password"
-                          type={showPassword ? "text" : "password"}
-                          name="password"
-                          className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none"
-                          disabled={form.formState.isSubmitting}
-                        />
-                        {String(addStaffForm.getValues("password")).length >
-                          0 && (
-                          <span
-                            className="absolute top-3.5 right-3 cursor-pointer text-gray-500"
-                            onClick={() => setShowPassword((prev) => !prev)}
-                          >
-                            {showPassword ? (
-                              <EyeOff size={20} />
-                            ) : (
-                              <Eye size={20} />
-                            )}
-                          </span>
-                        )}
-                      </div>
+                      <Input
+                        {...field}
+                        placeholder="Full Name"
+                        className={`h-12 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
+                        type="text"
+                        name="name"
+                      />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
-            )}
-
-            <div className="flex w-full items-center justify-center">
-              <Button
-                type="submit"
-                className={`bg-custom-green cursor-pointer rounded-full hover:bg-[#1fc966] ${addStaff.isPending || updateStaff.isPending ? "w-5" : "w-full"} transition-all duration-500 ease-in-out`}
-                disabled={addStaff.isPending}
-              >
-                {addStaff.isPending || updateStaff.isPending ? (
-                  <div className="flex items-center justify-center">
-                    <div className="bg-custom-green w-fit rounded-full p-2">
-                      <div className="h-5 w-5 animate-spin rounded-full border-3 border-gray-200 border-t-[#1AB65C]" />
-                    </div>
-                  </div>
-                ) : staffFormAction === "addStaff" ? (
-                  "Add Staff"
-                ) : (
-                  staffFormAction === "updateStaff" && "Update Staff Info"
+              <FormField
+                control={
+                  staffFormAction === "addStaff"
+                    ? addStaffForm.control
+                    : updateStaffForm.control
+                }
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email Address</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Enter email address"
+                        className={`h-12 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
+                        name="email"
+                        type="text"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
                 )}
-              </Button>
-            </div>
-          </form>
-        </Form>
+              />
+
+              <FormField
+                control={
+                  staffFormAction === "addStaff"
+                    ? addStaffForm.control
+                    : updateStaffForm.control
+                }
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone Number </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Enter email address"
+                        className={`h-12 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
+                        name="phone"
+                        type="text"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
+                )}
+              />
+              {staffFormAction === "addStaff" && (
+                <FormField
+                  name="password"
+                  control={addStaffForm.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Input
+                            {...field}
+                            placeholder="Password"
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                            disabled={form.formState.isSubmitting}
+                          />
+                          {String(addStaffForm.getValues("password")).length >
+                            0 && (
+                            <span
+                              className="absolute top-3.5 right-3 cursor-pointer text-gray-500"
+                              onClick={() => setShowPassword((prev) => !prev)}
+                            >
+                              {showPassword ? (
+                                <EyeOff size={20} />
+                              ) : (
+                                <Eye size={20} />
+                              )}
+                            </span>
+                          )}
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+
+              <div className="flex w-full items-center justify-center">
+                <Button
+                  type="submit"
+                  className={`bg-custom-green cursor-pointer rounded-full hover:bg-[#1fc966] ${addStaff.isPending || updateStaff.isPending ? "w-5" : "w-full"} transition-all duration-500 ease-in-out`}
+                  disabled={addStaff.isPending}
+                >
+                  {addStaff.isPending || updateStaff.isPending ? (
+                    <div className="flex items-center justify-center">
+                      <div className="bg-custom-green w-fit rounded-full p-2">
+                        <div className="h-5 w-5 animate-spin rounded-full border-3 border-gray-200 border-t-[#1AB65C]" />
+                      </div>
+                    </div>
+                  ) : staffFormAction === "addStaff" ? (
+                    "Add Staff"
+                  ) : (
+                    staffFormAction === "updateStaff" && "Update Staff Info"
+                  )}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
       </DialogContent>
     </Dialog>
   );
