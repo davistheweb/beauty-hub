@@ -282,7 +282,7 @@ const PackageForm = ({
           </DialogTitle>
         </DialogHeader>
 
-        <div className="mt-4 max-h-[50vh] space-y-4 overflow-y-auto pr-2">
+        <div className="mt-4 max-h-[50vh] space-y-4 overflow-y-auto md:max-h-[100vh]">
           {" "}
           <Form
             {...(packageFormAction === "addPackage"

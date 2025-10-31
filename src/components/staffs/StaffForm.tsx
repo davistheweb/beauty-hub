@@ -192,7 +192,7 @@ const StaffForm = ({
           </DialogTitle>
         </DialogHeader>
 
-        <div className="mt-4 max-h-[60vh] space-y-4 overflow-y-auto pr-2">
+        <div className="mt-4 max-h-[50vh] space-y-4 overflow-y-auto md:max-h-[100vh]">
           <Form
             {...(staffFormAction === "addStaff"
               ? addStaffForm
