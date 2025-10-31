@@ -30,6 +30,10 @@ export const API = axios.create({
  * it for 20 minutes, and then uses it for subsequent external API requests.
  */
 const get_bearer_token = async () => {
+  const cachedToken = Cookies.get("cached_bearer_token");
+
+  if (cachedToken !== undefined) return cachedToken;
+
   const token = await getAccessToken();
 
   const now = new Date();
@@ -57,8 +61,7 @@ API.interceptors.request.use(
   async (
     config: InternalAxiosRequestConfig,
   ): Promise<InternalAxiosRequestConfig> => {
-    const bearer_token =
-      Cookies.get("cached_bearer_token") || (await get_bearer_token());
+    const bearer_token = await get_bearer_token();
 
     console.log("Cookie from js-cookie", bearer_token);
 
