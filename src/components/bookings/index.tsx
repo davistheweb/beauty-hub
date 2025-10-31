@@ -260,7 +260,7 @@ export default function Bookings() {
                               {bookingDetail.status === "pending"
                                 ? "In Progress"
                                 : bookingDetail.status === "completed"
-                                  ? "Done"
+                                  ? "Completed"
                                   : bookingDetail.status === "confirmed"
                                     ? "Confirmed"
                                     : bookingDetail.status === "cancelled" &&
