@@ -1,5 +1,5 @@
 import { IRatingsResponse } from "@/types/IRatings";
-import { API } from "./axios";
+import { API } from "./API";
 import { getApiResponse } from "./helpers";
 
 const fetchRatingsService = async ({

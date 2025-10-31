@@ -2,7 +2,7 @@ import {
   ICustomerDetailsResponse,
   ICustomersResponse,
 } from "@/types/ICustomers";
-import { API } from "./axios";
+import { API } from "./API";
 import { getApiResponse } from "./helpers";
 
 const fetchCustomers = async (page: number = 1): Promise<ICustomersResponse> =>

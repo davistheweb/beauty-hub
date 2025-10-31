@@ -1,4 +1,5 @@
-import { API } from "./axios";
+import Cookies from "js-cookie";
+import { API } from "./API";
 import { getApiResponse } from "./helpers";
 import { deleteAccessBearerToken } from "./server";
 
@@ -24,6 +25,7 @@ const logoutAdmin = async () => {
   await API.post("/admin/profile/logout").then(
     async () => await deleteAccessBearerToken(),
   );
+  Cookies.remove("cached_bearer_token", { path: "/" });
 };
 
 export {

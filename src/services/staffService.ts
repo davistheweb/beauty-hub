@@ -1,5 +1,5 @@
 import { IStaffResponse } from "@/types/IStaff";
-import { API } from "./axios";
+import { API } from "./API";
 import { getApiResponse } from "./helpers";
 
 const fetchStaffs = async (page: number = 1): Promise<IStaffResponse> =>

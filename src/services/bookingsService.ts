@@ -1,5 +1,5 @@
 import { IBookingsResponse } from "@/types/IBookings";
-import { API } from "./axios";
+import { API } from "./API";
 import { getApiResponse } from "./helpers";
 
 const fetchAllBookings = async (page: number = 1): Promise<IBookingsResponse> =>

@@ -1,5 +1,5 @@
 import { IDashboardStatsResponse } from "@/types/IDashboardStats";
-import { API } from "./axios";
+import { API } from "./API";
 import { getApiResponse } from "./helpers";
 
 export const fetchDashboardStats = async (): Promise<IDashboardStatsResponse> =>

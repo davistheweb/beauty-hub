@@ -1,6 +1,6 @@
 //This code is for Suspending and Unsuspending both staff and users
 
-import { API } from "./axios";
+import { API } from "./API";
 import { getApiResponse } from "./helpers";
 
 const suspendService = async (id: string) =>

@@ -1,5 +1,5 @@
 import { NotificationResponse } from "@/types/INotifications";
-import { API } from "./axios";
+import { API } from "./API";
 import { getApiResponse } from "./helpers";
 
 export const getNotificationsService =
