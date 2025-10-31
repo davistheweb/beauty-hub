@@ -4,7 +4,7 @@ export const TableSkeleton = ({ length }: { length: number }) =>
   Array.from({ length: length + 5 }, (_, i) => i).map((i) => (
     <tr
       key={i}
-      className="h-[4px] w-full hover:bg-gray-50"
+      className="h-[60px] w-full hover:bg-gray-50"
     >
       {Array.from({ length: length }, (_, i) => i).map((i) => (
         <td
