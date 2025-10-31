@@ -32,7 +32,7 @@ export const API = axios.create({
 const get_bearer_token = async () => {
   const cachedToken = Cookies.get("cached_bearer_token");
 
-  if (cachedToken !== undefined) return cachedToken;
+  if (cachedToken) return cachedToken;
 
   const token = await getAccessToken();
 
