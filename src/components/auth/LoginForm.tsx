@@ -19,6 +19,7 @@ import {
   LoginFormValues,
 } from "@/utils/validators/LoginFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Cookies from "js-cookie";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -46,6 +47,7 @@ export default function LoginForm() {
         console.log(res);
 
         if (res.status) {
+          Cookies.remove("cached_bearer_token", { path: "/" });
           await storeAccessBearerToken(res?.data?.data.bearer_token).then(
             () => {
               router.push("/dashboard");

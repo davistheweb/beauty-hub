@@ -38,6 +38,8 @@ const get_bearer_token = async () => {
     now.getTime() + 20 * 60 * 1000,
   );
 
+  if (!token) Cookies.remove("cached_bearer_token", { path: "/" });
+
   if (token !== undefined)
     Cookies.set("cached_bearer_token", token, {
       expires: cachedBearerTokenExpirationTime,
@@ -74,6 +76,9 @@ API.interceptors.request.use(
 
 API.interceptors.response.use(
   async (response: AxiosResponse): Promise<AxiosResponse> => {
+    if (response.headers["x-clear-client-cache"])
+      Cookies.remove("cached_bearer_token", { path: "/" });
+
     return response;
   },
   async (error: AxiosError) => {
