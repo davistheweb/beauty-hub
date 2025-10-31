@@ -35,7 +35,7 @@ const get_bearer_token = async () => {
   const now = new Date();
 
   const cachedBearerTokenExpirationTime = new Date(
-    now.getTime() + 20 * 60 * 60 * 1000,
+    now.getTime() + 20 * 60 * 1000,
   );
 
   if (token !== undefined)
