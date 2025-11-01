@@ -139,7 +139,7 @@ const PackageForm = ({
     } else {
       addPackageForm.setError("services", {
         type: "manual",
-        message: "Add at least one service or type a service in the input",
+        message: "The Service field is required",
       });
     }
   };
