@@ -1,6 +1,7 @@
 import { useDate, useNotifications } from "@/hooks";
 import { AppDispatch, RootState } from "@/store";
 import { setOpenNotifications } from "@/store/utils/notificationStateSlice";
+import Cookies from "js-cookie";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -57,7 +58,10 @@ export default function DesktopNavigation() {
             width={28}
             height={28}
             unoptimized
-            onClick={() => router.push("/settings")}
+            onClick={() => {
+              Cookies.remove("currentSettingsTab");
+              router.push("/settings");
+            }}
           />
         </div>
       </div>
