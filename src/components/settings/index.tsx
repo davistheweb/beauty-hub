@@ -1,9 +1,20 @@
 "use client";
 
+import { RootState } from "@/store";
 import { TCurrentSettingTab } from "@/types";
-import clsx from "clsx";
+import {
+  ProfileFormSchema,
+  ProfileFormValues,
+} from "@/utils/validators/ProfileFormSchema";
+import {
+  SecurityFormSchema,
+  SecurityFormValues,
+} from "@/utils/validators/SecurityFormSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Cookies from "js-cookie";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import { Button } from "../ui/button";
 import BannerSettings from "./BannerSettings";
 import ProfileSettings from "./ProfileSettings";
@@ -24,6 +35,26 @@ export default function Settings() {
     });
   const [componentIsUploading, setComponentIsUploading] =
     useState<boolean>(false);
+
+  const adminState = useSelector((state: RootState) => state.admin.profile);
+
+  const profileForm = useForm<ProfileFormValues>({
+    resolver: zodResolver(ProfileFormSchema),
+    defaultValues: {
+      fullName: adminState?.fullName,
+      email: adminState?.email,
+      phoneNumber: adminState?.phoneNumber,
+    },
+  });
+
+  const securityForm = useForm<SecurityFormValues>({
+    resolver: zodResolver(SecurityFormSchema),
+    defaultValues: {
+      currentPassword: "",
+      newPassword: "",
+      confirmNewPassword: "",
+    },
+  });
 
   const handleCurrentSettingsChange = (tab: TCurrentSettingTab) => {
     if (componentIsUploading) {
@@ -75,7 +106,23 @@ export default function Settings() {
           Banner Settings
         </Button>
       </div>
-      <div
+
+      {currentSettingsTab === "profile-tab" ? (
+        <ProfileSettings
+          setComponentIsUploading={setComponentIsUploading}
+          profileForm={profileForm}
+        />
+      ) : currentSettingsTab === "security-tab" ? (
+        <SecuritySettings
+          setComponentIsUploading={setComponentIsUploading}
+          securityForm={securityForm}
+        />
+      ) : (
+        currentSettingsTab === "banner-tab" && (
+          <BannerSettings setComponentIsUploading={setComponentIsUploading} />
+        )
+      )}
+      {/* <div
         className={clsx(
           "[&>*]:hidden",
           currentSettingsTab === "profile-tab" && "[&>*:nth-child(1)]:block",
@@ -83,10 +130,16 @@ export default function Settings() {
           currentSettingsTab === "banner-tab" && "[&>*:nth-child(3)]:block",
         )}
       >
-        <ProfileSettings setComponentIsUploading={setComponentIsUploading} />
-        <SecuritySettings setComponentIsUploading={setComponentIsUploading} />
+        <ProfileSettings
+          setComponentIsUploading={setComponentIsUploading}
+          profileForm={profileForm}
+        />
+        <SecuritySettings
+          setComponentIsUploading={setComponentIsUploading}
+          securityForm={securityForm}
+        />
         <BannerSettings setComponentIsUploading={setComponentIsUploading} />
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -12,14 +12,10 @@ import { getErrorResponse } from "@/services/helpers";
 import { changeProfileAvatar, updateProfile } from "@/services/profile";
 import { AppDispatch, RootState } from "@/store";
 import { setProfile } from "@/store/utils/adminProfileSlice";
-import {
-  ProfileFormSchema,
-  ProfileFormValues,
-} from "@/utils/validators/ProfileFormSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { ProfileFormValues } from "@/utils/validators/ProfileFormSchema";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { useForm } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import { CustomUploadIcon } from "../icons";
@@ -29,21 +25,14 @@ import { Label } from "../ui/label";
 
 export default function ProfileSettings({
   setComponentIsUploading,
+  profileForm,
 }: {
   setComponentIsUploading: React.Dispatch<React.SetStateAction<boolean>>;
+  profileForm: UseFormReturn<ProfileFormValues>;
 }) {
   const [isUploading, setIsUploadloading] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
   const adminState = useSelector((state: RootState) => state.admin.profile);
-
-  const profileForm = useForm<ProfileFormValues>({
-    resolver: zodResolver(ProfileFormSchema),
-    defaultValues: {
-      fullName: adminState?.fullName,
-      email: adminState?.email,
-      phoneNumber: adminState?.phoneNumber,
-    },
-  });
 
   const handleProfileUpdate = async (data: ProfileFormValues) => {
     if (

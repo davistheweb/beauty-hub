@@ -10,37 +10,26 @@ import {
 } from "@/components/ui/form";
 import { getErrorResponse } from "@/services/helpers";
 import { updateAccountPassword } from "@/services/profile";
-import {
-  SecurityFormSchema,
-  SecurityFormValues,
-} from "@/utils/validators/SecurityFormSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { SecurityFormValues } from "@/utils/validators/SecurityFormSchema";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
 export default function SecuritySettings({
   setComponentIsUploading,
+  securityForm,
 }: {
   setComponentIsUploading: React.Dispatch<React.SetStateAction<boolean>>;
+  securityForm: UseFormReturn<SecurityFormValues>;
 }) {
   const [showCurrentPassword, setShowCurrentPassword] =
     useState<boolean>(false);
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
   const [showConfirmNewPassword, setShowConfirmNewPassword] =
     useState<boolean>(false);
-
-  const securityForm = useForm<SecurityFormValues>({
-    resolver: zodResolver(SecurityFormSchema),
-    defaultValues: {
-      currentPassword: "",
-      newPassword: "",
-      confirmNewPassword: "",
-    },
-  });
 
   const handlePasswordUpdate = async (data: SecurityFormValues) => {
     setComponentIsUploading(true);
