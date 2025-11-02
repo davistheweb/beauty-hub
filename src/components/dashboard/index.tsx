@@ -68,7 +68,7 @@ export default function Dashboard() {
             {/* Table and Statistics Container */}
             <div className="mt-3 flex w-full flex-col justify-center gap-3 p-2 lg:flex-row">
               {/* Bookings Display*/}
-              <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
+              <div className="flex w-full flex-col rounded-md bg-white p-1 md:h-[598px]">
                 {/* <div className="flex h-12 w-full items-center justify-center">
                   <div className="flex h-[30px] w-full items-center justify-end p-4">
                     <div className="flex gap-2">

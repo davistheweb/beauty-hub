@@ -68,7 +68,7 @@ export default function Customers() {
   return (
     <div className="mt-3 flex w-full flex-col gap-3 p-2">
       {/* Customers Table */}
-      <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
+      <div className="flex w-full flex-col rounded-md bg-white p-1 md:h-[598px]">
         {customers.length > 0 && (
           <div className="flex w-full items-start justify-center self-start">
             <div className="flex w-full flex-col gap-2 p-2 md:flex-row md:items-center md:justify-between md:gap-0">
@@ -279,7 +279,7 @@ export default function Customers() {
                               Phone Number
                             </h1>
                             <p className="text-[14px] font-medium text-[#5C5C5C]">
-                              {customer.phone}
+                              {customer.phone || "no_number"}
                             </p>
                           </span>
                           <span className="flex items-center justify-between">

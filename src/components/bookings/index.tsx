@@ -82,7 +82,7 @@ export default function Bookings() {
         />
       )}
       {/* Bookins Table  */}
-      <div className="flex h-[598px] w-full flex-col rounded-md bg-white px-1 py-1">
+      <div className="flex w-full flex-col rounded-md bg-white px-1 py-1 md:h-[598px]">
         {/* <div className="flex h-12 w-full items-center justify-center">
           <div className="flex h-[30px] w-full items-center justify-between p-2 md:p-4">
             
