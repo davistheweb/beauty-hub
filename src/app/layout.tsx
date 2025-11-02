@@ -24,13 +24,13 @@ export default function RootLayout({
       >
         <NextTopLoader
           color="#1AB65C"
-          initialPosition={0.08}
-          crawlSpeed={120}
           height={3}
+          initialPosition={0.08}
+          crawlSpeed={250}
           crawl={true}
           showSpinner={false}
           easing="ease"
-          speed={120}
+          speed={250}
         />
         <ReduxProvider>
           <QueryProvider>{children}</QueryProvider>
