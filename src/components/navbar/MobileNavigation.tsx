@@ -5,7 +5,7 @@ import { setOpenNotifications } from "@/store/utils/notificationStateSlice";
 import Cookies from "js-cookie";
 import { Menu } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomBellICon, CustomDot } from "../icons";

@@ -23,9 +23,14 @@ export default function RootLayout({
         className={`${dm_sans.className} h-screen w-full overflow-x-hidden antialiased`}
       >
         <NextTopLoader
-          showSpinner={false}
-          height={2.5}
           color="#1AB65C"
+          initialPosition={0.08}
+          crawlSpeed={120}
+          height={3}
+          crawl={true}
+          showSpinner={false}
+          easing="ease"
+          speed={120}
         />
         <ReduxProvider>
           <QueryProvider>{children}</QueryProvider>
