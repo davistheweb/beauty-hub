@@ -7,10 +7,13 @@ import {
 import { Label } from "@/components/ui/label";
 import SearchInput from "@/components/ui/SearchInput";
 import { customersTableHeaders } from "@/data";
-import { useCustomers } from "@/hooks";
+import { useCustomers, useDebounce } from "@/hooks";
+import { ICustomer } from "@/types/ICustomers";
+import getErrorMessage from "@/utils/getErrorMessage";
 import { Dot, Eye } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 import AppPagination from "../ui/AppPagination";
 import { CardSkeleton } from "../ui/CardSkeleton";
 import { ErrorElement } from "../ui/ErrorElement";
@@ -24,19 +27,62 @@ export default function Customers() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedFilter, setSelectedFilter] = useState<FilterOption>("All");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [search, setSearch] = useState<string>("");
+  const [searchData, setSearchData] = useState<ICustomer[] | []>([]);
 
   const {
     allCustomersData,
     customers,
+    searchCustomer,
     isAllCustomersDataPending,
     isAllCustomersDataFetching,
     isFetchCustomersError,
     fetchCustomersErrorMessage,
   } = useCustomers(currentPage);
 
+  const debouncedValue = useDebounce(search, 600);
+
+  useEffect(() => {
+    if (!debouncedValue?.trim()) {
+      setTimeout(() => setSearchData([]), 600);
+      return;
+    }
+
+    toast.dismiss();
+
+    const toastId = toast.loading("Searching Customers...");
+
+    setCurrentPage(1);
+    setSelectedFilter("All");
+    searchCustomer.mutate(
+      { search: debouncedValue },
+      {
+        onSuccess: (data) => {
+          console.log(data.data.data.data);
+          setSearchData(data.data.data.data);
+          toast.dismiss(toastId);
+        },
+        onError: (err) => {
+          toast.dismiss(toastId);
+          setSearchData([]);
+          const error = getErrorMessage(err);
+          toast.error(error.message);
+        },
+      },
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedValue]);
+
+  useEffect(() => {
+    if (search.trim().length === 0) setSearchData([]);
+  }, [search]);
+
+  const allCustomers =
+    searchData.length > 0 && search.length > 0 ? searchData : customers;
+
   // client side filtering
   const filteredCustomers = useMemo(() => {
-    if (selectedFilter === "All") return customers;
+    if (selectedFilter === "All") return allCustomers;
 
     const lower = selectedFilter.toLowerCase() as
       | "active"
@@ -44,8 +90,8 @@ export default function Customers() {
       | "suspended"
       | "archived";
 
-    return customers.filter((c) => c.status === lower);
-  }, [customers, selectedFilter]);
+    return allCustomers.filter((c) => c.status === lower);
+  }, [allCustomers, selectedFilter]);
 
   // Data state helpers
   const hasApiData = customers.length > 0;
@@ -73,7 +119,12 @@ export default function Customers() {
           <div className="flex w-full items-start justify-center self-start">
             <div className="flex w-full flex-col gap-2 p-2 md:flex-row md:items-center md:justify-between md:gap-0">
               {/* Search */}
-              <SearchInput />
+              <SearchInput
+                value={search}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearch(e.target.value);
+                }}
+              />
 
               {/* CUSTOM FILTER BUTTON */}
               <div

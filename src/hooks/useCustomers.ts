@@ -19,7 +19,7 @@ const useCustomers = (page: number) => {
 
   const customersQueryOptions = (pageNumber: number) =>
     queryOptions({
-      queryFn: () => fetchCustomers(pageNumber),
+      queryFn: () => fetchCustomers({ page: pageNumber }),
       queryKey: ["customers", pageNumber],
       placeholderData: (prevData) => prevData,
       retry: false,
@@ -49,6 +49,12 @@ const useCustomers = (page: number) => {
     allCustomersData?.data.data.last_page,
   ]);
 
+  const searchCustomer = useMutation({
+    retry: false,
+    networkMode: "always",
+    mutationFn: fetchCustomers,
+  });
+
   console.log(error?.message);
 
   const customers: ICustomer[] | [] = !isFetchCustomersError
@@ -62,6 +68,7 @@ const useCustomers = (page: number) => {
   return {
     allCustomersData,
     customers,
+    searchCustomer,
     isAllCustomersDataPending,
     isAllCustomersDataFetching,
     isFetchCustomersError,
