@@ -79,7 +79,7 @@ export default function Customers() {
   }, [search]);
 
   const allCustomers =
-    searchData.length > 0 && search.length > 0 ? searchData : customers;
+    searchData.length > 0 && debouncedValue ? searchData : customers;
 
   // client side filtering
   const filteredCustomers = useMemo(() => {

@@ -84,7 +84,7 @@ export default function Ratings() {
   };
 
   const allRatings =
-    searchData.length > 0 && search.length > 0 ? searchData : ratings;
+    searchData.length > 0 && debouncedValue ? searchData : ratings;
 
   if (isFetchRatingsError)
     return (
