@@ -160,7 +160,7 @@ export default function ProfileSettings({
       //     setComponentIsUploading(false);
       //   });
     },
-    [updateAvatar, setComponentIsUploading],
+    [adminState, updateAvatar, setComponentIsUploading],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
