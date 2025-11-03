@@ -37,11 +37,11 @@ export const ViewStaffDialog = ({
           }, 1200);
         },
         onError: (err) => {
-          console.log(err);
+          // console.log(err);
 
           const error = getErrorResponse(err);
           toast.error(error.message || "Something went wrong");
-          console.log(error);
+          // console.log(error);
         },
       });
     } else if (selectedStaff?.status === "suspended") {
@@ -56,7 +56,7 @@ export const ViewStaffDialog = ({
         onError: (err) => {
           const error = getErrorResponse(err);
           toast.error(error.message || "Something went wrong");
-          console.log(error);
+          // console.log(error);
         },
       });
     }

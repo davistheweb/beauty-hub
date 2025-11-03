@@ -8,9 +8,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useProfile } from "@/hooks";
 import { ProfileFormValues } from "@/lib/validators/ProfileFormSchema";
 import { getErrorResponse } from "@/services/helpers";
-import { changeProfileAvatar, updateProfile } from "@/services/profile";
 import { AppDispatch, RootState } from "@/store";
 import { setProfile } from "@/store/utils/adminProfileSlice";
 import React, { useCallback, useState } from "react";
@@ -22,6 +22,7 @@ import { CustomUploadIcon } from "../icons";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { ProfileSkeleton } from "./ProfileSkeleton";
 
 export default function ProfileSettings({
   setComponentIsUploading,
@@ -33,37 +34,65 @@ export default function ProfileSettings({
   const [isUploading, setIsUploadloading] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
   const adminState = useSelector((state: RootState) => state.admin.profile);
+  const { profileInfo, update_profile, updateAvatar, profileLoading } =
+    useProfile();
 
   const handleProfileUpdate = async (data: ProfileFormValues) => {
     if (
-      profileForm.getValues("fullName").trim() ===
-        adminState?.fullName?.trim() &&
+      profileForm.getValues("fullName").trim() === profileInfo?.name?.trim() &&
       // profileForm.getValues("email").trim() === adminState.email?.trim() &&
-      profileForm.getValues("phoneNumber").trim() ===
-        adminState.phoneNumber?.trim()
+      profileForm.getValues("phoneNumber").trim() === profileInfo.phone?.trim()
     ) {
       return;
     }
+
     setComponentIsUploading(true);
-    await updateProfile(data.fullName, data.phoneNumber)
-      .then((res) => {
-        if (res.status) {
-          toast.success(res.data?.message);
+
+    await update_profile.mutate(
+      {
+        name: data.fullName,
+        phoneNuber: data.phoneNumber,
+      },
+      {
+        onSuccess: (data) => {
+          console.log(data.data.data[0].name);
+
           dispatch(
             setProfile({
               ...adminState,
-              fullName: res?.data?.data[0].name,
-              email: res?.data?.data[0].email,
-              phoneNumber: res?.data?.data[0].phone,
+              fullName: data.data.data[0].name,
+              email: data.data.data[0].email,
+              phoneNumber: data.data.data[0].phone,
             }),
           );
-        }
-      })
-      .catch((err) => {
-        const error = getErrorResponse(err);
-        toast.error(error?.message || "Something went wrong");
-      })
-      .finally(() => setComponentIsUploading(false));
+          toast.success(data?.message);
+        },
+        onError: (err) => {
+          const error = getErrorResponse(err);
+          toast.error(error?.message || "Something went wrong");
+        },
+        onSettled: () => setComponentIsUploading(false),
+      },
+    );
+    // await updateProfile(data.fullName, data.phoneNumber)
+    //   .then((res) => {
+    //     if (res.status) {
+    //       toast.success(res.data?.message);
+    //       dispatch(
+    //         setProfile({
+    //           ...adminState,
+    //           fullName: res?.data?.data[0].name,
+    //           email: res?.data?.data[0].email,
+    //           phoneNumber: res?.data?.data[0].phone,
+    //         }),
+    //       );
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     const error = getErrorResponse(err);
+    //     toast.error(error?.message || "Something went wrong");
+    //   })
+    //   .finally(() => setComponentIsUploading(false));
   };
 
   const onDrop = useCallback(
@@ -87,29 +116,51 @@ export default function ProfileSettings({
       const formData = new FormData();
       formData.append("avatar", file);
 
-      await changeProfileAvatar(formData)
-        .then((res) => {
-          if (res.status) {
-            console.log(res);
-            toast.success(res.data?.message);
-            dispatch(
-              setProfile({
-                ...adminState,
-                avatar: res?.data?.data[0].avatar,
-              }),
-            );
-          }
-        })
-        .catch((err) => {
+      await updateAvatar.mutate(formData, {
+        onSuccess: (data) => {
+          toast.success(data?.message);
+          dispatch(
+            setProfile({
+              ...adminState,
+              avatar: data.data?.data[0].avatar,
+            }),
+          );
+        },
+        onError: (err) => {
+          console.log("error image", err);
           const error = getErrorResponse(err);
           toast.error(error?.message || "Something went wrong");
-        })
-        .finally(() => {
-          setIsUploadloading(false);
+        },
+
+        onSettled: () => {
           setComponentIsUploading(false);
-        });
+          setIsUploadloading(false);
+        },
+      });
+
+      // await changeProfileAvatar(formData)
+      //   .then((res) => {
+      //     if (res.status) {
+      //       console.log(res);
+      //       toast.success(res.data?.message);
+      //       dispatch(
+      //         setProfile({
+      //           ...adminState,
+      //           avatar: res?.data?.data[0].avatar,
+      //         }),
+      //       );
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     const error = getErrorResponse(err);
+      //     toast.error(error?.message || "Something went wrong");
+      //   })
+      //   .finally(() => {
+      //     setIsUploadloading(false);
+      //     setComponentIsUploading(false);
+      //   });
     },
-    [adminState, dispatch, setComponentIsUploading],
+    [updateAvatar, setComponentIsUploading],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -119,114 +170,120 @@ export default function ProfileSettings({
   });
 
   return (
-    <div className="mt-5 w-full rounded-2xl border border-[#E2E8F0] p-4">
-      {/* Image */}
-      <Label
-        {...getRootProps()}
-        className="flex h-[100px] w-full cursor-pointer items-center justify-center rounded-xl border-[2px] border-dashed border-[#898A8C] bg-[#7E7E7E0D] xl:h-[132px]"
-      >
-        <input
-          className="hidden"
-          {...getInputProps()}
-        />
-        {isDragActive ? (
-          <div>
-            <span>Drop Here</span>
-          </div>
-        ) : isUploading ? (
-          <div className="flex h-screen items-center justify-center py-20">
-            <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-[#1AB65C]" />
-          </div>
-        ) : (
-          <div className="flex h-max w-[265px] flex-col items-center justify-center gap-3 p-2 py-2">
-            <span className="flex h-[35px] w-[35px] items-center justify-center rounded-full bg-[#D1F0DE]">
-              <CustomUploadIcon size={15} />
-            </span>
-            <span className="text-center text-sm font-normal text-[#5C5A55]">
-              Click to upload or drag and drop PNG or JPG (max, 1030x170px)
-            </span>
-          </div>
-        )}
-      </Label>
-
-      <Form {...profileForm}>
-        <form
-          onSubmit={profileForm.handleSubmit(handleProfileUpdate)}
-          className="mt-5 flex w-full flex-col gap-4 xl:gap-4"
-        >
-          <FormField
-            name="fullName"
-            control={profileForm.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full Name</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none"
-                    placeholder="Full name"
-                    type="text"
-                    name="fullName"
-                    disabled={profileForm.formState.isSubmitting}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+    <>
+      {profileLoading ? (
+        <ProfileSkeleton />
+      ) : (
+        <div className="mt-5 w-full rounded-2xl border border-[#E2E8F0] p-4">
+          {/* Image */}
+          <Label
+            {...getRootProps()}
+            className="flex h-[100px] w-full cursor-pointer items-center justify-center rounded-xl border-[2px] border-dashed border-[#898A8C] bg-[#7E7E7E0D] xl:h-[132px]"
+          >
+            <input
+              className="hidden"
+              {...getInputProps()}
+            />
+            {isDragActive ? (
+              <div>
+                <span>Drop Here</span>
+              </div>
+            ) : isUploading ? (
+              <div className="flex h-screen items-center justify-center py-20">
+                <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-[#1AB65C]" />
+              </div>
+            ) : (
+              <div className="flex h-max w-[265px] flex-col items-center justify-center gap-3 p-2 py-2">
+                <span className="flex h-[35px] w-[35px] items-center justify-center rounded-full bg-[#D1F0DE]">
+                  <CustomUploadIcon size={15} />
+                </span>
+                <span className="text-center text-sm font-normal text-[#5C5A55]">
+                  Click to upload or drag and drop PNG or JPG (max, 1030x170px)
+                </span>
+              </div>
             )}
-          />
+          </Label>
 
-          <div className="flex w-full flex-col gap-4 py-3 xl:h-[110px] xl:flex-row xl:items-center xl:justify-between xl:gap-[24px]">
-            <FormField
-              name="email"
-              control={profileForm.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email Addreess</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Email"
-                      className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]"
-                      type="email"
-                      name="email"
-                      disabled
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="phoneNumber"
-              control={profileForm.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Phone Number"
-                      className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]"
-                      type="text"
-                      name="phoneNumber"
-                      disabled={profileForm.formState.isSubmitting}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="flex w-full items-center justify-center xl:justify-start">
-            <Button
-              className={`bg-custom-green h-[55px] w-full cursor-pointer rounded-full hover:bg-[#16aa53] xl:w-[365px]`}
-              disabled={profileForm.formState.isSubmitting}
+          <Form {...profileForm}>
+            <form
+              onSubmit={profileForm.handleSubmit(handleProfileUpdate)}
+              className="mt-5 flex w-full flex-col gap-4 xl:gap-4"
             >
-              Save
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+              <FormField
+                name="fullName"
+                control={profileForm.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                        placeholder="Full name"
+                        type="text"
+                        name="fullName"
+                        disabled={update_profile.isPending}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="flex w-full flex-col gap-4 py-3 xl:h-[110px] xl:flex-row xl:items-center xl:justify-between xl:gap-[24px]">
+                <FormField
+                  name="email"
+                  control={profileForm.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email Addreess</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Email"
+                          className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]"
+                          type="email"
+                          name="email"
+                          disabled
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="phoneNumber"
+                  control={profileForm.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone Number</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Phone Number"
+                          className="h-12 selection:bg-green-700 focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]"
+                          type="text"
+                          name="phoneNumber"
+                          disabled={update_profile.isPending}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="flex w-full items-center justify-center xl:justify-start">
+                <Button
+                  className={`bg-custom-green h-[55px] w-full cursor-pointer rounded-full hover:bg-[#16aa53] xl:w-[365px]`}
+                  disabled={update_profile.isPending}
+                >
+                  Save
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
+      )}
+    </>
   );
 }

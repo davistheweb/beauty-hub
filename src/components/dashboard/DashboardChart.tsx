@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import numberFormat from "@/lib/utils/numberFormat";
 import Chart from "react-apexcharts";
 
 interface IDashboardChartProps {
@@ -13,8 +13,7 @@ const DashboardChart = ({ labels, series }: IDashboardChartProps) => {
 
   // const total = series.reduce((a, b) => a + b, 0);
 
-  const [chartData] = useState({
-    series,
+  const chartData = {
     options: {
       chart: {
         toolbar: { show: false },
@@ -40,14 +39,14 @@ const DashboardChart = ({ labels, series }: IDashboardChartProps) => {
       stroke: { width: 10 },
       dataLabels: { enabled: false },
     },
-  });
+  };
 
   return (
     <div className="flex h-full flex-col items-center gap-5 space-y-4 p-5 lg:w-[292px]">
       {/* Donut chart */}
       <Chart
         options={chartData.options}
-        series={chartData.series}
+        series={series}
         type="donut"
         width="300"
       />
@@ -72,7 +71,7 @@ const DashboardChart = ({ labels, series }: IDashboardChartProps) => {
               </div>
 
               <span className="text-sm font-semibold text-[#070500]">
-                {value}
+                {numberFormat(value)}
                 {/* ({percentage}%) */}
               </span>
             </div>

@@ -27,9 +27,9 @@ export default function useNotifications() {
     ? getErrorResponse(error)
     : ({ type: "unknown", message: "Something went wrong" } as IErrorInfo);
 
-  console.log(notifications);
+  // console.log(notifications);
 
-  console.log(hasNotification);
+  // console.log(hasNotification);
 
   return {
     notifications,

@@ -44,7 +44,7 @@ export default function LoginForm() {
   const handleLogin = async (values: LoginFormValues) => {
     await loginAdmin(values.email, values.password)
       .then(async (res) => {
-        console.log(res);
+        // console.log(res);
 
         if (res.status) {
           Cookies.remove("cached_bearer_token", { path: "/" });

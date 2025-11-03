@@ -55,7 +55,7 @@ const useCustomers = (page: number) => {
     mutationFn: fetchCustomers,
   });
 
-  console.log(error?.message);
+  // console.log(error?.message);
 
   const customers: ICustomer[] | [] = !isFetchCustomersError
     ? allCustomersData?.data?.data?.data || []

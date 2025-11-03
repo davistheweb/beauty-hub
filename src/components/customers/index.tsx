@@ -57,14 +57,13 @@ export default function Customers() {
         onSuccess: (data) => {
           console.log(data.data.data.data);
           setSearchData(data.data.data.data);
-          toast.dismiss(toastId);
         },
         onError: (err) => {
-          toast.dismiss(toastId);
           setSearchData([]);
           const error = getErrorResponse(err);
           toast.error(error.message);
         },
+        onSettled: () => toast.dismiss(toastId),
       },
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -311,33 +310,25 @@ export default function Customers() {
                       >
                         <div className="flex h-[250px] w-full flex-col gap-3 p-4">
                           <span className="flex items-center justify-between">
-                            <h1 className="text-[18px] font-medium">
-                              Customer
-                            </h1>
+                            <h1 className="font-medium">Customer</h1>
                             <p className="text-[14px] font-medium text-[#5C5C5C]">
                               {customer.name}
                             </p>
                           </span>
                           <span className="flex items-center justify-between">
-                            <h1 className="text-[18px] font-medium">
-                              Email Address
-                            </h1>
+                            <h1 className="font-medium">Email</h1>
                             <p className="text-[14px] font-medium text-[#5C5C5C]">
                               {customer.email}
                             </p>
                           </span>
                           <span className="flex items-center justify-between">
-                            <h1 className="text-[18px] font-medium">
-                              Phone Number
-                            </h1>
+                            <h1 className="font-medium">Phone Number</h1>
                             <p className="text-[14px] font-medium text-[#5C5C5C]">
                               {customer.phone || "no_number"}
                             </p>
                           </span>
                           <span className="flex items-center justify-between">
-                            <h1 className="text-[18px] font-medium">
-                              Date Created
-                            </h1>
+                            <h1 className="font-medium">Date Created</h1>
                             <p className="text-[14px] font-medium text-[#5C5C5C]">
                               {new Date(customer.created_at)
                                 .toLocaleDateString()
@@ -347,7 +338,7 @@ export default function Customers() {
                           </span>
 
                           <span className="flex items-center justify-between">
-                            <h1 className="text-[18px] font-medium">Status</h1>
+                            <h1 className="font-medium">Status</h1>
                             <span
                               className={`rounded-[42.58px] bg-[#EDF5FE] pt-[4.73px] pr-[9.46px] pb-[4.73px] pl-[9.46px] ${
                                 customer.status === "active"

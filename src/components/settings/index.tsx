@@ -1,5 +1,6 @@
 "use client";
 
+import { useProfile } from "@/hooks";
 import {
   ProfileFormSchema,
   ProfileFormValues,
@@ -12,7 +13,7 @@ import { RootState } from "@/store";
 import { TCurrentSettingTab } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Cookies from "js-cookie";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { Button } from "../ui/button";
@@ -36,16 +37,28 @@ export default function Settings() {
   const [componentIsUploading, setComponentIsUploading] =
     useState<boolean>(false);
 
+  const { profileInfo } = useProfile();
+
   const adminState = useSelector((state: RootState) => state.admin.profile);
 
   const profileForm = useForm<ProfileFormValues>({
     resolver: zodResolver(ProfileFormSchema),
     defaultValues: {
-      fullName: adminState?.fullName,
-      email: adminState?.email,
-      phoneNumber: adminState?.phoneNumber,
+      fullName: adminState?.fullName || "",
+      email: adminState?.email || "",
+      phoneNumber: adminState?.phoneNumber || "",
     },
   });
+
+  useEffect(() => {
+    if (profileInfo) {
+      profileForm.reset({
+        fullName: profileInfo?.name,
+        email: profileInfo?.email,
+        phoneNumber: profileInfo?.phone,
+      });
+    }
+  }, [profileForm, profileInfo]);
 
   const securityForm = useForm<SecurityFormValues>({
     resolver: zodResolver(SecurityFormSchema),

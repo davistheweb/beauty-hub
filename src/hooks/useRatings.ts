@@ -77,7 +77,7 @@ export default function useRatings(page: number) {
     },
   }));
 
-  console.log(ratings);
+  // console.log(ratings);
 
   const fetchRatingsErrMessage = isFetchRatingsError
     ? getErrorResponse(error)

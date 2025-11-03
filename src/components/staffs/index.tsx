@@ -41,7 +41,7 @@ export default function Staffs() {
   const handleViewStaff = (staff: IStaff) => {
     setSelectedStaff(staff);
     setOpenStaffDialog((prev) => !prev);
-    console.log(staff.status);
+    // console.log(staff.status);
   };
 
   if (isFetchStaffsError)
@@ -224,9 +224,7 @@ export default function Staffs() {
                       >
                         <div className="flex h-[250px] w-full flex-col gap-5 p-4">
                           <span className="flex items-center justify-between">
-                            <h1 className="text-[18px] font-medium">
-                              Staff Name
-                            </h1>
+                            <h1 className="font-medium">Staff Name</h1>
                             <p className="text-[14px] font-medium text-[#5C5C5C]">
                               {staff.name}
                             </p>
@@ -240,9 +238,7 @@ export default function Staffs() {
                             </p>
                           </span> */}
                           <span className="flex items-center justify-between">
-                            <h1 className="text-[18px] font-medium">
-                              Joined Date
-                            </h1>
+                            <h1 className="font-medium">Joined Date</h1>
                             <p className="text-[14px] font-medium text-[#5C5C5C]">
                               {new Date(staff.created_at)
                                 .toLocaleDateString()
@@ -251,7 +247,7 @@ export default function Staffs() {
                             </p>
                           </span>
                           <span className="flex items-center justify-between">
-                            <h1 className="text-[18px] font-medium">Status</h1>
+                            <h1 className="font-medium">Status</h1>
                             <span
                               className={`gap-2 rounded-[42.58px] bg-[#EDF5FE] pt-[4.73px] pr-[1.46px] pb-[4.73px] pl-[1.46px] ${staff.status === "active" ? "text-[#00C247]" : staff.status === "inactive" ? "text-[#004CE8]" : staff.status === "suspended" && "text-[#FF3333]"} flex w-[130px] items-center justify-center text-[14px]`}
                             >

@@ -44,16 +44,15 @@ export default function Ratings() {
       { search: debouncedValue },
       {
         onSuccess: (data) => {
-          console.log(data.data.data.data);
+          // console.log(data.data.data.data);
           setSearchData(data.data.data.data);
-          toast.dismiss(toastId);
         },
         onError: (err) => {
-          toast.dismiss(toastId);
           setSearchData([]);
           const error = getErrorResponse(err);
           toast.error(error.message);
         },
+        onSettled: () => toast.dismiss(toastId),
       },
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,14 +71,13 @@ export default function Ratings() {
 
     deleteRating.mutate(id, {
       onSuccess: (data) => {
-        toast.dismiss(toastId);
         toast.success(data.message);
       },
       onError: (err) => {
-        toast.dismiss(toastId);
         const error = getErrorResponse(err);
         toast.error(error.message);
       },
+      onSettled: () => toast.dismiss(toastId),
     });
   };
 

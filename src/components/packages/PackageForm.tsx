@@ -178,7 +178,7 @@ const PackageForm = ({
         ...addPackageFormValuesData,
         services: servicesPayload.map((service) => ({ name: service })),
       };
-      console.log(finalPackageValues.services);
+      // console.log(finalPackageValues.services);
 
       const formData = new FormData();
       formData.append("name", finalPackageValues.name);
@@ -203,7 +203,7 @@ const PackageForm = ({
         onError: (err) => {
           const error = getErrorResponse(err);
           toast.error(error.message);
-          console.log(err);
+          // console.log(err);
         },
       });
     } else if (packageFormAction === "updatePackage") {
@@ -248,7 +248,7 @@ const PackageForm = ({
         onError: (err) => {
           const errMsg = getErrorResponse(err);
           toast.error(errMsg.message);
-          console.log(err);
+          // console.log(err);
         },
       });
     }

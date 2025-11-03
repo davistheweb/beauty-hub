@@ -85,7 +85,6 @@ export const ServiceDetails = ({
 
     deletePackageService.mutate(id, {
       onSuccess: (data) => {
-        toast.dismiss(toastID);
         toast.success(data.data.data);
         setTimeout(() => {
           setOpenServiceDetailsModal((prev) => !prev);
@@ -94,9 +93,10 @@ export const ServiceDetails = ({
       },
       onError: (err) => {
         const error = getErrorResponse(err);
-        toast.dismiss(toastID);
+
         toast.error(error.message);
       },
+      onSettled: () => toast.dismiss(toastID),
     });
   };
 
