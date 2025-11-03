@@ -74,7 +74,7 @@ export const BookingDetailsDialog = ({
       setTimeout(() => setCopyStatus("copy"), 2000);
     } catch (err) {
       toast.error("Failed to copy location.");
-      // console.log(err);
+      console.log(err);
     }
   };
 
