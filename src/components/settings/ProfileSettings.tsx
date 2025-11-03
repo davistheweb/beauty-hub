@@ -85,7 +85,7 @@ export default function ProfileSettings({
       const file = acceptedFiles[0];
       if (!file) return;
 
-      console.log(file);
+      // console.log(file);
 
       const validTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
 
@@ -106,7 +106,7 @@ export default function ProfileSettings({
           toast.success(data?.message);
         },
         onError: (err) => {
-          console.log("error image", err);
+          // console.log("error image", err);
           const error = getErrorResponse(err);
           toast.error(error?.message || "Something went wrong");
         },

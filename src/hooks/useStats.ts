@@ -34,7 +34,7 @@ export default function useStats() {
       : [],
   };
 
-  console.log(stats);
+  // console.log(stats);
 
   const statsErrorMessage = isError
     ? getErrorResponse(error)

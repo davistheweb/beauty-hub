@@ -54,7 +54,7 @@ export default function Bookings() {
     setOpenDialog(true);
   };
 
-  console.log(allBookingsData?.data.data.last_page);
+  // console.log(allBookingsData?.data.data.last_page);
 
   if (isFetchBookingsError)
     return (

@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomBellICon, CustomDot } from "../icons";
 import Logo from "../ui/Logo";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar } from "../ui/avatar";
 import { Skeleton } from "../ui/skeleton";
 import MobileNavMenu from "./MobileNavMenu";
 
@@ -75,27 +75,28 @@ export default function MobileNavigation() {
                 Cookies.remove("currentSettingsTab");
                 router.push("/settings");
               }}
+              className="h-[27px] w-[27px]"
             >
-              <AvatarImage asChild>
+              <div className="relative size-full overflow-hidden rounded-full">
                 <Image
+                  draggable={false}
                   src={profileInfo?.avatar || (adminState?.avatar as string)}
                   alt={getInitials(
                     profileInfo?.name || (adminState?.fullName as string),
                     2,
                   )}
-                  width={27}
-                  height={27}
-                  className="object-cover text-center text-[14px]"
+                  fill
+                  className="object-cover text-[14px]"
                   unoptimized
                   priority
                 />
-              </AvatarImage>
-              <AvatarFallback>
+              </div>
+              {/* <AvatarFallback className="text-[12px]">
                 {getInitials(
                   profileInfo?.name || (adminState?.fullName as string),
                   2,
                 )}
-              </AvatarFallback>
+              </AvatarFallback> */}
             </Avatar>
           )}
         </div>

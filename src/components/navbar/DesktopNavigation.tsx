@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useRouter } from "nextjs-toploader/app";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomBellICon, CustomDot } from "../icons";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar } from "../ui/avatar";
 import { Skeleton } from "../ui/skeleton";
 export default function DesktopNavigation() {
   //Fallback image url if profile fails to fetch
@@ -64,8 +64,9 @@ export default function DesktopNavigation() {
                 Cookies.remove("currentSettingsTab");
                 router.push("/settings");
               }}
+              className="h-[28px] w-[28px]"
             >
-              <AvatarImage asChild>
+              <div className="relative size-full overflow-hidden rounded-full">
                 <Image
                   draggable={false}
                   src={profileInfo?.avatar || (adminState?.avatar as string)}
@@ -73,19 +74,18 @@ export default function DesktopNavigation() {
                     profileInfo?.name || (adminState?.fullName as string),
                     2,
                   )}
-                  width={28}
-                  height={28}
-                  className="object-cover text-center text-[14px]"
+                  fill
+                  className="object-cover text-[14px]"
                   unoptimized
                   priority
                 />
-              </AvatarImage>
-              <AvatarFallback>
+              </div>
+              {/* <AvatarFallback className="text-[12px]">
                 {getInitials(
                   profileInfo?.name || (adminState?.fullName as string),
                   2,
                 )}
-              </AvatarFallback>
+              </AvatarFallback> */}
             </Avatar>
           )}
         </div>

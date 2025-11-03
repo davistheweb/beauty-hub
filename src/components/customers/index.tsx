@@ -55,7 +55,7 @@ export default function Customers() {
       { search: debouncedValue },
       {
         onSuccess: (data) => {
-          console.log(data.data.data.data);
+          // console.log(data.data.data.data);
           setSearchData(data.data.data.data);
         },
         onError: (err) => {
