@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomBellICon, CustomDot } from "../icons";
 import Logo from "../ui/Logo";
-import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Avatar } from "../ui/avatar";
 import { Skeleton } from "../ui/skeleton";
 import MobileNavMenu from "./MobileNavMenu";
 

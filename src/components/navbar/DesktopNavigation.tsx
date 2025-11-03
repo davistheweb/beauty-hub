@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useRouter } from "nextjs-toploader/app";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomBellICon, CustomDot } from "../icons";
-import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Avatar } from "../ui/avatar";
 import { Skeleton } from "../ui/skeleton";
 export default function DesktopNavigation() {
   //Fallback image url if profile fails to fetch
