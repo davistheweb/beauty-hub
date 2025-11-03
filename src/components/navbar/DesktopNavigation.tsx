@@ -3,6 +3,7 @@ import { getInitials } from "@/lib/utils/getInitials";
 import { AppDispatch, RootState } from "@/store";
 import { setOpenNotifications } from "@/store/utils/notificationStateSlice";
 import Cookies from "js-cookie";
+import Image from "next/image";
 import { useRouter } from "nextjs-toploader/app";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomBellICon, CustomDot } from "../icons";
@@ -55,19 +56,6 @@ export default function DesktopNavigation() {
           />
         </button>
         <div className="flex h-[28px] w-[28px] cursor-pointer items-center justify-center overflow-hidden rounded-full">
-          {/* <Image
-            draggable={false}
-            src={avatar}
-            className="object-cover"
-            alt="profile-img"
-            width={28}
-            height={28}
-            unoptimized
-            onClick={() => {
-              Cookies.remove("currentSettingsTab");
-              router.push("/settings");
-            }}
-          /> */}
           {profileLoading ? (
             <Skeleton className="bg-muted flex size-full items-center justify-center rounded-full" />
           ) : (
@@ -77,7 +65,21 @@ export default function DesktopNavigation() {
                 router.push("/settings");
               }}
             >
-              <AvatarImage src={profileInfo?.avatar || adminState?.avatar} />
+              <AvatarImage asChild>
+                <Image
+                  draggable={false}
+                  src={profileInfo?.avatar || (adminState?.avatar as string)}
+                  alt={getInitials(
+                    profileInfo?.name || (adminState?.fullName as string),
+                    2,
+                  )}
+                  width={28}
+                  height={28}
+                  className="object-cover text-center text-[14px]"
+                  unoptimized
+                  priority
+                />
+              </AvatarImage>
               <AvatarFallback>
                 {getInitials(
                   profileInfo?.name || (adminState?.fullName as string),

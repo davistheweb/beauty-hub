@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from "@/store";
 import { setOpenNotifications } from "@/store/utils/notificationStateSlice";
 import Cookies from "js-cookie";
 import { Menu } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "nextjs-toploader/app";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -66,18 +67,6 @@ export default function MobileNavigation() {
           />
         </button>
         <div className="flex h-[27px] w-[27px] items-center justify-center overflow-hidden rounded-full">
-          {/* <Image
-            src={avatar}
-            alt="profile-img"
-            width={27}
-            height={27}
-            className="object-cover"
-            unoptimized
-            onClick={() => {
-              Cookies.remove("currentSettingsTab");
-              router.push("/settings");
-            }}
-          /> */}
           {profileLoading ? (
             <Skeleton className="bg-muted flex size-full items-center justify-center rounded-full" />
           ) : (
@@ -87,7 +76,20 @@ export default function MobileNavigation() {
                 router.push("/settings");
               }}
             >
-              <AvatarImage src={profileInfo?.avatar || adminState?.avatar} />
+              <AvatarImage asChild>
+                <Image
+                  src={profileInfo?.avatar || (adminState?.avatar as string)}
+                  alt={getInitials(
+                    profileInfo?.name || (adminState?.fullName as string),
+                    2,
+                  )}
+                  width={27}
+                  height={27}
+                  className="object-cover text-center text-[14px]"
+                  unoptimized
+                  priority
+                />
+              </AvatarImage>
               <AvatarFallback>
                 {getInitials(
                   profileInfo?.name || (adminState?.fullName as string),
