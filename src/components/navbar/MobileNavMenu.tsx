@@ -63,7 +63,12 @@ export default function MobileNavMenu({
                     >
                       <span className="flex items-center gap-3">
                         <Icon size={17} />
-                        <Link href={href}>{title}</Link>
+                        <Link
+                          href={href}
+                          onClick={() => setIsOpen((prev) => !prev)}
+                        >
+                          {title}
+                        </Link>
                       </span>
                     </li>
                   ))}
