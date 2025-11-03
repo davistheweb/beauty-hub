@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import React from "react";
 
 export default function Redirect({ url }: { url: string }) {

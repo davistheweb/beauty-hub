@@ -2,9 +2,10 @@
 import { useNotifications } from "@/hooks";
 import { AppDispatch, RootState } from "@/store";
 import { setOpenNotifications } from "@/store/utils/notificationStateSlice";
+import Cookies from "js-cookie";
 import { Menu } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomBellICon, CustomDot } from "../icons";
@@ -66,7 +67,10 @@ export default function MobileNavigation() {
             height={27}
             className="object-cover"
             unoptimized
-            onClick={() => router.push("/settings")}
+            onClick={() => {
+              Cookies.remove("currentSettingsTab");
+              router.push("/settings");
+            }}
           />
         </div>
         <button onClick={() => setIsOpen((prev) => !prev)}>

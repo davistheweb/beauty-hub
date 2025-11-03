@@ -1,14 +1,14 @@
 "use client";
 import { useStaff } from "@/hooks";
-import { IStaff } from "@/types/IStaff";
-import getErrorMessage from "@/utils/getErrorMessage";
 import {
   addStaffFormSchema,
   addStaffFormValues,
   StaffFormValues,
   updatedStaffFormSchema,
   updatedStaffFormValues,
-} from "@/utils/validators/StaffFormSchema";
+} from "@/lib/validators/StaffFormSchema";
+import getErrorResponse from "@/services/helpers";
+import { IStaff } from "@/types/IStaff";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
@@ -119,7 +119,7 @@ const StaffForm = ({
             }, 1000);
           },
           onError: (err) => {
-            const error = getErrorMessage(err);
+            const error = getErrorResponse(err);
             toast.error(error.message || "Something went wrong");
             console.log(error);
           },
@@ -147,7 +147,7 @@ const StaffForm = ({
           },
 
           onError: (err) => {
-            const error = getErrorMessage(err);
+            const error = getErrorResponse(err);
             toast.error(error.message || "Something went wrong");
             console.log(err);
           },

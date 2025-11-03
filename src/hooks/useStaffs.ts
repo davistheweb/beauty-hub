@@ -1,4 +1,5 @@
 import { suspendService, unSuspendService } from "@/services/controlService";
+import getErrorResponse from "@/services/helpers";
 import {
   addStaffService,
   fetchStaffs,
@@ -6,7 +7,6 @@ import {
 } from "@/services/staffService";
 import { IErrorInfo } from "@/types/Error";
 import { IStaff } from "@/types/IStaff";
-import getErrorMessage from "@/utils/getErrorMessage";
 import {
   queryOptions,
   useMutation,
@@ -87,7 +87,7 @@ const useStaff = (page: number = 1) => {
   console.log(staffs);
 
   const fetchStaffsErrorMessage = isFetchStaffsError
-    ? getErrorMessage(error)
+    ? getErrorResponse(error)
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
   return {

@@ -1,14 +1,14 @@
 "use client";
 import { useBanner } from "@/hooks";
-import { IBanner } from "@/types/IBanner";
-import getErrorMessage from "@/utils/getErrorMessage";
 import {
   addBannerFormSchema,
   addBannerFormValues,
   BannerFormValues,
   editBannerFormSchema,
   editBannerFormValues,
-} from "@/utils/validators/BannerFormSchema";
+} from "@/lib/validators/BannerFormSchema";
+import getErrorResponse from "@/services/helpers";
+import { IBanner } from "@/types/IBanner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import Image from "next/image";
@@ -148,7 +148,7 @@ export default function BannerSettings({
           setPreviewImage(null);
         },
         onError: (err) => {
-          const error = getErrorMessage(err);
+          const error = getErrorResponse(err);
           toast.error(error.message);
           setComponentIsUploading(false);
           console.log(err);
@@ -192,7 +192,7 @@ export default function BannerSettings({
           }, 1200);
         },
         onError: (err) => {
-          const error = getErrorMessage(err);
+          const error = getErrorResponse(err);
           toast.error(error.message);
           setComponentIsUploading(false);
           console.log(err);
@@ -211,7 +211,7 @@ export default function BannerSettings({
         setComponentIsUploading(false);
       },
       onError: (err) => {
-        const error = getErrorMessage(err);
+        const error = getErrorResponse(err);
         toast.dismiss(toastID);
         toast.error(error.message);
         setComponentIsUploading(false);

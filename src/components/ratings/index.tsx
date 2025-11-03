@@ -3,8 +3,8 @@ import { CaretDownIcon } from "@/components/icons";
 import { Label } from "@/components/ui/label";
 import SearchInput from "@/components/ui/SearchInput";
 import { useDebounce, useRatings } from "@/hooks";
+import getErrorResponse from "@/services/helpers";
 import { IRating } from "@/types/IRatings";
-import getErrorMessage from "@/utils/getErrorMessage";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { NoDataFoundElement } from "../no-data";
@@ -32,12 +32,13 @@ export default function Ratings() {
   const debouncedValue = useDebounce(search, 600);
 
   useEffect(() => {
-    if (!debouncedValue?.trim()) {
-      return;
-    }
+    if (!debouncedValue?.trim()) return;
+
+    toast.dismiss();
+
     const toastId = toast.loading("Searching ratings...");
 
-    setSearchData([]);
+    setCurrentPage(1);
 
     searchRating.mutate(
       { search: debouncedValue },
@@ -50,7 +51,7 @@ export default function Ratings() {
         onError: (err) => {
           toast.dismiss(toastId);
           setSearchData([]);
-          const error = getErrorMessage(err);
+          const error = getErrorResponse(err);
           toast.error(error.message);
         },
       },
@@ -59,7 +60,7 @@ export default function Ratings() {
   }, [debouncedValue]);
 
   useEffect(() => {
-    if (search.trim().length === 0) setSearchData([]);
+    if (search.trim().length === 0) setTimeout(() => setSearchData([]), 2000);
   }, [search]);
 
   const handleDeleteRating = (id: number) => {
@@ -72,7 +73,7 @@ export default function Ratings() {
       },
       onError: (err) => {
         toast.dismiss(toastId);
-        const error = getErrorMessage(err);
+        const error = getErrorResponse(err);
         toast.error(error.message);
       },
     });

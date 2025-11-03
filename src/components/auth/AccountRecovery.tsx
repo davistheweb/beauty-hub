@@ -9,9 +9,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import maskMail from "@/lib/utils/maskMail";
 import { sendOtpViaMail } from "@/services/Auth";
 import { TReoveryStage } from "@/types";
-import maskMail from "@/utils/maskMail";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useState } from "react";

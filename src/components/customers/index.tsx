@@ -7,28 +7,95 @@ import {
 import { Label } from "@/components/ui/label";
 import SearchInput from "@/components/ui/SearchInput";
 import { customersTableHeaders } from "@/data";
-import { useCustomers } from "@/hooks";
+import { useCustomers, useDebounce } from "@/hooks";
+import getErrorResponse from "@/services/helpers";
+import { ICustomer } from "@/types/ICustomers";
 import { Dot, Eye } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 import AppPagination from "../ui/AppPagination";
 import { CardSkeleton } from "../ui/CardSkeleton";
 import { ErrorElement } from "../ui/ErrorElement";
 import { TableSkeleton } from "../ui/TableSkeleton";
 
+const FILTER_OPTIONS = ["All", "Active", "Inactive", "Suspended"] as const;
+type FilterOption = (typeof FILTER_OPTIONS)[number];
+
 export default function Customers() {
   const [selectedRowCount, setSelectedRowCount] = useState<number>(20);
-
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [selectedFilter, setSelectedFilter] = useState<FilterOption>("All");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [search, setSearch] = useState<string>("");
+  const [searchData, setSearchData] = useState<ICustomer[] | []>([]);
 
   const {
     allCustomersData,
     customers,
+    searchCustomer,
     isAllCustomersDataPending,
     isAllCustomersDataFetching,
     isFetchCustomersError,
     fetchCustomersErrorMessage,
   } = useCustomers(currentPage);
+
+  const debouncedValue = useDebounce(search, 600);
+
+  useEffect(() => {
+    if (!debouncedValue?.trim()) return;
+
+    toast.dismiss();
+
+    const toastId = toast.loading("Searching Customers...");
+
+    setCurrentPage(1);
+    setSelectedFilter("All");
+    searchCustomer.mutate(
+      { search: debouncedValue },
+      {
+        onSuccess: (data) => {
+          console.log(data.data.data.data);
+          setSearchData(data.data.data.data);
+          toast.dismiss(toastId);
+        },
+        onError: (err) => {
+          toast.dismiss(toastId);
+          setSearchData([]);
+          const error = getErrorResponse(err);
+          toast.error(error.message);
+        },
+      },
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedValue]);
+
+  useEffect(() => {
+    if (search.trim().length === 0) setTimeout(() => setSearchData([]), 2000);
+  }, [search]);
+
+  const allCustomers =
+    searchData.length > 0 && search.length > 0 ? searchData : customers;
+
+  // client side filtering
+  const filteredCustomers = useMemo(() => {
+    if (selectedFilter === "All") return allCustomers;
+
+    const lower = selectedFilter.toLowerCase() as
+      | "active"
+      | "inactive"
+      | "suspended"
+      | "archived";
+
+    return allCustomers.filter((c) => c.status === lower);
+  }, [allCustomers, selectedFilter]);
+
+  // Data state helpers
+  const hasApiData = customers.length > 0;
+  const hasFilteredData = filteredCustomers.length > 0;
+  const isFilteredEmpty =
+    selectedFilter !== "All" && hasApiData && !hasFilteredData;
+  const isApiEmpty = !hasApiData;
 
   if (isFetchCustomersError)
     return (
@@ -43,39 +110,62 @@ export default function Customers() {
 
   return (
     <div className="mt-3 flex w-full flex-col gap-3 p-2">
-      {/* Customers Table*/}
-      <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
-        <div className="flex h-12 w-full items-center justify-center">
-          <div className="flex h-[30px] w-full items-center justify-between p-2 md:p-4">
-            {/* Search  */}
-            <SearchInput />
-            <div className="flex max-w-fit gap-4 rounded-md border border-[#C2C2C2] px-[10px] py-[5px] md:gap-2">
-              <Label className="font-semibold">Status:</Label>
+      {/* Customers Table */}
+      <div className="flex w-full flex-col rounded-md bg-white p-1 md:h-[598px]">
+        {customers.length > 0 && (
+          <div className="flex w-full items-start justify-center self-start">
+            <div className="flex w-full flex-col gap-2 p-2 md:flex-row md:items-center md:justify-between md:gap-0">
+              {/* Search */}
+              <SearchInput
+                value={search}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearch(e.target.value);
+                }}
+              />
 
-              <div className="relative flex items-center">
-                <select className="text-custom-green cursor-pointer appearance-none pr-5 font-semibold outline-none">
-                  {["All", "Active", "Inactive"].map((option, i) => (
-                    <option
-                      key={i}
-                      value={option}
-                      className="text-black"
-                    >
-                      {option}
-                    </option>
-                  ))}
-                </select>
-                <CaretDownIcon
-                  size={15}
-                  color="#1AB65C"
-                  className="pointer-events-none absolute right-0"
-                />
+              {/* CUSTOM FILTER BUTTON */}
+              <div
+                className="relative flex max-w-fit cursor-pointer items-center gap-4 rounded-md border border-[#C2C2C2] px-[10px] py-[5px] md:gap-2"
+                onClick={() => setIsDropdownOpen((v) => !v)}
+              >
+                <Label className="cursor-pointer font-semibold">Status:</Label>
+                <button className="text-custom-green relative flex cursor-pointer items-center gap-1 pr-5 font-semibold outline-none">
+                  <span>{selectedFilter}</span>
+                  <CaretDownIcon
+                    size={15}
+                    color="#1AB65C"
+                    className="pointer-events-none absolute right-0"
+                  />
+                </button>
+
+                {isDropdownOpen && (
+                  <div className="absolute top-full left-1/2 z-10 mt-1 w-fit min-w-[120px] -translate-x-1/2 rounded-md border border-[#C2C2C2] bg-white py-1 shadow-lg">
+                    {FILTER_OPTIONS.map((opt) => (
+                      <button
+                        key={opt}
+                        onClick={() => {
+                          setSelectedFilter(opt);
+                          setIsDropdownOpen(false);
+                        }}
+                        className="block w-full cursor-pointer px-3 py-1.5 text-left text-sm hover:bg-gray-50"
+                      >
+                        {opt}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
-        </div>
-        {/* Customers Display Table  */}
+        )}
+
+        {/* DESKTOP TABLE */}
         <div
-          className={`table-parent-scrollbar ${isAllCustomersDataPending || !customers.length ? "h-full" : ""} hidden w-full overflow-x-auto p-1 md:flex`}
+          className={`table-parent-scrollbar ${
+            isAllCustomersDataPending || isApiEmpty || isFilteredEmpty
+              ? "h-full"
+              : ""
+          } hidden w-full overflow-x-auto p-1 md:flex`}
         >
           <table
             className="h-full w-full overflow-x-auto bg-white"
@@ -86,17 +176,29 @@ export default function Customers() {
                 {customersTableHeaders.map((header, _i) => (
                   <th
                     key={_i}
-                    className={`${header === "Action" ? "w-[50px]" : "w-[200px]"} border-b border-gray-200 px-4 py-2 text-start text-[14px] font-medium tracking-wide`}
+                    className={`${
+                      header === "Action" ? "w-[50px]" : "w-[200px]"
+                    } border-b border-gray-200 px-4 py-2 text-start text-[14px] font-medium tracking-wide`}
                   >
                     {header}
                   </th>
                 ))}
               </tr>
             </thead>
-            {!isAllCustomersDataPending && !customers.length ? (
+
+            {/* EMPTY STATES */}
+            {!isAllCustomersDataPending && isApiEmpty ? (
+              // API has no data original message
               <NoDataFoundTableDesktopComponent
                 title="No Customer Yet!"
                 subtitle="All customer details will be displayed here once they begin signing up and making bookings."
+                colSpan={customersTableHeaders.length}
+              />
+            ) : !isAllCustomersDataPending && isFilteredEmpty ? (
+              // Filter applied no match
+              <NoDataFoundTableDesktopComponent
+                title="No Customer Found!"
+                subtitle={`No customers match the selected status: **${selectedFilter}**.`}
                 colSpan={customersTableHeaders.length}
               />
             ) : (
@@ -104,7 +206,7 @@ export default function Customers() {
                 {isAllCustomersDataPending ? (
                   <TableSkeleton length={customersTableHeaders.length} />
                 ) : (
-                  customers
+                  filteredCustomers
                     .slice(0, selectedRowCount)
                     .map((customer, index) => (
                       <tr
@@ -127,11 +229,17 @@ export default function Customers() {
                             .join("-")}
                         </td>
 
-                        <td
-                          className={`flex h-full place-items-center justify-start py-1`}
-                        >
+                        <td className="flex h-full place-items-center justify-start py-1">
                           <span
-                            className={`rounded-[38.32px] bg-[#EDF5FE] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" ? "text-[#004CE8]" : customer.status === "suspended" && "text-[#FF3333]"} flex w-fit items-center justify-center gap-2 px-5 py-2`}
+                            className={`rounded-[38.32px] bg-[#EDF5FE] ${
+                              customer.status === "active"
+                                ? "text-[#00C247]"
+                                : customer.status === "archived"
+                                  ? "text-stone-700"
+                                  : customer.status === "inactive"
+                                    ? "text-[#004CE8]"
+                                    : "text-[#FF3333]"
+                            } flex w-fit items-center justify-center gap-2 px-5 py-2`}
                           >
                             <span className="flex h-3 w-3 items-center justify-center">
                               <Dot
@@ -144,7 +252,8 @@ export default function Customers() {
                             </span>
                           </span>
                         </td>
-                        <td className="">
+
+                        <td>
                           <Link
                             href={`/customers/${customer.id}`}
                             className="flex cursor-pointer items-center justify-center rounded-xs text-center text-[14px] font-medium"
@@ -162,12 +271,20 @@ export default function Customers() {
             )}
           </table>
         </div>
-        {/* Customers Display Card  */}
+
+        {/* MOBILE CARD VIEW */}
         <div className="scrollbar-thin flex h-full w-full items-center justify-center overflow-y-auto md:hidden">
-          {!isAllCustomersDataPending && !customers.length ? (
+          {!isAllCustomersDataPending && isApiEmpty ? (
+            // Customers empty
             <NoDataFoundTableMobileComponent
               title="No Customer Yet!"
               subtitle="All customer details will be displayed here once they begin signing up and making bookings."
+            />
+          ) : !isAllCustomersDataPending && isFilteredEmpty ? (
+            // Customers Filter empty
+            <NoDataFoundTableMobileComponent
+              title="No Customer Found!"
+              subtitle={`No customers match the selected status: **${selectedFilter}**.`}
             />
           ) : (
             <div className="h-full w-full">
@@ -176,86 +293,100 @@ export default function Customers() {
                   Customer Details
                 </h1>
               </div>
+
               <div className="flex w-full flex-col gap-3">
-                {/* Customer Cards  */}
                 {isAllCustomersDataPending ? (
                   <CardSkeleton className="flex h-[294px] w-full flex-col gap-2 border border-[#E2E5E9] p-2" />
                 ) : (
-                  customers.slice(0, selectedRowCount).map((customer, _i) => (
-                    <div
-                      className="flex h-[314px] w-full flex-col gap-2 border border-[#E2E5E9] p-2"
-                      key={_i}
-                    >
-                      <div className="flex h-[250px] w-full flex-col gap-3 p-4">
-                        <span className="flex items-center justify-between">
-                          <h1 className="text-[18px] font-medium">Customer</h1>
-                          <p className="text-[14px] font-medium text-[#5C5C5C]">
-                            {customer.name}
-                          </p>
-                        </span>
-                        <span className="flex items-center justify-between">
-                          <h1 className="text-[18px] font-medium">
-                            Email Address
-                          </h1>
-                          <p className="text-[14px] font-medium text-[#5C5C5C]">
-                            {customer.email}
-                          </p>
-                        </span>
-                        <span className="flex items-center justify-between">
-                          <h1 className="text-[18px] font-medium">
-                            Phone Number
-                          </h1>
-                          <p className="text-[14px] font-medium text-[#5C5C5C]">
-                            {customer.phone}
-                          </p>
-                        </span>
-                        <span className="flex items-center justify-between">
-                          <h1 className="text-[18px] font-medium">
-                            Date Created
-                          </h1>
-                          <p className="text-[14px] font-medium text-[#5C5C5C]">
-                            {new Date(customer.created_at)
-                              .toLocaleDateString()
-                              .split("/")
-                              .join("-")}
-                          </p>
-                        </span>
+                  filteredCustomers
+                    .slice(0, selectedRowCount)
+                    .map((customer, _i) => (
+                      <div
+                        className="flex h-[314px] w-full flex-col gap-2 border border-[#E2E5E9] p-2"
+                        key={_i}
+                      >
+                        <div className="flex h-[250px] w-full flex-col gap-3 p-4">
+                          <span className="flex items-center justify-between">
+                            <h1 className="text-[18px] font-medium">
+                              Customer
+                            </h1>
+                            <p className="text-[14px] font-medium text-[#5C5C5C]">
+                              {customer.name}
+                            </p>
+                          </span>
+                          <span className="flex items-center justify-between">
+                            <h1 className="text-[18px] font-medium">
+                              Email Address
+                            </h1>
+                            <p className="text-[14px] font-medium text-[#5C5C5C]">
+                              {customer.email}
+                            </p>
+                          </span>
+                          <span className="flex items-center justify-between">
+                            <h1 className="text-[18px] font-medium">
+                              Phone Number
+                            </h1>
+                            <p className="text-[14px] font-medium text-[#5C5C5C]">
+                              {customer.phone || "no_number"}
+                            </p>
+                          </span>
+                          <span className="flex items-center justify-between">
+                            <h1 className="text-[18px] font-medium">
+                              Date Created
+                            </h1>
+                            <p className="text-[14px] font-medium text-[#5C5C5C]">
+                              {new Date(customer.created_at)
+                                .toLocaleDateString()
+                                .split("/")
+                                .join("-")}
+                            </p>
+                          </span>
 
-                        <span className="flex items-center justify-between">
-                          <h1 className="text-[18px] font-medium">Status</h1>
-                          <span
-                            className={`rounded-[42.58px] bg-[#EDF5FE] pt-[4.73px] pr-[9.46px] pb-[4.73px] pl-[9.46px] ${customer.status === "active" ? "text-[#00C247]" : customer.status === "archived" ? "text-stone-700" : customer.status === "inactive" ? "text-[#004CE8]" : customer.status === "suspended" && "text-[#FF3333]"} flex items-center justify-center gap-2 px-2 text-[14px]`}
-                          >
-                            <span className="flex h-3 w-3 items-center justify-center">
-                              <Dot
-                                size={40}
-                                className="shrink-0"
-                              />
-                            </span>
-                            <span className="capitalize">
-                              {customer.status}
+                          <span className="flex items-center justify-between">
+                            <h1 className="text-[18px] font-medium">Status</h1>
+                            <span
+                              className={`rounded-[42.58px] bg-[#EDF5FE] pt-[4.73px] pr-[9.46px] pb-[4.73px] pl-[9.46px] ${
+                                customer.status === "active"
+                                  ? "text-[#00C247]"
+                                  : customer.status === "archived"
+                                    ? "text-stone-700"
+                                    : customer.status === "inactive"
+                                      ? "text-[#004CE8]"
+                                      : "text-[#FF3333]"
+                              } flex items-center justify-center gap-2 px-2 text-[14px]`}
+                            >
+                              <span className="flex h-3 w-3 items-center justify-center">
+                                <Dot
+                                  size={40}
+                                  className="shrink-0"
+                                />
+                              </span>
+                              <span className="capitalize">
+                                {customer.status}
+                              </span>
                             </span>
                           </span>
-                        </span>
+                        </div>
+
+                        <div className="flex justify-end pr-4">
+                          <Link
+                            href={`/customers/${customer.id}`}
+                            className="text-custom-green cursor-pointer rounded-full border border-[#1AB65C] bg-[#F9FFFB] px-2 py-1 text-sm font-semibold hover:bg-[#f1faf4]"
+                          >
+                            View Details
+                          </Link>
+                        </div>
                       </div>
-                      <div className="flex justify-end pr-4">
-                        <Link
-                          href={`/customers/${customer.id}`}
-                          className="text-custom-green cursor-pointer rounded-full border border-[#1AB65C] bg-[#F9FFFB] px-2 py-1 text-sm font-semibold hover:bg-[#f1faf4]"
-                        >
-                          View Details
-                        </Link>
-                      </div>
-                    </div>
-                  ))
+                    ))
                 )}
               </div>
             </div>
           )}
         </div>
       </div>
-      {/* Pagination  */}
-      {customers.length > 0 && (
+
+      {/* PAGINATION */}
+      {hasApiData && (
         <AppPagination
           rowCountValue={selectedRowCount}
           onChange={(e) => setSelectedRowCount(Number(e.target.value))}

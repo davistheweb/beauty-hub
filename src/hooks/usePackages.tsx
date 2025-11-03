@@ -1,3 +1,4 @@
+import getErrorResponse from "@/services/helpers";
 import {
   addPackageAndService,
   addSerive,
@@ -6,7 +7,6 @@ import {
   updatePackageService,
 } from "@/services/package-and-services";
 import { IErrorInfo } from "@/types/Error";
-import getErrorMessage from "@/utils/getErrorMessage";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function usePackages() {
@@ -58,7 +58,7 @@ export default function usePackages() {
   const packages = (!isError && data?.data?.data) || [];
 
   const fetchPackagesErrorMessage = isError
-    ? getErrorMessage(error)
+    ? getErrorResponse(error)
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
   return {

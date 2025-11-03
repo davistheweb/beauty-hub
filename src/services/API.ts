@@ -30,13 +30,19 @@ export const API = axios.create({
  * it for 20 minutes, and then uses it for subsequent external API requests.
  */
 const get_bearer_token = async () => {
+  const cachedToken = Cookies.get("cached_bearer_token");
+
+  if (cachedToken) return cachedToken;
+
   const token = await getAccessToken();
 
   const now = new Date();
 
   const cachedBearerTokenExpirationTime = new Date(
-    now.getTime() + 20 * 60 * 60 * 1000,
+    now.getTime() + 20 * 60 * 1000,
   );
+
+  if (!token) Cookies.remove("cached_bearer_token", { path: "/" });
 
   if (token !== undefined)
     Cookies.set("cached_bearer_token", token, {
@@ -55,15 +61,14 @@ API.interceptors.request.use(
   async (
     config: InternalAxiosRequestConfig,
   ): Promise<InternalAxiosRequestConfig> => {
-    const bearer_token =
-      Cookies.get("cached_bearer_token") || (await get_bearer_token());
+    const bearer_token = await get_bearer_token();
 
     console.log("Cookie from js-cookie", bearer_token);
 
     if (bearer_token !== undefined) {
       console.log("AccessBearerToken from apiWithAuth:", bearer_token);
 
-      config.headers.Authorization = `Bearer ${bearer_token}` as string;
+      config.headers.Authorization = `Bearer ${bearer_token}`;
     }
     return config;
   },
@@ -74,6 +79,9 @@ API.interceptors.request.use(
 
 API.interceptors.response.use(
   async (response: AxiosResponse): Promise<AxiosResponse> => {
+    if (response.headers["x-clear-client-cache"])
+      Cookies.remove("cached_bearer_token", { path: "/" });
+
     return response;
   },
   async (error: AxiosError) => {

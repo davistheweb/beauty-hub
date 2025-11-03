@@ -1,7 +1,7 @@
 import { fetchDashboardStats } from "@/services/dashboardStatsService";
+import getErrorResponse from "@/services/helpers";
 import { IErrorInfo } from "@/types/Error";
 import { DashboardStatsData } from "@/types/IDashboardStats";
-import getErrorMessage from "@/utils/getErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useStats() {
@@ -37,7 +37,7 @@ export default function useStats() {
   console.log(stats);
 
   const statsErrorMessage = isError
-    ? getErrorMessage(error)
+    ? getErrorResponse(error)
     : ({ type: "unknown", message: "Something went wrong" } as IErrorInfo);
 
   return { stats, isLoading, isError, statsErrorMessage };

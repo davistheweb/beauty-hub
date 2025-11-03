@@ -1,10 +1,10 @@
+import getErrorResponse from "@/services/helpers";
 import {
   deleteRatingsService,
   fetchRatingsService,
 } from "@/services/ratingsService";
 import { IErrorInfo } from "@/types/Error";
 import { IRating } from "@/types/IRatings";
-import getErrorMessage from "@/utils/getErrorMessage";
 import {
   queryOptions,
   useMutation,
@@ -80,7 +80,7 @@ export default function useRatings(page: number) {
   console.log(ratings);
 
   const fetchRatingsErrMessage = isFetchRatingsError
-    ? getErrorMessage(error)
+    ? getErrorResponse(error)
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
   return {

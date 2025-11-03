@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
+import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 import QueryProvider from "./QueryProvider";
 import ReduxProvider from "./ReduxProvider";
@@ -21,6 +22,16 @@ export default function RootLayout({
       <body
         className={`${dm_sans.className} h-screen w-full overflow-x-hidden antialiased`}
       >
+        <NextTopLoader
+          color="#1AB65C"
+          height={3}
+          initialPosition={0.08}
+          crawlSpeed={250}
+          crawl={true}
+          showSpinner={false}
+          easing="ease"
+          speed={250}
+        />
         <ReduxProvider>
           <QueryProvider>{children}</QueryProvider>
         </ReduxProvider>

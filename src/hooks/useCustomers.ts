@@ -3,9 +3,9 @@ import {
   fetchCustomerDetails,
   fetchCustomers,
 } from "@/services/customersServices";
+import getErrorResponse from "@/services/helpers";
 import { IErrorInfo } from "@/types/Error";
 import { ICustomer, ICustomerDetails } from "@/types/ICustomers";
-import getErrorMessage from "@/utils/getErrorMessage";
 import {
   queryOptions,
   useMutation,
@@ -19,7 +19,7 @@ const useCustomers = (page: number) => {
 
   const customersQueryOptions = (pageNumber: number) =>
     queryOptions({
-      queryFn: () => fetchCustomers(pageNumber),
+      queryFn: () => fetchCustomers({ page: pageNumber }),
       queryKey: ["customers", pageNumber],
       placeholderData: (prevData) => prevData,
       retry: false,
@@ -49,6 +49,12 @@ const useCustomers = (page: number) => {
     allCustomersData?.data.data.last_page,
   ]);
 
+  const searchCustomer = useMutation({
+    retry: false,
+    networkMode: "always",
+    mutationFn: fetchCustomers,
+  });
+
   console.log(error?.message);
 
   const customers: ICustomer[] | [] = !isFetchCustomersError
@@ -56,12 +62,13 @@ const useCustomers = (page: number) => {
     : [];
 
   const fetchCustomersErrorMessage = isFetchCustomersError
-    ? getErrorMessage(error)
+    ? getErrorResponse(error)
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
   return {
     allCustomersData,
     customers,
+    searchCustomer,
     isAllCustomersDataPending,
     isAllCustomersDataFetching,
     isFetchCustomersError,
@@ -118,7 +125,7 @@ const useCustomerDetailsByID = (customerId?: string) => {
       : null;
 
   const fetchCustomerDetailsErrorMessage = isFetchCustomerDetailsError
-    ? getErrorMessage(error)
+    ? getErrorResponse(error)
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
   return {

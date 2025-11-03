@@ -1,14 +1,14 @@
 "use client";
 import { usePackages } from "@/hooks";
-import { IPackage } from "@/types/IPackages";
-import getErrorMessage from "@/utils/getErrorMessage";
 import {
   addPackageFormSchema,
   addPackageFormValues,
   PackageFormValues,
   updatePackageFormSchema,
   updatePackageFormValues,
-} from "@/utils/validators/ServiceAndPackageFormSchema";
+} from "@/lib/validators/ServiceAndPackageFormSchema";
+import getErrorResponse from "@/services/helpers";
+import { IPackage } from "@/types/IPackages";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import Image from "next/image";
@@ -87,12 +87,6 @@ const PackageForm = ({
   });
 
   useEffect(() => {
-    if (addServices.length > 0) {
-      addPackageForm.clearErrors("services");
-    }
-  }, [addServices.length, addPackageForm]);
-
-  useEffect(() => {
     if (selectedPackage && packageFormAction === "updatePackage") {
       updatePackageForm.reset({
         name: selectedPackage.name || "",
@@ -143,7 +137,10 @@ const PackageForm = ({
       addPackageForm.setValue("services", "");
       addPackageForm.clearErrors(`services`);
     } else {
-      addPackageForm.trigger("services");
+      addPackageForm.setError("services", {
+        type: "manual",
+        message: "The Service field is required",
+      });
     }
   };
 
@@ -163,6 +160,15 @@ const PackageForm = ({
         .getValues("services")
         ?.trim();
 
+      // If there are no added services AND the input is empty -> show error and stop
+      if (addServices.length === 0 && !currentServiceInputValue) {
+        addPackageForm.setError("services", {
+          type: "manual",
+          message: "Add at least one service or type a service in the input",
+        });
+        return;
+      }
+
       const servicesPayload = [...addServices];
 
       if (currentServiceInputValue)
@@ -176,7 +182,7 @@ const PackageForm = ({
 
       const formData = new FormData();
       formData.append("name", finalPackageValues.name);
-      formData.append("price", String(finalPackageValues.price));
+      formData.append("price", finalPackageValues.price.replaceAll(",", ""));
       formData.append("image", finalPackageValues.image);
       // formData.append("services", JSON.stringify(finalPackageValues.services));
 
@@ -195,7 +201,7 @@ const PackageForm = ({
           }, 1000);
         },
         onError: (err) => {
-          const error = getErrorMessage(err);
+          const error = getErrorResponse(err);
           toast.error(error.message);
           console.log(err);
         },
@@ -204,7 +210,7 @@ const PackageForm = ({
       if (
         updatePackageForm.getValues("name").trim() ===
           selectedPackage?.name.trim() &&
-        updatePackageForm.getValues("price").trim() ===
+        String(updatePackageForm.getValues("price")).trim() ===
           selectedPackage.price.trim() &&
         updatePackageForm.getValues("image") === undefined
       )
@@ -218,7 +224,10 @@ const PackageForm = ({
 
       formData.append("name", updatePackageFormDataValues.name);
 
-      formData.append("price", updatePackageFormDataValues.price);
+      formData.append(
+        "price",
+        updatePackageFormDataValues.price.replaceAll(",", ""),
+      );
 
       if (updatePackageFormDataValues.image) {
         formData.append("image", updatePackageFormDataValues.image as File);
@@ -237,7 +246,7 @@ const PackageForm = ({
         },
 
         onError: (err) => {
-          const errMsg = getErrorMessage(err);
+          const errMsg = getErrorResponse(err);
           toast.error(errMsg.message);
           console.log(err);
         },
@@ -252,6 +261,7 @@ const PackageForm = ({
         setShowPackageFormModal(modalOpen);
         if (!modalOpen) {
           addPackageForm.reset();
+          setAddedServices([]);
           setPreviewImage(null);
 
           // setPackageFormAction("addPackage");
@@ -386,7 +396,7 @@ const PackageForm = ({
                                 {...field}
                                 placeholder="Service name"
                                 className={`${packageFormAction === "addPackage" ? "h-8" : packageFormAction === "updatePackage" && "h-12"} focus:border-green-300 focus:ring-1 focus:ring-green-500 focus:outline-none xl:w-[450px]`}
-                                name="services.0.name"
+                                name="services"
                                 type="text"
                               />
                               <FormMessage className="text-xs" />
@@ -395,10 +405,10 @@ const PackageForm = ({
                           <button
                             onClick={handleAddService}
                             type="button"
-                            className="text-custom-green flex cursor-pointer items-center gap-1 text-[14px]"
+                            className="text-custom-green flex cursor-pointer items-center gap-1 text-[12px]"
                           >
                             <Plus size={15} />
-                            Add Serive
+                            Add Service
                           </button>
                         </div>
                       </FormItem>

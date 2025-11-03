@@ -1,6 +1,6 @@
 import { useStaff } from "@/hooks";
+import getErrorResponse from "@/services/helpers";
 import { IStaff } from "@/types/IStaff";
-import getErrorMessage from "@/utils/getErrorMessage";
 import { Dot, Mail, PhoneIcon } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -39,7 +39,7 @@ export const ViewStaffDialog = ({
         onError: (err) => {
           console.log(err);
 
-          const error = getErrorMessage(err);
+          const error = getErrorResponse(err);
           toast.error(error.message || "Something went wrong");
           console.log(error);
         },
@@ -54,7 +54,7 @@ export const ViewStaffDialog = ({
           }, 1200);
         },
         onError: (err) => {
-          const error = getErrorMessage(err);
+          const error = getErrorResponse(err);
           toast.error(error.message || "Something went wrong");
           console.log(error);
         },

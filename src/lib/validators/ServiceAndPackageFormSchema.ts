@@ -6,7 +6,7 @@ const basePackageFormSchema = z.object({
 });
 
 const addPackageFormSchema = basePackageFormSchema.extend({
-  services: z.string().nonempty({ error: "This field is required" }),
+  services: z.string().optional(),
   image: z
     .instanceof(File, { message: "Package photo is required" })
     .refine(
