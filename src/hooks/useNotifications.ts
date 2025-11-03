@@ -1,5 +1,5 @@
 "use client";
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import { getNotificationsService } from "@/services/notificationsService";
 import { IErrorInfo } from "@/types/Error";
 import { useQuery } from "@tanstack/react-query";

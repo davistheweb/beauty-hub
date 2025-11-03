@@ -11,12 +11,9 @@ import {
 import { useProfile } from "@/hooks";
 import { ProfileFormValues } from "@/lib/validators/ProfileFormSchema";
 import { getErrorResponse } from "@/services/helpers";
-import { AppDispatch, RootState } from "@/store";
-import { setProfile } from "@/store/utils/adminProfileSlice";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { UseFormReturn } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import { CustomUploadIcon } from "../icons";
 import { Button } from "../ui/button";
@@ -32,8 +29,6 @@ export default function ProfileSettings({
   profileForm: UseFormReturn<ProfileFormValues>;
 }) {
   const [isUploading, setIsUploadloading] = useState<boolean>(false);
-  const dispatch = useDispatch<AppDispatch>();
-  const adminState = useSelector((state: RootState) => state.admin.profile);
   const { profileInfo, update_profile, updateAvatar, profileLoading } =
     useProfile();
 
@@ -55,16 +50,6 @@ export default function ProfileSettings({
       },
       {
         onSuccess: (data) => {
-          console.log(data.data.data[0].name);
-
-          dispatch(
-            setProfile({
-              ...adminState,
-              fullName: data.data.data[0].name,
-              email: data.data.data[0].email,
-              phoneNumber: data.data.data[0].phone,
-            }),
-          );
           toast.success(data?.message);
         },
         onError: (err) => {
@@ -119,12 +104,6 @@ export default function ProfileSettings({
       await updateAvatar.mutate(formData, {
         onSuccess: (data) => {
           toast.success(data?.message);
-          dispatch(
-            setProfile({
-              ...adminState,
-              avatar: data.data?.data[0].avatar,
-            }),
-          );
         },
         onError: (err) => {
           console.log("error image", err);
@@ -160,7 +139,7 @@ export default function ProfileSettings({
       //     setComponentIsUploading(false);
       //   });
     },
-    [adminState, dispatch, updateAvatar, setComponentIsUploading],
+    [updateAvatar, setComponentIsUploading],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

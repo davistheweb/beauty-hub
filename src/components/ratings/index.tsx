@@ -3,7 +3,8 @@ import { CaretDownIcon } from "@/components/icons";
 import { Label } from "@/components/ui/label";
 import SearchInput from "@/components/ui/SearchInput";
 import { useDebounce, useRatings } from "@/hooks";
-import getErrorResponse from "@/services/helpers";
+import { getInitials } from "@/lib/utils/getInitials";
+import { getErrorResponse } from "@/services/helpers";
 import { IRating } from "@/types/IRatings";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -163,11 +164,7 @@ export default function Ratings() {
                     .split("/")
                     .join("-")}
                   starsCount={Number(ratingsInfo.rating)}
-                  abbrev={ratingsInfo.user.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")
-                    .slice(0, 3)}
+                  abbrev={getInitials(ratingsInfo.user.name)}
                   userName={ratingsInfo.user.name}
                   // title={ratingsInfo?.user.}
                   comment={ratingsInfo.comment}

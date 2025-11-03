@@ -3,7 +3,7 @@ import {
   fetchBookingDetails,
   updateBookingsStatus,
 } from "@/services/bookingsService";
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import { IErrorInfo } from "@/types/Error";
 import { IBookings } from "@/types/IBookings";
 import {

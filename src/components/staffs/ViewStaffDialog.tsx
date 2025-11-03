@@ -1,5 +1,5 @@
 import { useStaff } from "@/hooks";
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import { IStaff } from "@/types/IStaff";
 import { Dot, Mail, PhoneIcon } from "lucide-react";
 import Image from "next/image";

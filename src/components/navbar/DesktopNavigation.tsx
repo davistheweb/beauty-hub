@@ -1,4 +1,5 @@
 import { useDate, useNotifications, useProfile } from "@/hooks";
+import { getInitials } from "@/lib/utils/getInitials";
 import { AppDispatch, RootState } from "@/store";
 import { setOpenNotifications } from "@/store/utils/notificationStateSlice";
 import Cookies from "js-cookie";
@@ -10,7 +11,7 @@ import { Skeleton } from "../ui/skeleton";
 export default function DesktopNavigation() {
   //Fallback image url if profile fails to fetch
 
-  const avatar = useSelector((state: RootState) => state.admin.profile?.avatar);
+  const adminState = useSelector((state: RootState) => state.admin.profile);
 
   const { profileInfo, profileLoading } = useProfile();
 
@@ -76,13 +77,12 @@ export default function DesktopNavigation() {
                 router.push("/settings");
               }}
             >
-              <AvatarImage src={profileInfo?.avatar || avatar} />
+              <AvatarImage src={profileInfo?.avatar || adminState?.avatar} />
               <AvatarFallback>
-                {profileInfo?.name
-                  .split(" ")
-                  .map((n) => n[0].toUpperCase())
-                  .slice(2)
-                  .join("") || "A"}
+                {getInitials(
+                  profileInfo?.name || (adminState?.fullName as string),
+                  2,
+                )}
               </AvatarFallback>
             </Avatar>
           )}

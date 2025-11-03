@@ -11,8 +11,8 @@ const getApiResponse = <T>(response: AxiosResponse<T>) => {
   };
 };
 
-export default function getErrorResponse(error: unknown): IErrorInfo {
-  console.log("error getErrorResponse", error);
+const getErrorResponse = (error: unknown): IErrorInfo => {
+  console.log("An Error Occured", error);
 
   if (!error) return { type: "unknown", message: "An unknown error occurred." };
 
@@ -51,6 +51,6 @@ export default function getErrorResponse(error: unknown): IErrorInfo {
   }
 
   return { type: "unknown", message: "Unknown error occurred." };
-}
+};
 
 export { getApiResponse, getErrorResponse };

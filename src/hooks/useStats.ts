@@ -1,5 +1,5 @@
 import { fetchDashboardStats } from "@/services/dashboardStatsService";
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import { IErrorInfo } from "@/types/Error";
 import { DashboardStatsData } from "@/types/IDashboardStats";
 import { useQuery } from "@tanstack/react-query";

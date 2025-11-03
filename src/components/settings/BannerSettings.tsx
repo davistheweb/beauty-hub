@@ -7,7 +7,7 @@ import {
   editBannerFormSchema,
   editBannerFormValues,
 } from "@/lib/validators/BannerFormSchema";
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import { IBanner } from "@/types/IBanner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";

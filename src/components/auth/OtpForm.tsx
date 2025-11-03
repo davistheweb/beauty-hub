@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/form";
 import { InputOTP, InputOTPSlot } from "@/components/ui/input-otp";
 import { resendOtp, verifyOtpCode } from "@/services/Auth";
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import { TReoveryStage } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { REGEXP_ONLY_DIGITS } from "input-otp";

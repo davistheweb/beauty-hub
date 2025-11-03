@@ -1,4 +1,4 @@
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import {
   deleteRatingsService,
   fetchRatingsService,
@@ -22,7 +22,6 @@ export default function useRatings(page: number) {
       queryKey: ["ratings", pageNumber],
       placeholderData: (prevData) => prevData,
       retry: false,
-      networkMode: "always",
       refetchOnReconnect: true,
       staleTime: 120_000,
       // gcTime: 1000 * 60 * 5,
