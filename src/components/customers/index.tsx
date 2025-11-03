@@ -43,9 +43,7 @@ export default function Customers() {
   const debouncedValue = useDebounce(search, 600);
 
   useEffect(() => {
-    if (!debouncedValue?.trim()) {
-      return;
-    }
+    if (!debouncedValue?.trim()) return;
 
     toast.dismiss();
 
@@ -73,7 +71,7 @@ export default function Customers() {
   }, [debouncedValue]);
 
   useEffect(() => {
-    if (search.trim().length === 0) setTimeout(() => setSearchData([]), 600);
+    if (search.trim().length === 0) setTimeout(() => setSearchData([]), 2000);
   }, [search]);
 
   const allCustomers =

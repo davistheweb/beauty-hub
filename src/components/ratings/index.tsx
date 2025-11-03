@@ -32,10 +32,8 @@ export default function Ratings() {
   const debouncedValue = useDebounce(search, 600);
 
   useEffect(() => {
-    if (!debouncedValue?.trim()) {
-      setTimeout(() => setSearchData([]), 600);
-      return;
-    }
+    if (!debouncedValue?.trim()) return;
+
     toast.dismiss();
 
     const toastId = toast.loading("Searching ratings...");
@@ -62,7 +60,7 @@ export default function Ratings() {
   }, [debouncedValue]);
 
   useEffect(() => {
-    if (search.trim().length === 0) setTimeout(() => setSearchData([]), 600);
+    if (search.trim().length === 0) setTimeout(() => setSearchData([]), 2000);
   }, [search]);
 
   const handleDeleteRating = (id: number) => {
