@@ -62,7 +62,7 @@ export default function Ratings() {
   }, [debouncedValue]);
 
   useEffect(() => {
-    if (search.trim().length === 0) setSearchData([]);
+    if (search.trim().length === 0) setTimeout(() => setSearchData([]), 600);
   }, [search]);
 
   const handleDeleteRating = (id: number) => {

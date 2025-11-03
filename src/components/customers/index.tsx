@@ -44,7 +44,6 @@ export default function Customers() {
 
   useEffect(() => {
     if (!debouncedValue?.trim()) {
-      setTimeout(() => setSearchData([]), 600);
       return;
     }
 
@@ -74,7 +73,7 @@ export default function Customers() {
   }, [debouncedValue]);
 
   useEffect(() => {
-    if (search.trim().length === 0) setSearchData([]);
+    if (search.trim().length === 0) setTimeout(() => setSearchData([]), 600);
   }, [search]);
 
   const allCustomers =
