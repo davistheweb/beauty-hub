@@ -1,4 +1,5 @@
 "use client";
+import numberFormat from "@/lib/utils/numberFormat";
 import Chart from "react-apexcharts";
 
 interface IDashboardChartProps {
@@ -71,7 +72,7 @@ const DashboardChart = ({ labels, series }: IDashboardChartProps) => {
               </div>
 
               <span className="text-sm font-semibold text-[#070500]">
-                {value}
+                {numberFormat(value)}
                 {/* ({percentage}%) */}
               </span>
             </div>
