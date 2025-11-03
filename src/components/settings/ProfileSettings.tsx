@@ -11,11 +11,9 @@ import {
 import { useProfile } from "@/hooks";
 import { ProfileFormValues } from "@/lib/validators/ProfileFormSchema";
 import { getErrorResponse } from "@/services/helpers";
-import { RootState } from "@/store";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { UseFormReturn } from "react-hook-form";
-import { useSelector } from "react-redux";
 import { toast } from "sonner";
 import { CustomUploadIcon } from "../icons";
 import { Button } from "../ui/button";
@@ -31,7 +29,6 @@ export default function ProfileSettings({
   profileForm: UseFormReturn<ProfileFormValues>;
 }) {
   const [isUploading, setIsUploadloading] = useState<boolean>(false);
-  const adminState = useSelector((state: RootState) => state.admin.profile);
   const { profileInfo, update_profile, updateAvatar, profileLoading } =
     useProfile();
 
