@@ -237,9 +237,7 @@ export default function Bookings() {
                           </p>
                         </span>
                         <span className="flex items-center justify-between">
-                          <h1 className="font-medium">
-                            Time and Date
-                          </h1>
+                          <h1 className="font-medium">Time and Date</h1>
                           <p className="text-[14px] font-medium text-[#5C5C5C]">
                             {bookingDetail.booking_date}
                           </p>

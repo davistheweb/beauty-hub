@@ -182,33 +182,25 @@ export default function Dashboard() {
                           >
                             <div className="flex h-[250px] w-full flex-col gap-5 p-4">
                               <span className="flex items-center justify-between">
-                                <h1 className="font-medium">
-                                  Customer
-                                </h1>
+                                <h1 className="font-medium">Customer</h1>
                                 <p className="text-[14px] font-medium text-[#5C5C5C]">
                                   {bookingDetail.user.name}
                                 </p>
                               </span>
                               <span className="flex items-center justify-between">
-                                <h1 className="font-medium">
-                                  Packages
-                                </h1>
+                                <h1 className="font-medium">Packages</h1>
                                 <p className="text-[14px] font-medium text-[#5C5C5C]">
                                   {bookingDetail.package.name}
                                 </p>
                               </span>
                               <span className="flex items-center justify-between">
-                                <h1 className="font-medium">
-                                  Time and Date
-                                </h1>
+                                <h1 className="font-medium">Time and Date</h1>
                                 <p className="text-[14px] font-medium text-[#5C5C5C]">
                                   {bookingDetail.booking_date}
                                 </p>
                               </span>
                               <span className="flex items-center justify-between">
-                                <h1 className="font-medium">
-                                  Status
-                                </h1>
+                                <h1 className="font-medium">Status</h1>
                                 <span
                                   className={`rounded-[38.32px] bg-[#EDF5FE] select-none ${bookingDetail.status === "pending" ? "text-[#004CE8]" : bookingDetail.status === "completed" ? "text-[#00C247]" : bookingDetail.status === "confirmed" ? "text-[#333]" : bookingDetail.status === "cancelled" && "text-[#FF3333]"} flex h-[25px] items-center justify-center gap-2 px-2`}
                                 >

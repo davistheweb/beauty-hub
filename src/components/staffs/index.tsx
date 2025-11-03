@@ -224,9 +224,7 @@ export default function Staffs() {
                       >
                         <div className="flex h-[250px] w-full flex-col gap-5 p-4">
                           <span className="flex items-center justify-between">
-                            <h1 className="font-medium">
-                              Staff Name
-                            </h1>
+                            <h1 className="font-medium">Staff Name</h1>
                             <p className="text-[14px] font-medium text-[#5C5C5C]">
                               {staff.name}
                             </p>
@@ -240,9 +238,7 @@ export default function Staffs() {
                             </p>
                           </span> */}
                           <span className="flex items-center justify-between">
-                            <h1 className="font-medium">
-                              Joined Date
-                            </h1>
+                            <h1 className="font-medium">Joined Date</h1>
                             <p className="text-[14px] font-medium text-[#5C5C5C]">
                               {new Date(staff.created_at)
                                 .toLocaleDateString()

@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import Chart from "react-apexcharts";
 
 interface IDashboardChartProps {
@@ -13,7 +12,7 @@ const DashboardChart = ({ labels, series }: IDashboardChartProps) => {
 
   // const total = series.reduce((a, b) => a + b, 0);
 
-  const [chartData] = useState({
+  const chartData = {
     series,
     options: {
       chart: {
@@ -40,14 +39,14 @@ const DashboardChart = ({ labels, series }: IDashboardChartProps) => {
       stroke: { width: 10 },
       dataLabels: { enabled: false },
     },
-  });
+  };
 
   return (
     <div className="flex h-full flex-col items-center gap-5 space-y-4 p-5 lg:w-[292px]">
       {/* Donut chart */}
       <Chart
         options={chartData.options}
-        series={chartData.series}
+        series={series}
         type="donut"
         width="300"
       />
