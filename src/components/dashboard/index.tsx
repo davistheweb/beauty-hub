@@ -182,7 +182,7 @@ export default function Dashboard() {
                           >
                             <div className="flex h-[250px] w-full flex-col gap-5 p-4">
                               <span className="flex items-center justify-between">
-                                <h1 className="text-[18px] font-medium">
+                                <h1 className="font-medium">
                                   Customer
                                 </h1>
                                 <p className="text-[14px] font-medium text-[#5C5C5C]">
@@ -190,7 +190,7 @@ export default function Dashboard() {
                                 </p>
                               </span>
                               <span className="flex items-center justify-between">
-                                <h1 className="text-[18px] font-medium">
+                                <h1 className="font-medium">
                                   Packages
                                 </h1>
                                 <p className="text-[14px] font-medium text-[#5C5C5C]">
@@ -198,7 +198,7 @@ export default function Dashboard() {
                                 </p>
                               </span>
                               <span className="flex items-center justify-between">
-                                <h1 className="text-[18px] font-medium">
+                                <h1 className="font-medium">
                                   Time and Date
                                 </h1>
                                 <p className="text-[14px] font-medium text-[#5C5C5C]">
@@ -206,7 +206,7 @@ export default function Dashboard() {
                                 </p>
                               </span>
                               <span className="flex items-center justify-between">
-                                <h1 className="text-[18px] font-medium">
+                                <h1 className="font-medium">
                                   Status
                                 </h1>
                                 <span
