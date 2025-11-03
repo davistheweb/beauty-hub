@@ -1,7 +1,7 @@
 "use client";
+import getErrorResponse from "@/services/helpers";
 import { getNotificationsService } from "@/services/notificationsService";
 import { IErrorInfo } from "@/types/Error";
-import getErrorMessage from "@/utils/getErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useNotifications() {
@@ -24,7 +24,7 @@ export default function useNotifications() {
   const hasNotification: boolean = notifications?.length > 0;
 
   const notificationErrorMessage = isError
-    ? getErrorMessage(error)
+    ? getErrorResponse(error)
     : ({ type: "unknown", message: "Something went wrong" } as IErrorInfo);
 
   console.log(notifications);

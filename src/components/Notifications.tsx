@@ -2,10 +2,10 @@
 
 import { useNotifications } from "@/hooks";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { getDateGroup } from "@/lib/utils/getDateGroup";
 import { AppDispatch, RootState } from "@/store";
 import { setOpenNotifications } from "@/store/utils/notificationStateSlice";
 import { INotification } from "@/types/INotifications";
-import { getDateGroup } from "@/utils/getDateGroup";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import React, { useEffect } from "react";

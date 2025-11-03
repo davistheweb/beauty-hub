@@ -8,11 +8,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { ProfileFormValues } from "@/lib/validators/ProfileFormSchema";
 import { getErrorResponse } from "@/services/helpers";
 import { changeProfileAvatar, updateProfile } from "@/services/profile";
 import { AppDispatch, RootState } from "@/store";
 import { setProfile } from "@/store/utils/adminProfileSlice";
-import { ProfileFormValues } from "@/utils/validators/ProfileFormSchema";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { UseFormReturn } from "react-hook-form";
@@ -61,7 +61,7 @@ export default function ProfileSettings({
       })
       .catch((err) => {
         const error = getErrorResponse(err);
-        toast.error(error?.errorMsg?.message || "Something went wrong");
+        toast.error(error?.message || "Something went wrong");
       })
       .finally(() => setComponentIsUploading(false));
   };
@@ -102,7 +102,7 @@ export default function ProfileSettings({
         })
         .catch((err) => {
           const error = getErrorResponse(err);
-          toast.error(error?.errorMsg?.message || "Something went wrong");
+          toast.error(error?.message || "Something went wrong");
         })
         .finally(() => {
           setIsUploadloading(false);

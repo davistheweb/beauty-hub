@@ -1,4 +1,4 @@
-import numberFormat from "@/utils/numberFormat";
+import numberFormat from "@/lib/utils/numberFormat";
 import { Dot } from "lucide-react";
 import Image from "next/image";
 import { MarkGreenIcon } from "../icons";

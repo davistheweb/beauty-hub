@@ -4,8 +4,8 @@ import {
   fetchBannersService,
   updateBannerService,
 } from "@/services/BannerSettings";
+import getErrorResponse from "@/services/helpers";
 import { IErrorInfo } from "@/types/Error";
-import getErrorMessage from "@/utils/getErrorMessage";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function useBanner() {
@@ -30,7 +30,7 @@ export default function useBanner() {
   const banners = data?.data?.data?.data || [];
 
   const fetchBannerErrorMessage = isFetchBannerError
-    ? getErrorMessage(error)
+    ? getErrorResponse(error)
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
   const deleteBanner = useMutation({

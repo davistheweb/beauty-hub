@@ -10,12 +10,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { usePackages } from "@/hooks";
-import { IPackage } from "@/types/IPackages";
-import getErrorMessage from "@/utils/getErrorMessage";
 import {
   addServiceToPackageFormSchema,
   addServiceToPackageFormValues,
-} from "@/utils/validators/ServiceAndPackageFormSchema";
+} from "@/lib/validators/ServiceAndPackageFormSchema";
+import getErrorResponse from "@/services/helpers";
+import { IPackage } from "@/types/IPackages";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import Image from "next/image";
@@ -69,7 +69,7 @@ export const ServiceDetails = ({
           }, 1000);
         },
         onError: (err) => {
-          const error = getErrorMessage(err);
+          const error = getErrorResponse(err);
           toast.error(error.message);
         },
       },
@@ -93,7 +93,7 @@ export const ServiceDetails = ({
         }, 1000);
       },
       onError: (err) => {
-        const error = getErrorMessage(err);
+        const error = getErrorResponse(err);
         toast.dismiss(toastID);
         toast.error(error.message);
       },

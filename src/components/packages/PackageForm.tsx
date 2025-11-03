@@ -1,14 +1,14 @@
 "use client";
 import { usePackages } from "@/hooks";
-import { IPackage } from "@/types/IPackages";
-import getErrorMessage from "@/utils/getErrorMessage";
 import {
   addPackageFormSchema,
   addPackageFormValues,
   PackageFormValues,
   updatePackageFormSchema,
   updatePackageFormValues,
-} from "@/utils/validators/ServiceAndPackageFormSchema";
+} from "@/lib/validators/ServiceAndPackageFormSchema";
+import getErrorResponse from "@/services/helpers";
+import { IPackage } from "@/types/IPackages";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import Image from "next/image";
@@ -201,7 +201,7 @@ const PackageForm = ({
           }, 1000);
         },
         onError: (err) => {
-          const error = getErrorMessage(err);
+          const error = getErrorResponse(err);
           toast.error(error.message);
           console.log(err);
         },
@@ -246,7 +246,7 @@ const PackageForm = ({
         },
 
         onError: (err) => {
-          const errMsg = getErrorMessage(err);
+          const errMsg = getErrorResponse(err);
           toast.error(errMsg.message);
           console.log(err);
         },

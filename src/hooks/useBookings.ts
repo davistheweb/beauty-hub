@@ -3,9 +3,9 @@ import {
   fetchBookingDetails,
   updateBookingsStatus,
 } from "@/services/bookingsService";
+import getErrorResponse from "@/services/helpers";
 import { IErrorInfo } from "@/types/Error";
 import { IBookings } from "@/types/IBookings";
-import getErrorMessage from "@/utils/getErrorMessage";
 import {
   queryOptions,
   useMutation,
@@ -54,7 +54,7 @@ const useBookings = (page: number) => {
   console.log("Bookings are: ", bookings);
 
   const fetchBookingsErrorMessage = isFetchBookingsError
-    ? getErrorMessage(error)
+    ? getErrorResponse(error)
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
   return {
@@ -99,7 +99,7 @@ const useBookingDetailsByID = (bookingId?: number) => {
   const bookingDetails: IBookings = bookingDetailsData?.data.data;
 
   const fetchBookingDetailsErrorMessage = isFetchBookingDetailsError
-    ? getErrorMessage(error)
+    ? getErrorResponse(error)
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
   console.log("Booking detail is", bookingDetails);

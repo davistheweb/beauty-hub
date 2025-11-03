@@ -22,12 +22,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useBookingDetailsByID } from "@/hooks";
-import { IErrorInfo } from "@/types/Error";
-import getErrorMessage from "@/utils/getErrorMessage";
 import {
   BookingStatusFormValues,
   bookingStatusSchema,
-} from "@/utils/validators/updateBookingDetailsSchema";
+} from "@/lib/validators/updateBookingDetailsSchema";
+import getErrorResponse from "@/services/helpers";
+import { IErrorInfo } from "@/types/Error";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -94,7 +94,7 @@ export const BookingDetailsDialog = ({
           }, 1000);
         },
         onError: (err) => {
-          const error = getErrorMessage(err);
+          const error = getErrorResponse(err);
           toast.error(error.message);
         },
       },

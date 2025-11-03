@@ -1,8 +1,8 @@
 import { IErrorInfo } from "@/types/Error";
 import { AxiosError } from "axios";
 
-export default function getErrorMessage(error: unknown): IErrorInfo {
-  console.log("error getErrorMessage", error);
+export default function getErrorResponse(error: unknown): IErrorInfo {
+  console.log("error getErrorResponse", error);
 
   if (!error) return { type: "unknown", message: "An unknown error occurred." };
 

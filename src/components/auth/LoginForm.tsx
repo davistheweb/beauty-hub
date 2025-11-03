@@ -9,15 +9,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  LoginFormSchema,
+  LoginFormValues,
+} from "@/lib/validators/LoginFormSchema";
 import { loginAdmin } from "@/services/Auth";
 import { getErrorResponse } from "@/services/helpers";
 import { storeAccessBearerToken } from "@/services/server";
 import { AppDispatch } from "@/store";
 import { setProfile } from "@/store/utils/adminProfileSlice";
-import {
-  LoginFormSchema,
-  LoginFormValues,
-} from "@/utils/validators/LoginFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Cookies from "js-cookie";
 import { Eye, EyeOff } from "lucide-react";
@@ -65,7 +65,7 @@ export default function LoginForm() {
       })
       .catch((err) => {
         const error = getErrorResponse(err);
-        toast.error(error?.errorMsg?.message || "Something went wrong");
+        toast.error(error?.message || "Something went wrong");
       });
   };
 

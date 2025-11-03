@@ -1,7 +1,7 @@
 "use client";
 
 import { useCustomerDetailsByID } from "@/hooks";
-import getErrorMessage from "@/utils/getErrorMessage";
+import getErrorResponse from "@/services/helpers";
 import { Dot, Mail } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -35,7 +35,7 @@ export const CustomerDetails = ({ customerId }: { customerId: string }) => {
         onError: (err) => {
           console.log(err);
 
-          const error = getErrorMessage(err);
+          const error = getErrorResponse(err);
           toast.error(error.message || "Something went wrong");
           console.log(error);
         },
@@ -46,7 +46,7 @@ export const CustomerDetails = ({ customerId }: { customerId: string }) => {
           toast.success(data.message);
         },
         onError: (err) => {
-          const error = getErrorMessage(err);
+          const error = getErrorResponse(err);
           toast.error(error.message || "Something went wrong");
           console.log(error);
         },

@@ -1,15 +1,15 @@
 "use client";
 
-import { RootState } from "@/store";
-import { TCurrentSettingTab } from "@/types";
 import {
   ProfileFormSchema,
   ProfileFormValues,
-} from "@/utils/validators/ProfileFormSchema";
+} from "@/lib/validators/ProfileFormSchema";
 import {
   SecurityFormSchema,
   SecurityFormValues,
-} from "@/utils/validators/SecurityFormSchema";
+} from "@/lib/validators/SecurityFormSchema";
+import { RootState } from "@/store";
+import { TCurrentSettingTab } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Cookies from "js-cookie";
 import { useState } from "react";

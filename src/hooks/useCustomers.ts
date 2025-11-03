@@ -3,9 +3,9 @@ import {
   fetchCustomerDetails,
   fetchCustomers,
 } from "@/services/customersServices";
+import getErrorResponse from "@/services/helpers";
 import { IErrorInfo } from "@/types/Error";
 import { ICustomer, ICustomerDetails } from "@/types/ICustomers";
-import getErrorMessage from "@/utils/getErrorMessage";
 import {
   queryOptions,
   useMutation,
@@ -62,7 +62,7 @@ const useCustomers = (page: number) => {
     : [];
 
   const fetchCustomersErrorMessage = isFetchCustomersError
-    ? getErrorMessage(error)
+    ? getErrorResponse(error)
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
   return {
@@ -125,7 +125,7 @@ const useCustomerDetailsByID = (customerId?: string) => {
       : null;
 
   const fetchCustomerDetailsErrorMessage = isFetchCustomerDetailsError
-    ? getErrorMessage(error)
+    ? getErrorResponse(error)
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
   return {

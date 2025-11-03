@@ -8,9 +8,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { SecurityFormValues } from "@/lib/validators/SecurityFormSchema";
 import { getErrorResponse } from "@/services/helpers";
 import { updateAccountPassword } from "@/services/profile";
-import { SecurityFormValues } from "@/utils/validators/SecurityFormSchema";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
@@ -41,7 +41,7 @@ export default function SecuritySettings({
       })
       .catch((err) => {
         const error = getErrorResponse(err);
-        toast.error(error?.errorMsg?.message || "Something went wrong");
+        toast.error(error?.message || "Something went wrong");
       })
       .finally(() => setComponentIsUploading(false));
   };

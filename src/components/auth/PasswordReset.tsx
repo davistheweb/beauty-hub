@@ -9,11 +9,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { createNewPassword } from "@/services/Auth";
 import {
   PasswordResetFormSchema,
   PasswordResetFormValues,
-} from "@/utils/validators/PasswordResetFormSchema";
+} from "@/lib/validators/PasswordResetFormSchema";
+import { createNewPassword } from "@/services/Auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "nextjs-toploader/app";

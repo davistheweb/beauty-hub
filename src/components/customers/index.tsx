@@ -8,8 +8,8 @@ import { Label } from "@/components/ui/label";
 import SearchInput from "@/components/ui/SearchInput";
 import { customersTableHeaders } from "@/data";
 import { useCustomers, useDebounce } from "@/hooks";
+import getErrorResponse from "@/services/helpers";
 import { ICustomer } from "@/types/ICustomers";
-import getErrorMessage from "@/utils/getErrorMessage";
 import { Dot, Eye } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -62,7 +62,7 @@ export default function Customers() {
         onError: (err) => {
           toast.dismiss(toastId);
           setSearchData([]);
-          const error = getErrorMessage(err);
+          const error = getErrorResponse(err);
           toast.error(error.message);
         },
       },

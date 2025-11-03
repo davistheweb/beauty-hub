@@ -3,8 +3,8 @@ import { CaretDownIcon } from "@/components/icons";
 import { Label } from "@/components/ui/label";
 import SearchInput from "@/components/ui/SearchInput";
 import { useDebounce, useRatings } from "@/hooks";
+import getErrorResponse from "@/services/helpers";
 import { IRating } from "@/types/IRatings";
-import getErrorMessage from "@/utils/getErrorMessage";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { NoDataFoundElement } from "../no-data";
@@ -51,7 +51,7 @@ export default function Ratings() {
         onError: (err) => {
           toast.dismiss(toastId);
           setSearchData([]);
-          const error = getErrorMessage(err);
+          const error = getErrorResponse(err);
           toast.error(error.message);
         },
       },
@@ -73,7 +73,7 @@ export default function Ratings() {
       },
       onError: (err) => {
         toast.dismiss(toastId);
-        const error = getErrorMessage(err);
+        const error = getErrorResponse(err);
         toast.error(error.message);
       },
     });
