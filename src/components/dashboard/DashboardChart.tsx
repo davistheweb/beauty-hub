@@ -1,5 +1,6 @@
 "use client";
 import numberFormat from "@/lib/utils/numberFormat";
+import ApexCharts from "apexcharts";
 import Chart from "react-apexcharts";
 
 interface IDashboardChartProps {
@@ -8,36 +9,38 @@ interface IDashboardChartProps {
 }
 
 const DashboardChart = ({ labels, series }: IDashboardChartProps) => {
-  const colors = ["#1AB65C", "#40C277", "#66CE92", "#8CDAAD", "#B3E7C9"];
+  const colors = ["#1AB65C", "#40C277", "#66CE92", "#8CDAAD", "#8CDAAD"];
   // const series = [10, 20, 15, 30, 25];
 
   // const total = series.reduce((a, b) => a + b, 0);
 
-  const chartData = {
-    options: {
-      chart: {
-        toolbar: { show: false },
-      },
-      labels,
-      colors,
-      legend: { show: false },
-      plotOptions: {
-        pie: {
-          donut: {
-            size: "75%",
-            labels: {
+  const chartData: ApexCharts.ApexOptions = {
+    chart: {
+      toolbar: { show: false },
+    },
+    labels,
+    colors,
+    legend: { show: false },
+    plotOptions: {
+      pie: {
+        expandOnClick: false,
+        donut: {
+          size: "80%",
+          labels: {
+            show: true,
+            total: {
               show: true,
-              total: {
-                show: true,
-                label: "",
-                formatter: () => "All Packages",
-              },
+              label: "",
+              formatter: () => "All Packages",
             },
           },
         },
       },
-      stroke: { width: 10 },
-      dataLabels: { enabled: false },
+    },
+    dataLabels: { enabled: false },
+    stroke: {
+      width: 6,
+      colors: ["#fff"],
     },
   };
 
@@ -45,7 +48,7 @@ const DashboardChart = ({ labels, series }: IDashboardChartProps) => {
     <div className="flex h-full flex-col items-center gap-5 space-y-4 p-5 lg:w-[292px]">
       {/* Donut chart */}
       <Chart
-        options={chartData.options}
+        options={chartData}
         series={series}
         type="donut"
         width="300"

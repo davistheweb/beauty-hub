@@ -86,17 +86,17 @@ export default function MobileNavigation() {
                     2,
                   )}
                   fill
-                  className="object-cover"
+                  className="object-cover text-[14px]"
                   unoptimized
                   priority
                 />
               </div>
-              <AvatarFallback className="text-[12px]">
+              {/* <AvatarFallback className="text-[12px]">
                 {getInitials(
                   profileInfo?.name || (adminState?.fullName as string),
                   2,
                 )}
-              </AvatarFallback>
+              </AvatarFallback> */}
             </Avatar>
           )}
         </div>
