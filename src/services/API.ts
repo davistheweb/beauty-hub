@@ -52,7 +52,7 @@ const get_bearer_token = async () => {
       sameSite: "strict",
     });
 
-  console.log("token from brfn", token);
+  // console.log("token from brfn", token);
 
   return token;
 };
@@ -63,10 +63,8 @@ API.interceptors.request.use(
   ): Promise<InternalAxiosRequestConfig> => {
     const bearer_token = await get_bearer_token();
 
-    console.log("Cookie from js-cookie", bearer_token);
-
     if (bearer_token !== undefined) {
-      console.log("AccessBearerToken from apiWithAuth:", bearer_token);
+      // console.log("AccessBearerToken from apiWithAuth:", bearer_token);
 
       config.headers.Authorization = `Bearer ${bearer_token}`;
     }
