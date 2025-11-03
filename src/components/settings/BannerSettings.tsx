@@ -143,16 +143,15 @@ export default function BannerSettings({
       await addBanner.mutate(formData, {
         onSuccess: (data) => {
           toast.success(data.message);
-          setComponentIsUploading(false);
           addBannerForm.reset();
           setPreviewImage(null);
         },
         onError: (err) => {
           const error = getErrorResponse(err);
           toast.error(error.message);
-          setComponentIsUploading(false);
           console.log(err);
         },
+        onSettled: () => setComponentIsUploading(false),
       });
     } else if (bannerAction === "updateBanner") {
       if (
@@ -182,7 +181,7 @@ export default function BannerSettings({
       await updateBanner.mutate(formData, {
         onSuccess: (data) => {
           toast.success(data.message);
-          setComponentIsUploading(false);
+
           editBannerForm.reset();
           setPreviewImage(null);
           setUpdateBannerValues(null);
@@ -194,9 +193,10 @@ export default function BannerSettings({
         onError: (err) => {
           const error = getErrorResponse(err);
           toast.error(error.message);
-          setComponentIsUploading(false);
+
           console.log(err);
         },
+        onSettled: () => setComponentIsUploading(false),
       });
     }
   };
@@ -208,16 +208,13 @@ export default function BannerSettings({
       onSuccess: (data) => {
         toast.dismiss(toastID);
         toast.success(data.message);
-        setComponentIsUploading(false);
       },
       onError: (err) => {
         const error = getErrorResponse(err);
         toast.dismiss(toastID);
         toast.error(error.message);
-        setComponentIsUploading(false);
-
-        console.log(err);
       },
+      onSettled: () => setComponentIsUploading(false),
     });
   };
 

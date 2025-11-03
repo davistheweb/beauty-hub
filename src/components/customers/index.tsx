@@ -57,14 +57,13 @@ export default function Customers() {
         onSuccess: (data) => {
           console.log(data.data.data.data);
           setSearchData(data.data.data.data);
-          toast.dismiss(toastId);
         },
         onError: (err) => {
-          toast.dismiss(toastId);
           setSearchData([]);
           const error = getErrorResponse(err);
           toast.error(error.message);
         },
+        onSettled: () => toast.dismiss(toastId),
       },
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
