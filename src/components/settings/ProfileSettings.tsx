@@ -142,7 +142,7 @@ export default function ProfileSettings({
       //     setComponentIsUploading(false);
       //   });
     },
-    [adminState, updateAvatar, setComponentIsUploading],
+    [updateAvatar, setComponentIsUploading],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
