@@ -4,7 +4,7 @@ import {
   fetchBannersService,
   updateBannerService,
 } from "@/services/BannerSettings";
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import { IErrorInfo } from "@/types/Error";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 

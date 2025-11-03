@@ -1,5 +1,5 @@
 import { suspendService, unSuspendService } from "@/services/controlService";
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import {
   addStaffService,
   fetchStaffs,

@@ -14,7 +14,7 @@ import {
   addServiceToPackageFormSchema,
   addServiceToPackageFormValues,
 } from "@/lib/validators/ServiceAndPackageFormSchema";
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import { IPackage } from "@/types/IPackages";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";

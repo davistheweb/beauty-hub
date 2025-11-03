@@ -26,7 +26,7 @@ import {
   BookingStatusFormValues,
   bookingStatusSchema,
 } from "@/lib/validators/updateBookingDetailsSchema";
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import { IErrorInfo } from "@/types/Error";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";

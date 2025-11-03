@@ -1,7 +1,7 @@
 "use client";
 
 import { useCustomerDetailsByID } from "@/hooks";
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import { Dot, Mail } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";

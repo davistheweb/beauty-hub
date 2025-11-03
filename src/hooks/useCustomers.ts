@@ -3,7 +3,7 @@ import {
   fetchCustomerDetails,
   fetchCustomers,
 } from "@/services/customersServices";
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import { IErrorInfo } from "@/types/Error";
 import { ICustomer, ICustomerDetails } from "@/types/ICustomers";
 import {

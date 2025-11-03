@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import SearchInput from "@/components/ui/SearchInput";
 import { customersTableHeaders } from "@/data";
 import { useCustomers, useDebounce } from "@/hooks";
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import { ICustomer } from "@/types/ICustomers";
 import { Dot, Eye } from "lucide-react";
 import Link from "next/link";

@@ -1,4 +1,4 @@
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import {
   addPackageAndService,
   addSerive,

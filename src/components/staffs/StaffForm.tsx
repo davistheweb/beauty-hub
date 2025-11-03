@@ -7,7 +7,7 @@ import {
   updatedStaffFormSchema,
   updatedStaffFormValues,
 } from "@/lib/validators/StaffFormSchema";
-import getErrorResponse from "@/services/helpers";
+import { getErrorResponse } from "@/services/helpers";
 import { IStaff } from "@/types/IStaff";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Plus } from "lucide-react";
