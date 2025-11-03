@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/form";
 import { InputOTP, InputOTPSlot } from "@/components/ui/input-otp";
 import { resendOtp, verifyOtpCode } from "@/services/Auth";
+import getErrorResponse from "@/services/helpers";
 import { TReoveryStage } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
@@ -44,7 +45,7 @@ export const OtpForm = ({
       })
       .catch((err) => {
         toast.error(err?.response?.data?.message);
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -69,7 +70,10 @@ export const OtpForm = ({
           toast.success(res?.data?.message);
         }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        const error = getErrorResponse(err);
+        toast.error(error.message);
+      })
       .finally(() => {
         SetResendOtpCountdown(60);
         setIsResending((prev) => !prev);

@@ -33,11 +33,11 @@ export const CustomerDetails = ({ customerId }: { customerId: string }) => {
           toast.success(data.message);
         },
         onError: (err) => {
-          console.log(err);
+          // console.log(err);
 
           const error = getErrorResponse(err);
           toast.error(error.message || "Something went wrong");
-          console.log(error);
+          // console.log(error);
         },
       });
     } else if (customerDetails?.status === "suspended") {
@@ -48,7 +48,7 @@ export const CustomerDetails = ({ customerId }: { customerId: string }) => {
         onError: (err) => {
           const error = getErrorResponse(err);
           toast.error(error.message || "Something went wrong");
-          console.log(error);
+          // console.log(error);
         },
       });
     }

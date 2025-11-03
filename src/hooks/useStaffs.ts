@@ -84,7 +84,7 @@ const useStaff = (page: number = 1) => {
 
   const staffs: IStaff[] | [] = allStaffsData?.data?.data?.data || [];
 
-  console.log(staffs);
+  // console.log(staffs);
 
   const fetchStaffsErrorMessage = isFetchStaffsError
     ? getErrorResponse(error)

@@ -59,7 +59,7 @@ export default function Notifications() {
     { Today: [], Yesterday: [], "Other days": [] },
   );
 
-  console.log(groupedNotifications);
+  // console.log(groupedNotifications);
 
   return (
     <AnimatePresence>

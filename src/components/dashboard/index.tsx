@@ -23,9 +23,9 @@ export default function Dashboard() {
     (top_package) => top_package.package.name,
   );
 
-  console.log(series);
+  // console.log(series);
 
-  console.log(labels);
+  // console.log(labels);
 
   if (isError)
     return (

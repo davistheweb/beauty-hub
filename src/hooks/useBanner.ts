@@ -25,7 +25,7 @@ export default function useBanner() {
     gcTime: 1000 * 60 * 5,
   });
 
-  console.log(data);
+  // console.log(data);
 
   const banners = data?.data?.data?.data || [];
 

@@ -129,7 +129,7 @@ export default function BannerSettings({
   const handleAddOREditBannerAction = async (
     data: addBannerFormValues | editBannerFormValues,
   ) => {
-    console.log(data);
+    // console.log(data);
     if (bannerAction === "addBanner") {
       setComponentIsUploading(true);
       const addBannerFormDataValues = data as addBannerFormValues;
@@ -149,7 +149,7 @@ export default function BannerSettings({
         onError: (err) => {
           const error = getErrorResponse(err);
           toast.error(error.message);
-          console.log(err);
+          // console.log(err);
         },
         onSettled: () => setComponentIsUploading(false),
       });
@@ -194,7 +194,7 @@ export default function BannerSettings({
           const error = getErrorResponse(err);
           toast.error(error.message);
 
-          console.log(err);
+          // console.log(err);
         },
         onSettled: () => setComponentIsUploading(false),
       });
@@ -420,7 +420,7 @@ export default function BannerSettings({
                     setOpenDialog((prev) => !prev);
                     if (data) {
                       setUpdateBannerValues(data);
-                      console.log(data);
+                      // console.log(data);
                     }
                   }}
                 />

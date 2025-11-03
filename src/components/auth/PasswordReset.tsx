@@ -54,7 +54,7 @@ export default function PasswordReset({ userMail }: { userMail: string }) {
       });
   };
 
-  console.log(userMail);
+  // console.log(userMail);
 
   return (
     <div className="w-full bg-white">

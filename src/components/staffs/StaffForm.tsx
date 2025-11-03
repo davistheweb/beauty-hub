@@ -121,7 +121,7 @@ const StaffForm = ({
           onError: (err) => {
             const error = getErrorResponse(err);
             toast.error(error.message || "Something went wrong");
-            console.log(error);
+            // console.log(error);
           },
         },
       );
@@ -149,7 +149,7 @@ const StaffForm = ({
           onError: (err) => {
             const error = getErrorResponse(err);
             toast.error(error.message || "Something went wrong");
-            console.log(err);
+            // console.log(err);
           },
         },
       );

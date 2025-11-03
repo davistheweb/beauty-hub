@@ -51,7 +51,7 @@ const useBookings = (page: number) => {
   ]);
 
   const bookings: IBookings[] | [] = allBookingsData?.data?.data?.data || [];
-  console.log("Bookings are: ", bookings);
+  // console.log("Bookings are: ", bookings);
 
   const fetchBookingsErrorMessage = isFetchBookingsError
     ? getErrorResponse(error)
@@ -84,7 +84,7 @@ const useBookingDetailsByID = (bookingId?: number) => {
     gcTime: 1000 * 60 * 5,
   });
 
-  console.log(error?.message);
+  // console.log(error?.message);
 
   const updateBookingStatus = useMutation({
     mutationFn: updateBookingsStatus,
@@ -102,7 +102,7 @@ const useBookingDetailsByID = (bookingId?: number) => {
     ? getErrorResponse(error)
     : ({ type: "unknown", message: "" } as IErrorInfo);
 
-  console.log("Booking detail is", bookingDetails);
+  // console.log("Booking detail is", bookingDetails);
 
   return {
     updateBookingStatus,

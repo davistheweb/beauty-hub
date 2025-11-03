@@ -41,7 +41,7 @@ export default function Staffs() {
   const handleViewStaff = (staff: IStaff) => {
     setSelectedStaff(staff);
     setOpenStaffDialog((prev) => !prev);
-    console.log(staff.status);
+    // console.log(staff.status);
   };
 
   if (isFetchStaffsError)

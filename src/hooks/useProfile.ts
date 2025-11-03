@@ -40,7 +40,7 @@ export default function useProfile() {
 
   const profileInfo = data?.data[0];
 
-  console.log(profileInfo);
+  // console.log(profileInfo);
 
   const profileErrorMessage = isError
     ? getErrorResponse(error)
