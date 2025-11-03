@@ -71,11 +71,15 @@ export default function Customers() {
   }, [debouncedValue]);
 
   useEffect(() => {
-    if (search.trim().length === 0) setTimeout(() => setSearchData([]), 2000);
+    const timer = setTimeout(() => {
+      if (!search.trim().length) setSearchData([]);
+    }, 1500);
+
+    return () => clearTimeout(timer);
   }, [search]);
 
   const allCustomers =
-    searchData.length > 0 && search.length > 0 ? searchData : customers;
+    searchData.length > 0 && debouncedValue ? searchData : customers;
 
   // client side filtering
   const filteredCustomers = useMemo(() => {

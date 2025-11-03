@@ -60,7 +60,11 @@ export default function Ratings() {
   }, [debouncedValue]);
 
   useEffect(() => {
-    if (search.trim().length === 0) setTimeout(() => setSearchData([]), 2000);
+    const timer = setTimeout(() => {
+      if (!search.trim().length) setSearchData([]);
+    }, 1500);
+
+    return () => clearTimeout(timer);
   }, [search]);
 
   const handleDeleteRating = (id: number) => {
@@ -80,7 +84,7 @@ export default function Ratings() {
   };
 
   const allRatings =
-    searchData.length > 0 && search.length > 0 ? searchData : ratings;
+    searchData.length > 0 && debouncedValue ? searchData : ratings;
 
   if (isFetchRatingsError)
     return (
