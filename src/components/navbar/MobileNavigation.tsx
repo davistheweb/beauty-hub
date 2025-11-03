@@ -1,20 +1,25 @@
 "use client";
-import { useNotifications } from "@/hooks";
+import { useNotifications, useProfile } from "@/hooks";
 import { AppDispatch, RootState } from "@/store";
 import { setOpenNotifications } from "@/store/utils/notificationStateSlice";
 import Cookies from "js-cookie";
 import { Menu } from "lucide-react";
-import Image from "next/image";
 import { useRouter } from "nextjs-toploader/app";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomBellICon, CustomDot } from "../icons";
 import Logo from "../ui/Logo";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Skeleton } from "../ui/skeleton";
 import MobileNavMenu from "./MobileNavMenu";
 
 export default function MobileNavigation() {
-  const avatar =
-    useSelector((state: RootState) => state.admin.profile?.avatar) || "";
+  //Fallback image url if profile fails to fetch
+
+  const avatar = useSelector((state: RootState) => state.admin.profile?.avatar);
+
+  const { profileInfo, profileLoading } = useProfile();
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -60,7 +65,7 @@ export default function MobileNavigation() {
           />
         </button>
         <div className="flex h-[27px] w-[27px] items-center justify-center overflow-hidden rounded-full">
-          <Image
+          {/* <Image
             src={avatar}
             alt="profile-img"
             width={27}
@@ -71,7 +76,26 @@ export default function MobileNavigation() {
               Cookies.remove("currentSettingsTab");
               router.push("/settings");
             }}
-          />
+          /> */}
+          {profileLoading ? (
+            <Skeleton className="bg-muted flex size-full items-center justify-center rounded-full" />
+          ) : (
+            <Avatar
+              onClick={() => {
+                Cookies.remove("currentSettingsTab");
+                router.push("/settings");
+              }}
+            >
+              <AvatarImage src={profileInfo?.avatar || avatar} />
+              <AvatarFallback>
+                {profileInfo?.name
+                  .split(" ")
+                  .map((n) => n[0].toUpperCase())
+                  .slice(2)
+                  .join("") || "A"}
+              </AvatarFallback>
+            </Avatar>
+          )}
         </div>
         <button onClick={() => setIsOpen((prev) => !prev)}>
           <Menu size={30} />
