@@ -14,7 +14,6 @@ const DashboardChart = ({ labels, series }: IDashboardChartProps) => {
   // const total = series.reduce((a, b) => a + b, 0);
 
   const chartData = {
-    series,
     options: {
       chart: {
         toolbar: { show: false },
