@@ -34,6 +34,7 @@ export async function middleware(request: NextRequest) {
         new URL("/auth/login", request.nextUrl),
       );
       response.cookies.delete("beauty_atk");
+      response.cookies.delete("cached_bearer_token");
       return response;
     }
 
@@ -47,6 +48,7 @@ export async function middleware(request: NextRequest) {
       new URL("/auth/login", request.nextUrl),
     );
     response.cookies.delete("beauty_atk");
+    response.cookies.delete("cached_bearer_token");
     return response;
   }
 }

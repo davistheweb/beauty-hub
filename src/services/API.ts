@@ -82,9 +82,8 @@ API.interceptors.request.use(
 
 API.interceptors.response.use(
   async (response: AxiosResponse): Promise<AxiosResponse> => {
-    if (response.headers["x-clear-client-cache"])
-      Cookies.remove("cached_bearer_token", { path: "/" });
-
+    // if (response.headers["x-clear-client-cache"])
+    //   Cookies.remove("cached_bearer_token", { path: "/" });
     return response;
   },
   async (error: AxiosError) => {
