@@ -1,29 +1,62 @@
 import { type NextRequest, NextResponse } from "next/server";
-export function middleware(request: NextRequest) {
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
+
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const token = request.cookies.get("beauty_atk")?.value;
 
-  const hasToken = request.cookies.has("beauty_atk");
-
-  console.log("userHasToken:", hasToken);
+  console.log("userHasToken:", !!token);
   console.log(pathname, "is pathname from middleware");
 
-  if (!hasToken && !pathname.startsWith("/auth/login")) {
-    const response = NextResponse.redirect(new URL("/auth/login", request.url));
+  const publicRoute = ["/auth/login", "/auth/account-recovery"];
+
+  const isPublicRoute = publicRoute.some((route) => pathname.startsWith(route));
+
+  if (!token && !isPublicRoute)
+    return NextResponse.redirect(new URL("/auth/login", request.url));
+
+  if (!token && isPublicRoute) return NextResponse.next();
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/admin/profile/fetch_profile`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    });
+
+    console.log(`GOOD RESPONSE: ${res.ok} \n`, res);
+
+    if (!res.ok) {
+      const response = NextResponse.redirect(
+        new URL("/auth/login", request.nextUrl),
+      );
+      response.cookies.delete("beauty_atk");
+      response.cookies.delete("cached_bearer_token");
+      return response;
+    }
+
+    if (isPublicRoute && res.ok)
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+
+    return NextResponse.next();
+  } catch (err) {
+    console.warn("Auth failed: ", err);
+    const response = NextResponse.redirect(
+      new URL("/auth/login", request.nextUrl),
+    );
     response.cookies.delete("beauty_atk");
-    response.headers.set("x-clear-client-cache", "true");
+    response.cookies.delete("cached_bearer_token");
     return response;
   }
-
-  if (pathname.startsWith("/auth/login") && hasToken) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
-  return NextResponse.next();
 }
 
 export const config = {
   matcher: [
     "/",
-    "/auth/login",
+    "/auth/:path*",
     "/dashboard/:path*",
     "/booking/:path*",
     "/packages/:path*",

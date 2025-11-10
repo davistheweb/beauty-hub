@@ -30,6 +30,11 @@ export const API = axios.create({
  * it for 20 minutes, and then uses it for subsequent external API requests.
  */
 const get_bearer_token = async () => {
+  if (
+    typeof window !== undefined &&
+    window.location.pathname.startsWith("/auth")
+  )
+    return undefined;
   const cachedToken = Cookies.get("cached_bearer_token");
 
   if (cachedToken) return cachedToken;
@@ -77,9 +82,8 @@ API.interceptors.request.use(
 
 API.interceptors.response.use(
   async (response: AxiosResponse): Promise<AxiosResponse> => {
-    if (response.headers["x-clear-client-cache"])
-      Cookies.remove("cached_bearer_token", { path: "/" });
-
+    // if (response.headers["x-clear-client-cache"])
+    //   Cookies.remove("cached_bearer_token", { path: "/" });
     return response;
   },
   async (error: AxiosError) => {
