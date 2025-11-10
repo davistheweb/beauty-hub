@@ -27,9 +27,9 @@ export async function middleware(request: NextRequest) {
       cache: "no-store",
     });
 
-    if (!res.ok) {
-      console.log(res);
+    console.log(`GOOD RESPONSE: ${res.ok} \n`, res);
 
+    if (!res.ok) {
       const response = NextResponse.redirect(
         new URL("/auth/login", request.nextUrl),
       );
