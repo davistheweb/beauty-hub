@@ -9,7 +9,7 @@ import Logo from "./ui/Logo";
 export default function Sidebar() {
   const pathName = usePathname();
 
-  const isActive = (url: string) => pathName === url;
+  const isActive = (url: string) => pathName.startsWith(url);
 
   const handleLogout = async () => {
     await logoutAdmin().then(() => {
