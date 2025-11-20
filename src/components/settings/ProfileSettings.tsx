@@ -59,25 +59,6 @@ export default function ProfileSettings({
         onSettled: () => setComponentIsUploading(false),
       },
     );
-    // await updateProfile(data.fullName, data.phoneNumber)
-    //   .then((res) => {
-    //     if (res.status) {
-    //       toast.success(res.data?.message);
-    //       dispatch(
-    //         setProfile({
-    //           ...adminState,
-    //           fullName: res?.data?.data[0].name,
-    //           email: res?.data?.data[0].email,
-    //           phoneNumber: res?.data?.data[0].phone,
-    //         }),
-    //       );
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     const error = getErrorResponse(err);
-    //     toast.error(error?.message || "Something went wrong");
-    //   })
-    //   .finally(() => setComponentIsUploading(false));
   };
 
   const onDrop = useCallback(
@@ -116,28 +97,6 @@ export default function ProfileSettings({
           setIsUploadloading(false);
         },
       });
-
-      // await changeProfileAvatar(formData)
-      //   .then((res) => {
-      //     if (res.status) {
-      //       console.log(res);
-      //       toast.success(res.data?.message);
-      //       dispatch(
-      //         setProfile({
-      //           ...adminState,
-      //           avatar: res?.data?.data[0].avatar,
-      //         }),
-      //       );
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     const error = getErrorResponse(err);
-      //     toast.error(error?.message || "Something went wrong");
-      //   })
-      //   .finally(() => {
-      //     setIsUploadloading(false);
-      //     setComponentIsUploading(false);
-      //   });
     },
     [updateAvatar, setComponentIsUploading],
   );

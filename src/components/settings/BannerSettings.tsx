@@ -136,9 +136,9 @@ export default function BannerSettings({
 
       const formData = new FormData();
 
-      formData.append("title", addBannerFormDataValues.title);
-      formData.append("subtitle", addBannerFormDataValues.subtitle);
-      formData.append("image", addBannerFormDataValues.image);
+      Object.entries(addBannerFormDataValues).forEach(([key, value]) =>
+        formData.append(key, value),
+      );
 
       await addBanner.mutate(formData, {
         onSuccess: (data) => {
@@ -168,15 +168,9 @@ export default function BannerSettings({
 
       formData.append("id", String(updateBannerValues?.id));
 
-      formData.append("title", editBannerFormDataValues.title);
-      formData.append("subtitle", editBannerFormDataValues.subtitle);
-
-      if (editBannerFormDataValues.image) {
-        formData.append(
-          "image",
-          (editBannerFormDataValues.image as File) || undefined,
-        );
-      }
+      Object.entries(editBannerFormDataValues).forEach(([key, value]) => {
+        if (value) formData.append(key, value);
+      });
 
       await updateBanner.mutate(formData, {
         onSuccess: (data) => {
