@@ -181,13 +181,13 @@ const PackageForm = ({
       // console.log(finalPackageValues.services);
 
       const formData = new FormData();
-      formData.append("name", finalPackageValues.name);
-      formData.append("price", finalPackageValues.price.replaceAll(",", ""));
-      formData.append("image", finalPackageValues.image);
-      // formData.append("services", JSON.stringify(finalPackageValues.services));
 
-      finalPackageValues.services.forEach((service, index) => {
-        formData.append(`services[${index}][name]`, service.name);
+      Object.entries(finalPackageValues).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((val, _i) => {
+            formData.append(`${key}[${_i}][name]`, val.name);
+          });
+        } else formData.append(key, value);
       });
 
       await addPackage.mutate(formData, {
@@ -222,16 +222,9 @@ const PackageForm = ({
 
       formData.append("id", String(selectedPackage?.id));
 
-      formData.append("name", updatePackageFormDataValues.name);
-
-      formData.append(
-        "price",
-        updatePackageFormDataValues.price.replaceAll(",", ""),
-      );
-
-      if (updatePackageFormDataValues.image) {
-        formData.append("image", updatePackageFormDataValues.image as File);
-      }
+      Object.entries(updatePackageFormDataValues).forEach(([key, value]) => {
+        if (value) formData.append(key, value);
+      });
 
       await updatePackage.mutate(formData, {
         onSuccess: (data) => {
