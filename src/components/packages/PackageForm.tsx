@@ -185,7 +185,7 @@ const PackageForm = ({
       Object.entries(finalPackageValues).forEach(([key, value]) => {
         if (Array.isArray(value)) {
           value.forEach((val, _i) => {
-            formData.append(`${key}[${_i}][name]`, val.name);
+            formData.append(`${key}[${_i}][${Object.keys(val)[0]}]`, val.name);
           });
         } else formData.append(key, value);
       });
