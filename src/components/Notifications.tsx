@@ -98,7 +98,7 @@ export default function Notifications() {
                     subtitle="Notifications will appear here when there is..."
                   />
                 </div>
-              ) : isError ? (
+              ) : isError && !notifications.length ? (
                 <div className="flex h-full w-full items-center justify-center">
                   <ErrorElement
                     errorType={notificationErrorMessage.type}

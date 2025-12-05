@@ -77,7 +77,7 @@ export const CustomerDetails = ({ customerId }: { customerId: string }) => {
     <div className="mt-3 flex w-full flex-col gap-3 p-2">
       {/* Customers Table*/}
       <div className="flex h-[598px] w-full flex-col overflow-hidden rounded-md bg-white p-2">
-        {isFetchCustomerDetailsError ? (
+        {isFetchCustomerDetailsError && !customerDetails ? (
           <ErrorElement
             title="Something went wrong"
             subtitle={fetchCustomerDetailsErrorMessage.message}

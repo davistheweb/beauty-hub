@@ -212,7 +212,7 @@ export default function BannerSettings({
     });
   };
 
-  if (isFetchBannerError)
+  if (isFetchBannerError && !banners)
     return (
       <div className="mt-5 flex h-[500px] w-full flex-col rounded-md bg-white p-1 px-1 pb-1 lg:px-8">
         <ErrorElement

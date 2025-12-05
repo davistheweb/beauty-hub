@@ -56,7 +56,7 @@ export default function Bookings() {
 
   // console.log(allBookingsData?.data.data.last_page);
 
-  if (isFetchBookingsError)
+  if (isFetchBookingsError && !bookings.length)
     return (
       <div className="mt-3 flex h-[598px] w-full flex-col rounded-md bg-white p-1">
         <ErrorElement

@@ -100,7 +100,7 @@ export default function Customers() {
     selectedFilter !== "All" && hasApiData && !hasFilteredData;
   const isApiEmpty = !hasApiData;
 
-  if (isFetchCustomersError)
+  if (isFetchCustomersError && !customers.length)
     return (
       <div className="mt-3 flex h-[598px] w-full flex-col rounded-md bg-white p-1">
         <ErrorElement

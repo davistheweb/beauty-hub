@@ -40,5 +40,5 @@ export default function useStats() {
     ? getErrorResponse(error)
     : ({ type: "unknown", message: "Something went wrong" } as IErrorInfo);
 
-  return { stats, isLoading, isError, statsErrorMessage };
+  return { stats, statsDataResponse, isLoading, isError, statsErrorMessage };
 }

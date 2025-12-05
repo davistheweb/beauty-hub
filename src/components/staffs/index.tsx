@@ -44,7 +44,7 @@ export default function Staffs() {
     // console.log(staff.status);
   };
 
-  if (isFetchStaffsError)
+  if (isFetchStaffsError && !staffs.length)
     return (
       <div className="flex h-[598px] w-full flex-col rounded-md bg-white p-1">
         {" "}
