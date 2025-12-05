@@ -13,7 +13,8 @@ import DashboardChart from "./DashboardChart";
 import DashboardSkeleton from "./DashboardSkeleton";
 
 export default function Dashboard() {
-  const { stats, isLoading, isError, statsErrorMessage } = useStats();
+  const { stats, statsDataResponse, isLoading, isError, statsErrorMessage } =
+    useStats();
 
   const series = stats.top_packages.map((top_package) =>
     Number(top_package.total),
@@ -27,7 +28,7 @@ export default function Dashboard() {
 
   // console.log(labels);
 
-  if (isError)
+  if (isError && !statsDataResponse)
     return (
       <div className="mt-3 flex h-[598px] w-full flex-col rounded-md bg-white p-1">
         <ErrorElement

@@ -82,7 +82,7 @@ const useStaff = (page: number = 1) => {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["staffs"] }),
   });
 
-  const staffs: IStaff[] | [] = allStaffsData?.data?.data?.data || [];
+  const staffs: IStaff[] = allStaffsData?.data?.data?.data || [];
 
   // console.log(staffs);
 

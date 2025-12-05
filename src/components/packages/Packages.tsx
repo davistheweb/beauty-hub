@@ -31,7 +31,7 @@ const Package = () => {
     setOpenServiceDetailsModal((prev) => !prev);
   };
 
-  if (isError)
+  if (isError && !packages.length)
     return (
       <div className="mt-5 flex w-full flex-col rounded-md bg-white p-1 md:h-[600px]">
         <ErrorElement

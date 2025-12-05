@@ -85,7 +85,7 @@ export default function Ratings() {
   const allRatings =
     searchData.length > 0 && debouncedValue ? searchData : ratings;
 
-  if (isFetchRatingsError)
+  if (isFetchRatingsError && !ratings.length)
     return (
       <div className="mt-3 flex h-[598px] w-full flex-col rounded-md bg-white p-1">
         <ErrorElement
